@@ -1,0 +1,20 @@
+#set($layout = '')
+#set($title='禁止访问')
+#override("head")  
+	##此处可以修改表头，添加样式，等
+#end
+
+#override("content")
+<div class="error_page"  style="height:500px;">
+<div class="error_box">
+			<h1>无权访问</h1>
+			<p>请联系管理员.</p>
+			<a href="javascript:history.back()" class="back_link btn btn-small">返回</a>
+</div>
+</div>
+#end
+
+#override("script")
+#end
+##页面布局
+#extends("layout/main.vm")

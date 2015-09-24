@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<sqlMap>
+
+    <resultMap id="RM.SysAuthResourceInfo" class="cn.wltc.biz.system.model.SysAuthResourceInfo">
+	    <result column="id" property="id" jdbcType="INTEGER" />
+	    <result column="qxzydm" property="qxzydm" jdbcType="VARCHAR" />
+	    <result column="qxzymc" property="qxzymc" jdbcType="VARCHAR" />
+	    <result column="qxzymc" property="title" jdbcType="VARCHAR" />
+	    <result column="qxzybz" property="qxzybz" jdbcType="VARCHAR" />
+	    <result column="qxzytb" property="qxzytb" jdbcType="VARCHAR" />
+	    <result column="qxzyms" property="qxzyms" jdbcType="VARCHAR" />
+	    <result column="qxzylx" property="qxzylx" jdbcType="VARCHAR" />
+	    <result column="fid"    property="fid" jdbcType="INTEGER" />
+	    <result column="qxzydz" property="qxzydz" jdbcType="VARCHAR" />
+	    <result column="px"     property="px" jdbcType="INTEGER" />
+	    <result column="qxzyzt" property="qxzyzt" jdbcType="VARCHAR" />
+	    <result column="jlcjsj" property="jlcjsj" jdbcType="TIMESTAMP" />
+	    <result column="jlcjyh" property="jlcjyh" jdbcType="VARCHAR" />
+	    <result column="jlxgsj" property="jlxgsj" jdbcType="TIMESTAMP" />
+	    <result column="jlxgyh" property="jlxgyh" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SysAuthResourceInfo.columns">
+	    <![CDATA[
+        id, qxzydm, qxzymc, qxzybz,qxzytb,qxzyms, qxzylx,fid, qxzydz,px, qxzyzt, jlcjsj, jlcjyh,jlxgsj,jlxgyh
+	    ]]>
+	</sql>
+
+	<sql id="SysAuthResourceInfo.where">
+	    <dynamic prepend="WHERE">
+		       <isNotEmpty prepend="AND" property="id">
+		             id = #id#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="qxzydm">
+		             qxzydm = #qxzydm#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="qxzymc">
+		             qxzymc = #qxzymc#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="qxzybz">
+		             qxzybz = #qxzybz#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="qxzytb">
+		             qxzytb = #qxzytb#
+		       </isNotEmpty>		       		       
+		       <isNotEmpty prepend="AND" property="qxzyms">
+		             qxzyms = #qxzyms#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="qxzylx">
+		             qxzylx = #qxzylx#
+		       </isNotEmpty>		       		       
+		       <isNotEmpty prepend="AND" property="fid">
+		             fid = #fid#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="qxzydz">
+		             qxzydz = #qxzydz#
+		       </isNotEmpty>		       		       
+		       <isNotEmpty prepend="AND" property="px">
+		             px = #px#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="qxzyzt">
+		             qxzyzt = #qxzyzt#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jssszxt">
+		             jssszxt = #jssszxt#
+		       </isNotEmpty>		       		       
+		       <isNotEmpty prepend="AND" property="jlcjsj">
+		             jlcjsj = #jlcjsj#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlcjyh">
+		             jlcjyh = #jlcjyh#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlxgsj">
+		             jlxgsj = #jlxgsj#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlxgyh">
+		             jlxgyh = #jlxgyh#
+		       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	
+    <insert id="SysAuthResourceInfo.insert" >
+    <![CDATA[
+        INSERT INTO `g_xtgl_qxzyxxb` (
+        	id, qxzydm, qxzymc, qxzybz,qxzytb,qxzyms, qxzylx,fid, qxzydz,px, qxzyzt,jssszxt, jlcjsj, jlcjyh,jlxgsj,jlxgyh
+        ) VALUES (
+        	#id#, #qxzydm#, #qxzymc#, #qxzybz#,#qxzytb#,#qxzyms#, #qxzylx#,#fid#, #qxzydz#,#px#, #qxzyzt#,#jssszxt#, #jlcjsj#, #jlcjyh#,#jlxgsj#,#jlxgyh#
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+    -->
+        <selectKey resultClass="java.lang.Integer" type="post" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+    </insert>
+	<insert id="SysAuthResourceInfo.insertSelective" >
+        INSERT INTO `g_xtgl_qxzyxxb`
+		 <dynamic prepend="(" >
+			  <isNotEmpty prepend="," property="id" >id</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzydm" >qxzydm</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzymc" >qxzymc</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzybz" >qxzybz</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzytb" >qxzytb</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzyms" >qxzyms</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzylx" >qxzylx</isNotEmpty>			  
+			  <isNotEmpty prepend="," property="fid" >fid</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzydz" >qxzydz</isNotEmpty>
+			  <isNotEmpty prepend="," property="px" >px</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzyzt" >qxzyzt</isNotEmpty>			  
+			  <isNotEmpty prepend="," property="jssszxt" >jssszxt</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjsj" >jlcjsj</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjyh" >jlcjyh</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgsj" >jlxgsj</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgyh" >jlxgyh</isNotEmpty>			  
+			  )
+		</dynamic>
+			values
+		<dynamic prepend="(" >
+			  <isNotEmpty prepend="," property="id" >#id#</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzydm" >#qxzydm#</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzymc" >#qxzymc#</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzybz" >#qxzybz#</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzytb" >#qxzytb#</isNotEmpty>			  
+			  <isNotEmpty prepend="," property="qxzyms" >#qxzyms#</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzylx" >#qxzylx#</isNotEmpty>			  
+			  <isNotEmpty prepend="," property="fid" >#fid#</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzydz" >#qxzydz#</isNotEmpty>
+			  <isNotEmpty prepend="," property="px" >#px#</isNotEmpty>
+			  <isNotEmpty prepend="," property="qxzyzt" >#qxzyzt#</isNotEmpty>			  
+			  <isNotEmpty prepend="," property="jssszxt" >#jssszxt#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjsj" >#jlcjsj#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjyh" >#jlcjyh#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgsj" >#jlxgsj#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgyh" >#jlxgyh#</isNotEmpty>
+		)
+		</dynamic>
+        <selectKey resultClass="java.lang.Integer" type="post" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+
+    <update id="SysAuthResourceInfo.updateSelective" >
+        UPDATE `g_xtgl_qxzyxxb`
+		<dynamic prepend="set" >
+			  <isNotNull prepend="," property="qxzydm" >qxzydm=#qxzydm#</isNotNull>
+			  <isNotNull prepend="," property="qxzymc" >qxzymc=#qxzymc#</isNotNull>
+			  <isNotNull prepend="," property="qxzybz" >qxzybz=#qxzybz#</isNotNull>
+			  <isNotNull prepend="," property="qxzytb" >qxzytb=#qxzytb#</isNotNull>
+			  <isNotNull prepend="," property="qxzyms" >qxzyms=#qxzyms#</isNotNull>
+			  <isNotNull prepend="," property="fid" >fid=#fid#</isNotNull>
+			  <isNotNull prepend="," property="qxzylx" >qxzylx=#qxzylx#</isNotNull>	
+			  <isNotNull prepend="," property="px" >px=#px#</isNotNull>
+			  <isNotNull prepend="," property="qxzyzt" >qxzyzt=#qxzyzt#</isNotNull>			  
+			  <isNotNull prepend="," property="jlxgsj" >jlxgsj=#jlxgsj#</isNotNull>
+			  <isNotNull prepend="," property="jlxgyh" >jlxgyh=#jlxgyh#</isNotNull>					
+		</dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+    <delete id="SysAuthResourceInfo.delete">
+    <![CDATA[
+        DELETE FROM `g_xtgl_qxzyxxb` WHERE
+        id = #id# 
+    ]]>
+    </delete>
+	<delete id="SysAuthResourceInfo.deleteSelective">
+        DELETE FROM `g_xtgl_qxzyxxb` <include refid="SysAuthResourceInfo.where"/>
+    </delete>
+    
+    <select id="SysAuthResourceInfo.getById" resultMap="RM.SysAuthResourceInfo">
+	    SELECT <include refid="SysAuthResourceInfo.columns"/>
+	    <![CDATA[
+	        FROM `g_xtgl_qxzyxxb` 
+	        WHERE 
+		        id = #id# 
+	    ]]>
+    </select>
+
+	
+	 
+    <select id="SysAuthResourceInfo.count" resultClass="long">
+        SELECT count(*) FROM `g_xtgl_qxzyxxb` <include refid="SysAuthResourceInfo.where"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="SysAuthResourceInfo.findPage" resultMap="RM.SysAuthResourceInfo">
+    	SELECT <include refid="SysAuthResourceInfo.columns"/> FROM g_xtgl_jsxxb 
+		<include refid="SysAuthResourceInfo.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+		 limit #firstResult#,#pageSize#
+    </select>
+	<select id="SysAuthResourceInfo.find" resultMap="RM.SysAuthResourceInfo">
+    	SELECT <include refid="SysAuthResourceInfo.columns"/> FROM g_xtgl_jsxxb 
+		<include refid="SysAuthResourceInfo.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+	
+	<!-- Manually Added -->
+    <select id="SysAuthResourceInfo.findAllByTypes" parameterClass="java.util.List" resultMap="RM.SysAuthResourceInfo">
+	    SELECT <include refid="SysAuthResourceInfo.columns"/>
+	        FROM `g_xtgl_qxzyxxb`
+	        WHERE 
+	    qxzylx in
+        <iterate open="(" close=")" conjunction=",">  
+            #[]#  
+        </iterate>  
+    </select>
+     	
+    <!--  user menus -->
+    
+    <resultMap id="RM.G_Xtgl_ZyxxbMenu" class="cn.wltc.biz.system.model.SysAuthResourceInfo">
+	    <result column="id" property="id" jdbcType="INTEGER" />
+	    <result column="qxzydm" property="qxzydm" jdbcType="VARCHAR" />
+	    <result column="qxzydm" property="nodecode" jdbcType="VARCHAR" />
+	    <result column="qxzymc" property="qxzymc" jdbcType="VARCHAR" />
+	    <result column="qxzybz" property="qxzybz" jdbcType="VARCHAR" />
+	    <result column="qxzytb" property="qxzytb" jdbcType="VARCHAR" />
+	    <result column="qxzymc" property="title" jdbcType="VARCHAR" />
+	    <result column="qxzylx" property="qxzylx" jdbcType="VARCHAR" />
+	    <result column="fid" property="fid" jdbcType="INTEGER" />
+	    <result column="qxzydz" property="qxzydz" jdbcType="VARCHAR" />
+	    <result column="px" property="px" jdbcType="INTEGER" />
+    </resultMap>    
+    <select id="SysAuthResourceInfo.getByYhid" parameterClass="java.util.HashMap" resultMap="RM.G_Xtgl_ZyxxbMenu">
+	    SELECT  distinct zyxxb.id as id, 
+			    zyxxb.qxzydm as qxzydm, 
+			    zyxxb.qxzymc as qxzymc, 
+			    zyxxb.qxzybz as qxzybz,
+			    zyxxb.qxzytb as qxzytb,
+			    zyxxb.qxzylx as qxzylx,
+			    zyxxb.fid as fid, 
+			    zyxxb.qxzydz as qxzydz,
+			    zyxxb.px as px
+	        FROM `g_xtgl_yhxxb` as yhxxb 
+		        	inner join  `g_xtgl_yhjsxxb` as yhjsxxb  on (yhxxb.id=yhjsxxb.yhid) 
+		        	inner join  `g_xtgl_jsqxxxb` as jsqxxxb  on (yhjsxxb.jsid=jsqxxxb.jsid) 
+		        	inner join  `g_xtgl_qxzyxxb` as zyxxb  on (jsqxxxb.zyid=zyxxb.id) 
+	        WHERE 
+		    zyxxb.qxzylx in
+	        <iterate open="(" close=")" conjunction="," property="zytypes">  
+	            #zytypes[]#
+	        </iterate>
+		     and
+		     yhxxb.id = #yhid# 
+		    ORDER BY   px  
+    </select>	
+</sqlMap>
+

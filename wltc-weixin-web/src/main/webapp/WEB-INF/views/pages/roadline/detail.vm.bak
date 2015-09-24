@@ -1,0 +1,78 @@
+#set($layout = '')
+#set($title='零担专线详情')
+#set($contentstyle = 'padding: 0em;')
+#override("head")  
+#end
+#override("header")  
+
+#end
+#override("navbar")
+
+#end
+#override("content")
+ <style>
+	ul.detaili li{list-style:none;}
+	ul.detaili2 li{list-style:none;}
+	.detaili li {
+		width:100%;
+		/**overflow: hidden;**/
+		height:36px;
+		line-height:36px;
+		font-size:0.8em;
+		
+	}
+	.detaili2 li {
+		width:100%;
+		/**overflow: hidden;**/
+		min-height:44px;
+		line-height:44px;
+		font-size:0.8em;
+		margin-bottom:5px;
+		
+	}	
+ </style>
+<div>
+	<div class="ui-grid-solo logoback" style="line-height:200px;">
+		<div class="ui-block-a logo1" >
+			<div style="font-size: 1.5em;padding-left:0.5em" >$orgzanation.name</div>
+		</div>
+	 </div>		 
+    <ul class="ui-listview ui-listview-inset ui-shadow" data-role="listview" data-inset="true" style="margin-top:0px;">
+		<li class="ui-li-divider ui-bar-inherit ui-li-has-count ui-first-child" role="heading" style="background:#e6f0f8;color:#0d68b6;font-size: 1.1em;">总部信息</li>
+		<li>
+			<ul class="detaili">
+				<li><span style="float:left;background:url(${rc.contextPath}/static/images/location.png) no-repeat;padding-left: 30px;">$!orgzanation.address　</span></li>
+				<li><span style="float:left;background:url(${rc.contextPath}/static/images/user2.png) no-repeat 0 5px;padding-left: 30px;">$!orgzanation.contract　</span><div style="float:right;"><a style="margin: 0px 10px;float: left;" href="tel:$!orgzanation.phone" data-role="button" data-icon="phone" data-mini="true">拨打</a></div></li>
+			</ul>
+		</li>
+		
+		
+		<li class="ui-li-divider ui-bar-inherit ui-li-has-count ui-first-child" role="heading" style="background:#e6f0f8;color:#0d68b6;font-size: 1.1em;">专线信息</li>
+		<li>
+			<ul  class="detaili2">
+                <li><span style="float:left;background:url(${rc.contextPath}/static/images/start.png) no-repeat -4px;padding-left: 40px;">$!{roadline.startProvince}$!{roadline.startCity}$!{roadline.start}　</span></li>
+				<li style="border-bottom: 1px solid #ccc;"><span style="float:left;background:url(${rc.contextPath}/static/images/user2.png) no-repeat 0 5px;;padding-left: 40px;">$!roadline.contract　</span><div style="float:right;"><a style="margin: 0px 10px;float: left;" href="tel:$!roadline.phone" data-role="button" data-icon="phone" data-mini="true">拨打</a></div></li>
+				<li><span style="float:left;background:url(${rc.contextPath}/static/images/over.png) no-repeat -4px;padding-left: 40px;">$!{roadline.endProvince}$!{roadline.endCity}$!{roadline.end}　</span></li>
+				<li><span style="float:left;background:url(${rc.contextPath}/static/images/user2.png) no-repeat 0 5px;;padding-left: 40px;">$!roadline.contract2　</span><div style="float:right;"><a style="margin: 0px 10px;float: left;" href="tel:$!roadline.phone2" data-role="button" data-icon="phone" data-mini="true">拨打</a></div></li>
+				<li style="min-height:40px;"><span style="display:block;font-size:1em">可辐射网点</span><span style="display:block;">$!roadline.transit</span></li>
+			</ul>
+		</li>		
+    </ul>
+		<div class="ui-grid-solo">
+			<div class="ui-block-a">
+				#if($collectedLine && $collectedLine.collectTime)
+    				<a href="#?" onclick="doRemovefav($!roadline.id,this)" data-role="button" data-icon="minus" class="ui-link ui-btn ui-icon-minus ui-btn-icon-left ui-shadow ui-corner-all ui-btn_red">取消收藏</a>
+				#else
+					<a href="#?" onclick="dofav($!roadline.id,this)" data-role="button" data-icon="plus"  class="ui-link ui-btn ui-icon-plus ui-btn-icon-left ui-shadow ui-corner-all">收藏</a>
+				#end
+			</div>
+		  </div>
+</div>
+
+#end
+#override("script")
+<script type="text/javascript" >
+#include("pages/roadline/roadline.js")
+</script>		
+#end
+#extends("layout/weixinlayout.vm")

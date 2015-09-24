@@ -1,0 +1,117 @@
+/*Monitor Page Start*/
+.y-fluid-table {
+  position: relative;
+  overflow-y: auto;
+}
+
+.x-fluid-table {
+  position: relative;
+  overflow-x: auto;
+}
+
+.markerInfo{
+	display:none;
+	position:absolute;
+	width: 500px; 
+	height:300px;
+ 	position: absolute;
+    top: 300px;
+    left: 800px;
+  	z-index: 1010;
+  	padding: 1px;
+  	text-align: left;
+  	white-space: normal;
+  	background-color: #ffffff;
+  	border: 1px solid #ccc;
+  	border: 1px solid rgba(0, 0, 0, 0.2);
+  	-webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+  	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  	-webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    margin-left: 10px;
+}
+
+.markerInfo .arrow,
+.markerInfo .arrow:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  top: 50%;
+  left: 0;
+  margin-left: -40px;
+  border-right-color: #fff;
+  border-width: 20px;
+}
+
+.markerInfo .markerInfo-header {
+    border-bottom: 1px solid #EEEEEE;
+    padding: 9px 15px;
+    background-color: #EFEFEF;
+}
+
+.markerInfo .markerInfo-header .close {
+    padding: 10px;
+    margin: -10px;
+}
+
+.modal-short-header {background:#e4e4e4;border-color:#d4d4d4;padding:5px}
+.modal-short-header .close {margin:0}
+
+.timefield{padding-left:10px}
+
+.shortnav {
+  margin-bottom: 5px;
+  margin-left: 0;
+  list-style: none;
+}
+.stinfo .st-heading {background:#F0F9FF;font-weight:700}
+.stinfo > ul {list-style:none;margin:3px 0 0 3px;overflow:hidden}
+.stinfo > ul > li:first-child {border-top:1px dashed #dcdcdc}
+.stinfo > ul > li {padding:4px;border-bottom:1px dashed #dcdcdc;overflow:hidden}
+.stinfo .infodiv{width:250px;}
+.stinfo .item-key {float:left;color:#888;}
+.stinfo .item-value {margin-left:30px;}
+
+/* element separation */
+.sepH_a {margin-bottom:5px}.sepH_b {margin-bottom:10px}.sepH_c {margin-bottom:20px}
+.sepV_a {margin-right:5px}.sepV_b {margin-right:10px}.sepV_c {margin-right:20px}
+.sepH_a_line {padding-bottom:6px;margin-bottom:18px;border-bottom:1px solid #dcdcdc}
+.sepH_no {margin-bottom:0}
+
+.tac {text-align:center}
+.line_sep {border-bottom: 1px solid #dcdcdc;margin-bottom: 18px;padding-bottom: 5px}
+.sml_t {font-size:11px}
+.sml {font-size:11px;color:#9d9d9d}
+
+.historyClass {
+    position: absolute;
+    top: 45px;
+    right: 125px;
+    z-index: 1002;
+}
+
+.mapSelectBar {
+	float: right;
+	position: absolute;
+	top: 45px;
+	right:180px;
+	z-index:1002;
+	display: block;
+}
+
+.warn-table-tr {
+	background-color:#DA4F49;
+}
+
+.normal-table-tr {
+	background-color:#f9f9f9;
+}
+
+/*Monitor Page End*/

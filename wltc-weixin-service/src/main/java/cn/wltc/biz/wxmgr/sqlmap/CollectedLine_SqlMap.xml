@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<sqlMap>
+
+    <resultMap id="RM.CollectedLine" class="cn.wltc.biz.wxmgr.model.CollectedLine">
+	   <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+	   <result column="line_id" property="lineId" jdbcType="INTEGER" />
+	   <result column="collect_time" property="collectTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+	<sql id="CollectedLine.where">
+	    where 1=1
+		 <isNotEmpty prepend="AND" property="customerId">
+		            a.customer_id=#customerId#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="lineId">
+		            a.line_id=#lineId#
+		 </isNotEmpty>  
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="CollectedLine.columns">
+	    <![CDATA[
+         	a.customer_id,a.line_id,a.collect_time
+	    ]]>
+	</sql>
+	 <select id="CollectedLine.count" resultClass="long">
+        SELECT count(*) FROM weixin_collected_line  a <include refid="CollectedLine.where"/>    
+    </select>
+   
+   <select id="CollectedLine.getById" resultMap="RM.CollectedLine">
+	    SELECT <include refid="CollectedLine.columns"/>
+	        FROM weixin_collected_line a 
+	        WHERE  a.customer_id = #customerId#  and a.line_id=#lineId#
+    </select>
+    <update id="CollectedLine.delete">
+    <![CDATA[
+       delete from weixin_collected_line  WHERE  customer_id = #customerId#  and line_id=#lineId#
+    ]]>
+    </update>   
+   <insert id="CollectedLine.insert" >
+    <![CDATA[
+        INSERT INTO `weixin_collected_line` (
+        	customer_id, 
+        	line_id, 
+        	collect_time
+        ) VALUES (
+        	#customerId#, 
+        	#lineId#, 
+        	now()
+        )
+    ]]>
+   </insert>
+   
+   <update id="CollectedLine.update" >
+        UPDATE `weixin_collected_line`
+		<dynamic prepend="set" >
+			<isNotNull prepend="," property="name" >name = #name#</isNotNull>
+			<isNotNull prepend="," property="type" >type = #type#</isNotNull>
+			<isNotNull prepend="," property="beginTime" >begin_time = #beginTime#</isNotNull>
+			<isNotNull prepend="," property="endTime" >end_time = #endTime#</isNotNull>
+			<isNotNull prepend="," property="content" >content = #content#</isNotNull>
+			<isNotNull prepend="," property="orgzanation.id" >org_id = #orgzanation.id#</isNotNull>
+			<isNotNull prepend="," property="lineId" >line_id = #lineId#</isNotNull>
+			<isNotNull prepend="," property="status" >status = #status#</isNotNull>
+			,update_time=now()
+		</dynamic>
+        WHERE 
+	        CollectedLine_id = #id# 
+    </update>
+    <select id="CollectedLine.find" resultMap="RM.CollectedLine">
+    	SELECT <include refid="CollectedLine.columns"/> FROM 
+    	weixin_collected_line a  
+    	<include refid="CollectedLine.where"/>
+    </select>  
+    
+</sqlMap>
+

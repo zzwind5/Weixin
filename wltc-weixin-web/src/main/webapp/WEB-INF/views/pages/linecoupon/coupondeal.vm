@@ -1,0 +1,103 @@
+#set($layout = '')
+#override("head")  
+		
+<script type="text/javascript" >
+	$(document).ready(function() {
+		//* validation
+		$('#form1').validate({
+			onkeyup: false,
+			errorClass: 'error',
+			validClass: 'valid',
+			errorElement:"p",
+			rules: {
+				lineDealComment: {required : true
+				}
+			},
+		    messages: {
+		    }
+		});
+	});
+				
+	function saveForm(nextFlag){
+		$("#next").val(nextFlag);
+		$("#form1").submit();
+	}
+</script>
+
+
+#end
+#override("header")  
+
+#end
+
+#override("content")
+
+	<form method="post" id="form1" action="saveCoupondeal.htm" style="padding:5px;">
+      <input type="hidden" id="id" name="id" value="$!{item.id}"/>
+      <input type="hidden" id="activityId" name="activityId" value="$!{item.activityId}"/>
+      <input type="hidden" id="next" name="next" value="0"/>
+
+<div class="loadintroinfo5 mar12">
+            <div class="formFieldWrapper txt25">
+              客户姓名：$!{item.customer.name}
+            </div>
+            <div class="formFieldWrapper txt25">
+               电话：$!{item.customer.mobile} <span class="txt24"><a href="tel:$!{item.customer.mobile}"><img src="${rc.contextPath}/static/weixin/images/phonepc.png" width="20" height="20"></a></span>
+            </div>
+            <div class="formFieldWrapper txt25 bordernone">
+               优惠券领取时间：$!{item.getTime.substring(0,16)}
+            </div>
+</div>
+
+<div class="title1">预订单信息</div>
+<div class="loadintroinfo5">
+            <div class="formFieldWrapper txt25">
+              <span class="txt27">组织名称：</span>$!{couponOrder.customerOrgname}
+            </div>
+            <div class="formFieldWrapper txt25">
+               <span class="txt27">货物名称：</span>$!{couponOrder.cargoName}
+            </div>
+            <div class="formFieldWrapper txt25">
+               <span class="txt27">货物数量：</span>$!{couponOrder.cargoNumber}$!{couponOrder.cargoUnit}
+            </div>
+            <div class="formFieldWrapper txt25 bordernone">
+               <span class="txt27">装货地：</span>$!{couponOrder.destination}
+            </div>
+</div>
+
+		
+		#if($!{item.lineDealStatus} != '1')
+			<div class="loadintroinfo5 mar12">
+    		#if($!{dateInteval} < 0)				
+            <div class="formFieldWrapper txt25 bordernone">
+               <span class="txt27">活动已结束
+            </div>
+			#else
+			   <div class="formFieldWrapper txt25 bordernone">
+                          <span class="txt27 mar30"><img src="${rc.contextPath}/static/weixin/images/beizhu.png" width="23" height="17"><br>
+                          我的备注：</span><textarea id="lineDealComment" name="lineDealComment" required></textarea>
+              </div>
+                        <div class="formFieldWrapper txt25 bordernone">
+                         <label><input type="checkbox" id="status" name="status" value="1"> <span class="txt30">有效客户，确认其参与活动</span></label>
+            </div>
+		
+			#end
+			</div>
+		#end
+
+		#if($!{item.lineDealStatus} != '1' && $!{dateInteval} >= 0)
+
+    <div class="bottombtnbox">
+        <div class="button_3" onclick="saveForm(1);">确认提交并处理下一条</div>
+        <div class="button_8" onclick="saveForm(0);">确认提交</div>
+    </div>
+		#end
+</form>
+
+<br/>
+<br/>
+<br/>
+
+#end
+
+#extends("layout/weixinlayout.vm")

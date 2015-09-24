@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<!-- 客户信息 -->
+<sqlMap>
+
+    <resultMap id="RM.NI_NEWSINFO" class="cn.wltc.biz.newsmgr.model.NewsInfo">
+		<result column="news_id" property="news_id" jdbcType="INTEGER" />
+		<result column="news_url" property="news_url" jdbcType="VARCHAR" />
+		<result column="is_main_news" property="is_main_news" jdbcType="VARCHAR" />
+		<result column="section" property="section" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="image_url" property="image_url" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="group_id" property="group_id" jdbcType="INTEGER" />
+		<result column="group_name" property="group_name" jdbcType="VARCHAR" />
+		<result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+	   
+    </resultMap>
+	<sql id="NewsInfo.where">
+	    where 1=1
+		 <isNotEmpty prepend="AND" property="group_name">
+		            a.group_name like CONCAT('%',#group_name#,'%')
+		 </isNotEmpty>  
+		  <isNotEmpty prepend="AND" property="status">
+		            a.status =#status#
+		 </isNotEmpty>  
+		  <isNotEmpty prepend="AND" property="section">
+		            a.section =#section#
+		 </isNotEmpty>  		       		       	       		       			       		       		       
+	</sql>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="NewsInfo.columns">
+	    <![CDATA[
+         	a.news_id,
+			a.news_url,
+			a.is_main_news,
+			a.section,
+			a.title,
+			a.description,
+			a.image_url,
+			a.content,
+			a.status,
+			a.update_time
+	    ]]>
+	</sql>
+	
+	<sql id="NewsInfo.groupcolumns">
+	    <![CDATA[
+			a.section,
+			a.status,
+			a.update_time,
+			a.group_id,
+			a.group_name,
+			a.news_ids,
+			a.add_time
+	    ]]>
+	</sql>
+	 <select id="NewsInfo.count" resultClass="long">
+        select count(*) from weixin_news_group AS a <include refid="NewsInfo.where"/>  
+    </select>
+   
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="NewsInfo.findPage.count" resultClass="long">
+        select count(*) from weixin_news_group AS a <include refid="NewsInfo.where"/>  
+    </select>   
+    <select id="NewsInfo.findPage" resultClass="cn.wltc.biz.newsmgr.model.NewsInfo">
+    	SELECT <include refid="NewsInfo.groupcolumns"/> FROM 
+    	weixin_news_group a 
+		<include refid="NewsInfo.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+		limit #firstResult#,#pageSize#
+    </select>
+    
+    <select id="NewsInfo.find" resultClass="cn.wltc.biz.newsmgr.model.NewsInfo">
+    	SELECT <include refid="NewsInfo.groupcolumns"/> FROM 
+    	weixin_news_group a 
+		<include refid="NewsInfo.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+		limit #firstResult#,#pageSize#
+    </select>
+    
+    <select id="NewsInfo.getGroupById" resultClass="cn.wltc.biz.newsmgr.model.NewsInfo">
+	    SELECT <include refid="NewsInfo.groupcolumns"/> 
+	    <![CDATA[
+	        FROM `weixin_news_group` a
+	        WHERE 
+		        group_id = #group_id# 
+	    ]]>
+    </select>
+    
+   <delete id="NewsInfo.delete" >
+	    delete FROM `weixin_news_group`
+	        WHERE 
+		        group_id = #group_id# 
+    </delete>
+    
+    <delete id="NewsInfo.deleteNews" >
+	    delete FROM `weixin_news`
+	        WHERE 
+		        news_id = #news_id# 
+    </delete>
+    
+    <insert id="NewsInfo.insert" >
+	    insert into `weixin_news_group` (group_name,section,status,add_time)
+	        values (#group_name#,#section#,#status#,#update_time#)
+	    <selectKey resultClass="java.lang.Integer" type="post" keyProperty="group_id" >
+            select last_insert_id()
+        </selectKey>
+    </insert>
+    
+    <select id="NewsInfo.getNewsById" resultClass="cn.wltc.biz.newsmgr.model.NewsInfo">
+	    SELECT <include refid="NewsInfo.columns"/> 
+	    <![CDATA[
+	        FROM `weixin_news` a
+	        WHERE 
+		        news_id = #news_id# 
+	    ]]>
+    </select>
+    
+    <insert id="NewsInfo.insertNews" >
+	    insert into `weixin_news` (image_url,is_main_news,section,title,description,content,update_time)
+	        values (#image_url#,#is_main_news#,#section#,#title#,#description#,#content#,#update_time#)
+	    <selectKey resultClass="java.lang.Integer" type="post" keyProperty="news_id" >
+            select last_insert_id()
+        </selectKey>
+    </insert>
+    
+     <update id="NewsInfo.updateNews" >
+	    update `weixin_news` set 
+	        section=#section#
+	        <isNotEmpty prepend="," property="image_url">
+	        	image_url=#image_url#
+	        </isNotEmpty>  
+	        ,title=#title#,description=#description#,content=#content#,update_time=#update_time#
+	         WHERE 
+		        news_id = #news_id# 
+    </update>
+    
+    <insert id="NewsInfo.updateNewsgrp" >
+	    update weixin_news_group set status=#status#
+	    <isNotEmpty prepend="," property="update_time">
+		      update_time=#update_time#    
+		</isNotEmpty>  
+		<isNotEmpty prepend="," property="section">
+		      section=#section#    
+		</isNotEmpty>  
+		<isNotEmpty prepend="," property="group_name">
+		      group_name=#group_name#    
+		</isNotEmpty>  
+	    ,news_ids=#news_ids#
+	    WHERE 
+		        group_id = #group_id# 
+    </insert>
+    
+     <select id="NewsInfo.getNews" resultClass="cn.wltc.biz.newsmgr.model.NewsInfo" parameterClass="java.lang.String" >
+	    SELECT <include refid="NewsInfo.columns"/> 
+	    <![CDATA[
+	        FROM `weixin_news` a
+	        WHERE 
+		        news_id in ($news_id$)
+	    ]]>
+    </select>
+    
+    <update id="NewsInfo.updateNewsgrpAll" >
+	    update weixin_news_group set status=#status#, update_time=null
+	    where section=#section#
+	    <isNotEmpty prepend="and" property="flag">
+		      status=#flag#    
+		</isNotEmpty> 
+    </update>
+</sqlMap>
+

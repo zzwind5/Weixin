@@ -1,0 +1,87 @@
+ <div id="header" class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="${rc.contextPath}/" style="width:205px;"><i class="icon-home icon-white"></i> 56同城管理平台 </a>
+            <ul class="nav user_menu pull-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i>$!{shiro.getPrincipal().xm} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#springUrl('/changePassword.htm')" onclick="formalMadal.show(this.href,'修改密码');return false;">修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="${rc.contextPath}/logout.htm">退出系统</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav" id="mobile-nav">
+
+				##<li> <a  href="${rc.contextPath}/index.html"><i class="icon-list-alt icon-white"></i>首页</a></li>
+				
+               	#set($rootMenus=${shiro.getPrincipal().resourceMenuList})
+				
+				#if($rootMenus)
+    				#foreach($rootMenu in $rootMenus)
+    					#if (!$rootMenu.children || $rootMenu.children.size() == 0)
+    						<li> <a  href="javascript:;" onclick="navigateClick(this);">
+									<input type="hidden" name="menuUrl" value="${rc.contextPath}/$rootMenu.qxzydz"/>
+									<i class="$rootMenu.qxzytb"></i> $rootMenu.qxzymc </a>
+							</li>
+    					#else #if(!$rootMenu.qxzydz || $rootMenu.qxzydz=='#' || $rootMenu.qxzydz == '')
+							<li> <a href="javascript:;" onclick="navigateClick(this);">
+								<input type="hidden" name="menuUrl" value="${rc.contextPath}/$rootMenu.children.get(0).qxzydz"/>
+								<i class="$rootMenu.children.get(0).qxzytb"  ></i> $rootMenu.qxzymc </a>
+							</li>
+						#else
+							<li> <a href="javascript:;" onclick="navigateClick(this);">
+								<input type="hidden" name="menuUrl" value="${rc.contextPath}/$rootMenu.qxzydz"/>
+								<i class="$rootMenu.qxzytb"></i> $rootMenu.qxzymc </a>
+							</li>
+						#end
+    						##<li class="dropdown">
+    							##<a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="$rootMenu.qxzytb"></i> $rootMenu.qxzymc <b class="caret"></b></a>
+    							##<ul class="dropdown-menu">
+    								##foreach($leafMenu in $rootMenu.children)
+    									##<li><a href="${rc.contextPath}/$leafMenu.qxzydz">$leafMenu.qxzymc</a></li>
+    								##end
+    							##</ul>
+    						##</li>
+    					#end
+    				#end
+				#end
+            </ul>
+        	<script>
+			/**
+			var appServer = '${rc.contextPath}';
+                jQuery(function(){
+            				jQuery.get( "#springUrl('/roleModuleMgr/getRoleResourceByYhId.htm?yhid=')$!{shiro.getPrincipal().id}" ,
+                        		function(data){
+                    				if (data){
+										jQuery.each(data,function(index,rootMenu){
+    										if (rootMenu.children){
+												var listr = '';
+												 	listr += '<li class="dropdown">';
+												    listr += '		<a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="' + rootMenu.zytb + '"></i>' +  rootMenu.qxzymc +  '<b class="caret"></b></a>';
+													listr += '		<ul class="dropdown-menu">';
+													jQuery.each(rootMenu.children,function(index,leafMenu){
+													listr += '			<li><a href="' + appServer + '/' + leafMenu.qxzydz + '">' + leafMenu.qxzymc + '</a></li>';
+													});
+													listr += '		</ul>';
+													listr += '</li>';
+													jQuery("#mobile-nav").append(listr);
+    										} else {
+												jQuery("#mobile-nav").append('<li> <a href="' + appServer + '/' + rootMenu.qxzydz +  '"><i class="' + rootMenu.zytb + '"></i>' +  rootMenu.qxzymc + '</a> </li>');
+											}
+										});
+									}
+                        		}
+                    		);
+                });
+				**/
+    		function navigateClick(obj){
+				var url = $(obj).find("input[name='menuUrl']").val();
+				location.href = url;
+			}
+            </script>
+        </div>
+    </div>
+</div>
+

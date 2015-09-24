@@ -1,0 +1,17 @@
+#set($layout = '')
+#override("head")  
+
+#end
+#override("header")  
+
+#end
+#override("content")
+	
+<div class="loadintroinfo6"> 
+ 	<div class="Bindingpng mar48"><img src="${rc.contextPath}/static/weixin/images/Bindingpng.png" width="76" height="102"></div>
+   <div class="Bindingtxt mar30">您需要提交专线的资料才能成为专线会员</div>
+    <div class="button_5 mar30" onclick="toUrl('lineauth.htm');"  >提交资料</div>
+</div>
+
+#end
+#extends("layout/weixinlayout.vm")

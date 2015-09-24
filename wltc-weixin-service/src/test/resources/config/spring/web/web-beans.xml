@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="ResourceConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:server.properties</value>
+				<value>classpath:mail.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- URLBrokers -->
+	<bean id="appServerBroker" class="cn.wltc.framework.web.url.URLBroker">
+		<property name="encoding" value="${web.encoding}"></property>
+		<property name="config">
+			<bean class="cn.wltc.framework.web.url.URLConfig">
+				<property name="host" value="${app.server.host}"></property>
+				<property name="port" value="${app.server.port}"></property>
+				<property name="followContextPath" value="true"></property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="staticServerBroker" class="cn.wltc.framework.web.url.StampURLBroker">
+		<property name="encoding" value="${web.encoding}"></property>
+		<property name="config">
+			<bean class="cn.wltc.framework.web.url.URLConfig">
+				<property name="host" value="${static.server.host}"></property>
+				<property name="port" value="${static.server.port}"></property>
+				<property name="path" value="${static.server.path}"></property>
+				<property name="followContextPath" value="true"></property>
+			</bean>
+		</property>
+		<property name="stamp" value="${web.stamp}"></property>
+	</bean>
+	<bean id="fileServerBroker" class="cn.wltc.framework.web.url.StampURLBroker">
+		<property name="encoding" value="${web.encoding}"></property>
+		<property name="config">
+			<bean class="cn.wltc.framework.web.url.URLConfig">
+				<property name="host" value="${file.server.host}"></property>
+				<property name="port" value="${file.server.port}"></property>
+				<property name="path" value="${file.server.path}"></property>
+				<property name="followContextPath" value="true"></property>
+			</bean>
+		</property>
+		<property name="stamp" value="${web.stamp}"></property>
+	</bean>
+	<bean class="cn.wltc.framework.web.url.ServletContextInitHelper">
+		<property name="brokers">
+			<list>
+				<ref bean="appServerBroker"/>
+				<ref bean="staticServerBroker"/>
+				<ref bean="fileServerBroker"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="encodingFilterBean" class="org.springframework.web.filter.CharacterEncodingFilter">
+		<property name="encoding" value="${web.encoding}"></property>
+		<property name="forceEncoding" value="true"></property>
+	</bean>
+	
+	<!-- cookyjar 配置 -->
+	<bean id="cookieCrypto" class="cn.wltc.framework.util.crypto.impl.AESCryptoImpl">
+		<property name="key" value="${cookie.aes.key}"></property>
+		<property name="ivParameter" value="${cookie.aes.iv}"></property>
+	</bean>
+
+	<bean id="cookyjarConfigure" class="cn.wltc.framework.web.cookyjar.CookyjarConfigure">
+		<!-- cookie缺省配置 -->
+		<property name="defaultConfigure">
+			<bean class="cn.wltc.framework.web.cookyjar.CookieConfigure">
+				<property name="path" value="/" />
+				<property name="lifeTime" value="-1" />
+				<property name="domain" value="${app.domain}" />
+			</bean>
+		</property>
+		<!-- 每个cookie的配置是 本身配置+缺省配置 -->
+		<property name="cookieConfigures">
+			<list>
+				<bean class="cn.wltc.framework.web.cookyjar.CookieConfigure">
+					<property name="name" value="userAgent" />
+					<property name="clientName" value="_uyiu_" />
+					<property name="crypto" ref="cookieCrypto" />
+					<property name="randomChar" value="4" />
+					<property name="selfDependenceClass" value="cn.wltc.common.web.cookie.UserAgent"></property>
+				</bean>
+				<bean class="cn.wltc.framework.web.cookyjar.CookieConfigure">
+					<property name="name" value="navAgent" />
+					<property name="clientName" value="_nav_" />
+					<property name="selfDependenceClass" value="cn.wltc.common.web.cookie.NavAgent"></property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="responseOutputBufferFilterBean" class="cn.wltc.framework.web.filter.ResponseOutputBufferFilter">
+		<property name="outCharset" value="${web.encoding}"></property>
+	</bean>	
+	<bean id="cookyjarFilterBean" class="cn.wltc.framework.web.cookyjar.CookyjarFilter">
+		<property name="cookyjarConfigure" ref="cookyjarConfigure"></property>
+	</bean>
+</beans>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>#if($title)${title}#else 56同城  #end</title>
+        <!-- Bootstrap framework -->
+        <link rel="stylesheet" href="${rc.contextPath}/static/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="${rc.contextPath}/static/bootstrap/css/bootstrap-responsive.min.css" />
+        <!-- tooltips-->
+        <link rel="stylesheet" href="${rc.contextPath}/static/lib/qtip2/jquery.qtip.min.css" />
+        <!-- gebo color theme-->
+        <link rel="stylesheet" href="${rc.contextPath}/static/gebo/css/blue.css" id="link_theme" />
+        <!-- main styles -->
+        <link rel="stylesheet" href="${rc.contextPath}/static/gebo/css/style.css" />
+        <!-- Favicon -->
+        <!--<link rel="shortcut icon" href="favicon.ico" /> -->
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="${rc.contextPath}/static/gebo/css/ie.css" />
+            <script src="${rc.contextPath}/static/js/ie/html5.js"></script>
+            <script src="${rc.contextPath}/static/js/ie/respond.min.js"></script>
+        <![endif]-->
+         <!-- app -->
+		 <link rel="stylesheet" href="${rc.contextPath}/static/css/base.css" />
+		 <link rel="stylesheet" href="${rc.contextPath}/static/css/swm.css"  media="all"/>
+
+		<script src="${rc.contextPath}/static/js/jquery.min.js"></script>
+		#block("head")   
+           ##每个页面的扩展样式
+        #end
+        <style>
+        .error {
+			font-size: 85%;
+			color: #f00;
+			padding-top: 5px;
+		}
+        </style>         
+    </head>
+    <body  class="sidebar_hidden">
+        <div id="maincontainer" class="clearfix">
+            <!-- header -->
+            #parse("layout/component/header.vm")
+            <!-- main content -->
+            <div id="contentwrapper">
+                <div class="main_content">
+					<!-- .breadcrumb -->
+                   
+					#block("breadcrumbs")
+                           <!-- <div id="breadcrumbs" class="breadcrumbs">子导航</div> -->
+                     #end
+					<div class="page_content">
+    					#block("content")
+							##页面内容
+                        #end
+					</div>
+				
+					<div  class="page_footer">
+							<hr/>
+                        <p>
+						</p>
+					</div>
+            	</div>
+            </div>
+        </div>
+
+        <script src="${rc.contextPath}/static/js/jquery-migrate.min.js"></script>
+        <!-- smart resize event -->
+        <script src="${rc.contextPath}/static/js/jquery.debouncedresize.min.js"></script>
+        <!-- hidden elements width/height -->
+        <script src="${rc.contextPath}/static/js/jquery.actual.min.js"></script>
+        <!-- js cookie plugin -->
+        <script src="${rc.contextPath}/static/js/jquery_cookie.min.js"></script>
+        <!-- main bootstrap js -->
+        <script src="${rc.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
+         <!-- bootstrap plugins -->
+        <script src="${rc.contextPath}/static/js/bootstrap.plugins.min.js"></script>
+        <!-- tooltips -->
+        <script src="${rc.contextPath}/static/lib/qtip2/jquery.qtip.min.js"></script>
+        <!-- fix for ios orientation change -->
+        <script src="${rc.contextPath}/static/js/ios-orientationchange-fix.js"></script>
+        <!-- scrollbar -->
+        <script src="${rc.contextPath}/static/lib/antiscroll/antiscroll.js"></script>
+        <script src="${rc.contextPath}/static/lib/antiscroll/jquery-mousewheel.js"></script>
+		<script src="${rc.contextPath}/static/lib/forms/My97DatePicker/WdatePicker.js"></script>
+		<script src="${rc.contextPath}/static/lib/validation/jquery.validate.js"></script>
+		<script src="${rc.contextPath}/static/lib/validation/additional-methods.js"></script>
+		<script src="${rc.contextPath}/static/lib/validation/localization/messages_cn.js"></script>
+		<script src="${rc.contextPath}/static/js/app/profiler.js"></script>
+        <!-- common functions -->
+        <script src="${rc.contextPath}/static/gebo/js/gebo_common.js"></script>
+		<link rel="stylesheet" href="${rc.contextPath}/static/css/swm.css" media="all" />
+
+		#block("script") 
+		##自定义脚本
+		#end
+		#parse('pages/contain/formalmodal.vm')
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+
+    <resultMap id="RM.UserFile" class="cn.wltc.biz.base.model.UserFile">
+	    <result column="id" property="id" jdbcType="INTEGER" />
+	    <result column="fjmc" property="fjmc" jdbcType="VARCHAR" />
+	    <result column="fjlj" property="fjlj" jdbcType="VARCHAR" />
+	    <result column="scsj" property="scsj" jdbcType="TIMESTAMP" />
+	    <result column="scr" property="scr" jdbcType="VARCHAR" />
+	    <result column="sfsc" property="sfsc" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <insert id="UserFile.insert" >
+	    <![CDATA[
+	        INSERT INTO wz_wzfjb (
+	        	id ,
+	        	fjmc ,
+	        	fjlj ,
+	        	scr ,
+	        	scsj,
+	        	sfsc 
+	        ) VALUES (
+	        	#id# ,
+	        	#fjmc# ,
+	        	#fjlj# ,
+	        	#scr# ,
+	        	now(),
+	        	'0'
+	        )
+	    ]]>
+        <selectKey resultClass="java.lang.Integer" type="post" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+    </insert>
+    
+	<select id="UserFile.getById" resultMap="RM.UserFile">
+    	SELECT * from wz_wzfjb where id = #id#
+    </select>     
+</sqlMap>
+

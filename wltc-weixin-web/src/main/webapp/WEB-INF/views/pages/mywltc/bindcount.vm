@@ -1,0 +1,148 @@
+#set($layout = '')
+#override("head")  
+		
+<script type="text/javascript" >
+	$(document).ready(function() {
+		//* validation
+		
+		$('#bindcountForm').validate({
+			onkeyup: false,
+			errorClass: 'error',
+			validClass: 'valid',
+			errorElement:"p",
+			rules: {
+				mobile: {digits : true,
+						maxlength:11,
+						minlength:11,
+                    remote:{
+                        type:"POST",
+                        url:ROOT_PATH + "/mywltc/checkCount.htm",
+                        data:{
+                      	  mobile:function(){return $("#mobile").val();}
+                        }
+                    }
+				},
+				verify_code: {required:true,
+                    remote:{
+                        type:"POST",
+                        url:ROOT_PATH + "/mywltc/confirmCheckCode.htm",
+                        data:{
+                      	  verify_code:function(){return $("#verify_code").val();}
+                        }
+                    }
+				}
+			},
+		    messages: {
+		        mobile: {
+		            digits: "请输入11位手机号码",
+		            maxlength : "请输入11位手机号码",
+		            minlength : "请输入11位手机号码",
+					remote:jQuery.format("手机号码已被绑定，请重输")
+		        },
+				verify_code: {
+                    required:"请输入验证码",
+                    remote:jQuery.format("验证码错误")
+                }
+		    }
+		});
+		
+		
+		
+	});
+		
+	function saveForm(){
+		$("#bindcountForm").submit();
+	}
+	
+	function getCheckCode(){
+		if($('#mobile').valid() == 0){
+			return;
+		}
+	
+		var mobile = $("#mobile").val();
+		jQuery.post(ROOT_PATH + "/mywltc/getCheckCode.htm", {
+			mobile:mobile
+		}, function(data) {
+			var result = data.data;
+			if(result){
+				checkCode();
+				$("#tipContent").html("验证码已发送至您的手机("+mobile+")，请注意查收");
+			}else{
+				$("#tipContent").html("验证码发送失败，请检查您的手机号码");
+			}
+			$("#tipPage").show();
+		}, "json");
+	}
+	
+	var count = 60;
+	function checkCode() {
+		$("#getCheckCodeDiv").hide();
+		$("#getCheckCodeTip").html(count + "秒")
+		$("#getCheckCodeTipDiv").show();
+		count--;
+		if (count > 0) {
+			setTimeout(checkCode, 1000);
+		} else {
+    		$("#getCheckCodeDiv").show();
+    		$("#getCheckCodeTipDiv").hide();
+			cancelCheckCode();
+			count = 60;
+		}
+	}
+	
+	function cancelCheckCode() {
+		jQuery.post(ROOT_PATH + "/mywltc/cancelCheckCode.htm", {
+		}, function(data) {
+		}, "json");
+	}
+
+</script>
+#end
+#override("header")  
+
+#end
+#override("content")
+
+<form id="bindcountForm" method="post" action="saveBindcount.htm" style="padding:0 5px;">
+
+
+<div class="title1">绑定信息:</div>
+<div class="loadintroinfo4">
+            <div class="formFieldWrapper">
+              <input type="text" name="name" class="fieldWithIcon userFieldIcon" id="name"  maxlength="5" placeholder="请输入您的真实姓名" required>
+            </div>
+            <div class="formFieldWrapper">
+                <input type="number" name="mobile" class="fieldWithIcon userFieldIcon2" id="mobile" maxlength="11" placeholder="请输入您的手机号码" required>
+            </div>
+            <div class="formFieldWrapper">
+                <span class="yzm">
+					<div id="getCheckCodeDiv" >
+							<a id="getCheckCode" href="javascript:;" onclick="getCheckCode();" style="color:#fff">获取验证码</a>
+                	</div>
+                	<div style="display:none;" id="getCheckCodeTipDiv">
+                		<a id="getCheckCodeTip" href="javascript:;"></a>
+                	</div>	
+				</span>
+                <input style="padding-right:2px" type="text" name="verify_code" class="fieldWithIcon userFieldIcon3 qkbox" id="verify_code" placeholder="验证码"  maxlength="4">
+            </div>
+</div>
+
+
+<div class="bottombtnbox">
+    <div class="button_3" onclick="saveForm();">保存</div>
+</div>
+</form>
+
+ <div id="tipPage" style="display:none;">
+<div class="tanbox" >
+    <div class="tancon">
+          <div class="txt90">消息提示</div>
+          <div class="txt91 mar10" id="tipContent"></div>
+          <div class="knowbtn" onclick="javascript:$('#tipPage').hide();">关闭</div>
+    </div>
+</div>
+ </div>
+
+#end
+
+#extends("layout/weixinlayout.vm")

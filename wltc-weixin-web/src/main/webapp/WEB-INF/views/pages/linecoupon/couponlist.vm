@@ -1,0 +1,104 @@
+#set($layout = '')
+#override("head")  
+
+	
+<script type="text/javascript" >
+    $(function () {
+        $('#mobile').keypress(function (e) { 
+            var key = e.which; //e.which是按键的值
+            if (key == 13) {
+        	    query();
+            }
+        });
+		
+		$("#status").change(function(){
+			query();
+		});
+  		
+		var qStatus = $("#qStatus").val();
+		if(qStatus != null && qStatus != ""){
+			//$("#status").val(qStatus);
+		}
+    }); 
+
+	function query(){
+		var activityId = $("#activityId").val();
+		var lineDealStatus = $("#lineDealStatus").val();
+		var mobile = $("#mobile").val();
+		var url = "couponlist.htm";
+		url += "?lineDealStatus=" + lineDealStatus;
+		url += "&activityId=" + activityId;
+		url += "&mobile=" + mobile;
+		
+		if($("#status").length > 0){
+			url += "&status=" + $("#status").val();
+		}
+		
+		location.href = url;
+	}
+</script>
+
+
+#end
+#override("header")  
+
+#end
+#override("navbar")
+<div class="tipbox2">
+    <a href="javascript:;" onclick="toUrl('couponlist.htm?lineDealStatus=0&activityId=$!{activityId}');"  #if($!{lineDealStatus} != '1') id="tiped2" #end>待处理($!{dclCount})</a>
+    <a href="javascript:;" onclick="toUrl('couponlist.htm?lineDealStatus=1&activityId=$!{activityId}');"  #if($!{lineDealStatus} == '1') id="tiped2" #end>已处理($!{yclCount})</a>
+</div>
+<div class="clear"></div>
+#end
+#override("content")
+      <input type="hidden" id="activityId" name="activityId" value="$!{activityId}"/>
+      <input type="hidden" id="lineDealStatus" name="lineDealStatus" value="$!{lineDealStatus}"/>
+      <input type="hidden" id="qStatus" name="qStatus" value="$!{qStatus}"/>
+	  
+	#if($!{lineDealStatus} == '0')	
+		
+		<div class="erachphonebox">
+			<input type="text" name="mobile" id="mobile" class="fieldWithIcon3 userFieldIcon4"  maxlength="25" value="$!{mobile}" placeholder="客户手机号查询" >
+        </div>
+
+		#foreach( $item in $list )
+			<a href="javascript:;" onclick="toUrl('coupondeal.htm?id=$!{item.id}');">
+			<div class="adminbox">
+        	        #set($getTime=$!{item.getTime})
+        			#if($getTime.length()>16)
+        				#set($getTime=$getTime.substring(0,16))
+        			#end	
+                  <div class="txt22">申领时间：$getTime</div>
+                  <div class="txt22 mar10">客户姓名：$!{item.customer.name}</div>
+                  <div class="txt23 mar10">联系电话：$!{item.customer.mobile}</div>
+            </div>			
+			</a>
+		#end
+	 #else
+		
+		<div class="erachphonebox">
+          <span class="fl"><input style="padding-right: 2px;" type="text" name="mobile" id="mobile" class="fieldWithIcon3 userFieldIcon6"  maxlength="25" value="$!{mobile}" placeholder="客户手机号查询" ></span>
+          <span class="txt100 fl">		  
+    		<select name="status" id="status"  class="style11">
+              <option value="-1" #if($!{status} == "-1") selected #end>所有客户</option>
+              <option value="1" #if($!{status} == "1") selected #end>有效客户</option>
+              <option value="0" #if($!{status} == "0") selected #end>无效客户</option>
+            </select></span>
+        <div class="clear"></div>
+        </div>	
+		#foreach( $item in $list )			
+			<div class="loadintroinfo6 mar2">
+        	        #set($getTime=$!{item.getTime})
+        			#if($getTime.length()>16)
+        				#set($getTime=$getTime.substring(0,16))
+        			#end	
+                 <div class="txt28"><span class="txt32">#if($!{item.status} == '1')有效#else无效#end</span>申领时间：$getTime</div>
+                 <div class="txt28 mar10">客户姓名：$!{item.customer.name}</div>
+                 <div class="txt28 mar10">联系电话：$!{item.customer.mobile}</div>
+                 <div class="mar10"><span class="txt31">备注：</span><span class="txt98">$!{item.lineDealComment}</span></div>
+            </div>
+		#end
+	  #end
+#end
+
+#extends("layout/weixinlayout.vm")

@@ -1,0 +1,145 @@
+/*
+ * swm css
+ */
+.row-fluid [class*="span-"] {
+  min-height: 30px;
+  margin-left: 1.127659574468085%;
+  *margin-left: 1.074468085106383%;
+}
+.row-fluid [class="spanheader"] {
+  min-height: 30px;
+  margin-left: 2.827659574468085%;
+  *margin-left: 2.874468085106383%;
+}
+.row-fluid .span-05 {
+  width: 1.893617021276595%;
+  *width: 1.840425531914894%;
+}
+.row-fluid  .line {
+  height: 28px;
+  line-height:28px;
+  text-align:center;
+}
+.row-fluid .span-15 {
+  width: 11.893617021276595%;
+  *width: 11.840425531914894%;
+}
+.input-medium-15 {
+  width: 120px;
+}
+.input-medium-15-fixpadding {
+  width: 106px;
+}
+.input-medium-15-m21 {
+  width: 120px;
+  margin-left: 21.827659574468085%;
+}
+.row-fluid .spanheader {
+  width: 6.382978723404255%;
+  *width: 6.329787234042553%;
+}
+.row-fluid .span-button {
+  width: 11.893617021276595%;
+  *width: 11.840425531914894%;
+  text-align:center;
+  height:30px;
+  line-height:30px;
+}
+.width21{
+  display:inline-block;
+  width: 21.827659574468085%;
+}
+.row-fluid .span-4 {
+  width: 31.914893617021278%;
+  *width: 31.861702127659576%;
+}
+
+.row-fluid .span-12 {
+  width: 100%;
+  *width: 99.94680851063829%;
+}
+
+.row-fluid .span-11 {
+  width: 91.48936170212765%;
+  *width: 91.43617021276594%;
+}
+
+.row-fluid .span-10 {
+  width: 82.97872340425532%;
+  *width: 82.92553191489361%;
+}
+
+.row-fluid .span-9 {
+  width: 74.46808510638297%;
+  *width: 74.41489361702126%;
+}
+
+.row-fluid .span-8 {
+  width: 65.95744680851064%;
+  *width: 65.90425531914893%;
+}
+
+.row-fluid .span-7 {
+  width: 57.44680851063829%;
+  *width: 57.39361702127659%;
+}
+
+.row-fluid .span-6 {
+  width: 48.93617021276595%;
+  *width: 48.88297872340425%;
+}
+
+.row-fluid .span-5 {
+  width: 40.42553191489362%;
+  *width: 40.37234042553192%;
+}
+
+.row-fluid .span-4 {
+  width: 31.914893617021278%;
+  *width: 31.861702127659576%;
+}
+
+.row-fluid .span-3 {
+  width: 23.404255319148934%;
+  *width: 23.351063829787233%;
+}
+
+.row-fluid .span-2 {
+  width: 14.893617021276595%;
+  *width: 14.840425531914894%;
+}
+
+.row-fluid .span-1 {
+  width: 6.382978723404255%;
+  *width: 6.329787234042553%;
+}
+.moreserach-btn{
+	display: inline-block;
+	padding: 0 5px;
+	background-color: #fff;
+	color: #c1dce7;
+	font-size: 80%;
+}
+label {
+vertical-align: middle;
+}
+.attentionLis{
+	font-size: 85%;
+	color: #c09853;
+	margin: 0 0 3px;
+	background-color: #fcf8e3;
+	border: 1px solid #fbeed5;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+	padding: 8px 10px 8px 14px;
+	margin:5px 0 5px 0;
+}
+.dialog.modal {
+width: 300px;
+margin-left: -150px;
+}
+.dialog.modal.fade.in {
+top: 20%;
+}

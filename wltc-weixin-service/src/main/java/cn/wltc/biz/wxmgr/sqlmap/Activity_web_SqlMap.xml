@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<!-- 优惠活动 -->
+<sqlMap>
+
+    <resultMap id="RM.ActivityWeb" class="cn.wltc.biz.wxmgr.model.Activity">
+	   <result column="activity_id" property="id" jdbcType="INTEGER" />
+	   <result column="name" property="name" jdbcType="VARCHAR" />
+	   <result column="type" property="type" jdbcType="VARCHAR" />
+	   <result column="begin_time" property="beginTime" jdbcType="VARCHAR" />
+	   <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+	   <result column="content" property="content" jdbcType="VARCHAR" />
+	   <result column="org_id" property="orgzanation.id" jdbcType="VARCHAR" />
+	   <result column="org_name" property="orgzanation.name" jdbcType="VARCHAR" />
+	   <result column="line_id" property="lineId" jdbcType="VARCHAR" />
+	   <result column="line_name" property="lineName" jdbcType="VARCHAR" />
+	   <result column="status" property="status" jdbcType="VARCHAR" />
+	   <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+	   <result column="line_phone" property="linePhone" jdbcType="VARCHAR" />
+ 	   <result column="customer_count" property="customerCount" jdbcType="INTEGER" />
+    </resultMap>
+	<sql id="ActivityWeb.where">
+	    where 1=1
+		 <isNotEmpty prepend="AND" property="id">
+		            a.activity_id=#id#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="type">
+		            a.type=#type#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="status">
+		            a.status=#status#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="name">
+		            a.name like CONCAT('%',#name#,'%')
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="orgzanation.name">
+		            b.name like CONCAT('%',#orgzanation.name#,'%')
+		 </isNotEmpty>
+		 <isNotNull prepend="AND" property="baseDate">
+		            a.begin_time &lt;#baseDate#
+		 </isNotNull>
+		 <isNotNull prepend="AND" property="baseDate">
+		            a.end_time &gt;#baseDate#
+		 </isNotNull>		 		  		   
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ActivityWeb.columns">
+	    <![CDATA[
+         	a.activity_id as id,
+         	a.name as name,
+         	a.type as type,
+         	a.begin_time as begin_time,
+         	a.end_time as end_time,
+         	a.content as content,
+         	a.org_id as orgzanationId,
+         	a.line_id as lineId,
+         	a.status as status,
+         	a.update_time as updateTime,
+         	a.customer_count as customerCount,
+         	b.name  as orgzanationName,
+         	CONCAT(c.start_city,' - ',c.end_city) as lineName,
+         	b.phone as linePhone
+	    ]]>
+	</sql>
+	 <select id="ActivityWeb.count" resultClass="long">
+        SELECT count(*) FROM weixin_activity AS a   
+        left join tfrs_orgzanation b on a.org_id = b.org_id 
+        left join tfrs_road_line c on a.line_id = c.line_id 
+        <isNotNull property="customerId">
+		            inner join weixin_collected_line e on d.customer_id = e.customer_id 
+		 </isNotNull>
+        <include refid="ActivityWeb.where"/>    
+    </select>
+   
+   <select id="ActivityWeb.getById" resultClass="cn.wltc.biz.wxmgr.model.Activity">
+    	SELECT <include refid="ActivityWeb.columns"/>,b.contract as orgzanationcontract,c.start_city as startCity,c.end_city as endCity,f.activity_id_count as activityIdCount FROM 
+    	weixin_activity a 
+    	left join tfrs_orgzanation b on a.org_id = b.org_id  
+    	left join tfrs_road_line c on a.line_id = c.line_id
+		left join (select count(*) as activity_id_count,activity_id from weixin_coupon group by activity_id) f on a.activity_id=f.activity_id  
+	    WHERE  a.activity_id = #id# 
+	    limit 0,1
+    </select>
+   
+   <insert id="ActivityWeb.insert" >
+    <![CDATA[
+        INSERT INTO `weixin_activity` (
+        	name, 
+        	type, 
+        	begin_time, 
+        	end_time, 
+        	content, 
+        	org_id,
+        	line_id, 
+        	status, 
+        	update_time,
+        	customer_count
+        ) VALUES (
+        	#name#, 
+        	#type#, 
+        	#beginTime#, 
+        	#endTime#, 
+        	#content#, 
+        	#orgzanation.id#,
+        	#lineId#, 
+        	#status#, 
+        	now(),
+        	#customerCount# 
+        )
+    ]]>
+   </insert>
+   
+   <update id="ActivityWeb.update" >
+        UPDATE `weixin_activity`
+		<dynamic prepend="set" >
+			<isNotNull prepend="," property="name" >name = #name#</isNotNull>
+			<isNotNull prepend="," property="type" >type = #type#</isNotNull>
+			<isNotNull prepend="," property="beginTime" >begin_time = #beginTime#</isNotNull>
+			<isNotNull prepend="," property="endTime" >end_time = #endTime#</isNotNull>
+			<isNotNull prepend="," property="content" >content = #content#</isNotNull>
+			<isNotNull prepend="," property="orgzanation.id" >org_id = #orgzanation.id#</isNotNull>
+			<isNotNull prepend="," property="lineId" >line_id = #lineId#</isNotNull>
+			<isNotNull prepend="," property="status" >status = #status#</isNotNull>
+			,update_time=now()
+		</dynamic>
+        WHERE 
+	        activity_id = #id# 
+    </update>
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="ActivityWeb.findPage.count" resultClass="long">
+        SELECT count(*) FROM weixin_activity AS a  
+        left join tfrs_orgzanation b on a.org_id = b.org_id  
+        left join tfrs_road_line c on a.line_id = c.line_id
+    	<isEqual property="pageType" compareValue="my">
+    	inner join weixin_coupon g on (a.activity_id = g.activity_id and g.customer_id =#customerId#)
+    	</isEqual>
+    	<isNotEqual property="pageType" compareValue="my">
+    	left join weixin_coupon g on (a.activity_id = g.activity_id and g.customer_id =#customerId#)
+    	</isNotEqual>	         
+        <include refid="ActivityWeb.where"/>  
+    </select>
+    <select id="ActivityWeb.findPage" resultClass="cn.wltc.biz.wxmgr.model.Activity">
+    	SELECT <include refid="ActivityWeb.columns"/>, c.start_city as startCity, c.end_city as endCity, f.activity_id_count as activityIdCount,g.get_time as collectTime,g.line_deal_comment as lineDealComment,g.line_deal_feedback as lineDealFeedback,g.line_deal_status as lineDealStatus,g.status as couponStatus FROM 
+    	weixin_activity a
+    	left join tfrs_orgzanation b on a.org_id = b.org_id  
+    	left join tfrs_road_line c on a.line_id = c.line_id   
+    	left join (select count(*) as activity_id_count,activity_id from weixin_coupon group by activity_id) f on a.activity_id=f.activity_id
+    	<isEqual property="pageType" compareValue="my">
+    	inner join weixin_coupon g on (a.activity_id = g.activity_id and g.customer_id =#customerId#)
+    	</isEqual>
+    	<isNotEqual property="pageType" compareValue="my">
+    	left join weixin_coupon g on (a.activity_id = g.activity_id and g.customer_id =#customerId#)
+    	</isNotEqual>
+		<include refid="ActivityWeb.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>		
+		limit #firstResult#,#pageSize#
+    </select>
+    
+    <select id="ActivityWeb.find" resultClass="cn.wltc.biz.wxmgr.model.Activity">
+    	SELECT <include refid="ActivityWeb.columns"/> FROM 
+    	weixin_activity a 
+    	left join tfrs_orgzanation b on a.org_id = b.org_id  
+    	left join tfrs_road_line c on a.line_id = c.line_id  
+		 <isNotNull property="customerId">
+		            inner join weixin_collected_line e on d.customer_id = e.customer_id 
+		 </isNotNull>		
+		<include refid="ActivityWeb.where"/>
+    </select>
+  
+</sqlMap>
+

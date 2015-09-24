@@ -1,0 +1,74 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2014-07-15 16:15:40
+ * @version $Id: cityPicker.css,v 1.1 2014/08/11 01:53:30 taifeng Exp $
+
+html { font-family: "Helvetica Neue", Helvetica, STHeiTi, Arial, sans-serif; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+body { margin: 0; height: 100%; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
+audio, canvas, progress, video { display: inline-block; vertical-align: baseline; }
+audio:not([controls]) { display: none; height: 0; }
+[hidden], template { display: none; }
+svg:not(:root) { overflow: hidden; }
+
+a { background: transparent; text-decoration: none; }
+a:active { outline: 0; }
+abbr[title] { border-bottom: 1px dotted; }
+b, strong { font-weight: bold; }
+dfn { font-style: italic; }
+mark { background: #ff0; color: #000; }
+small { font-size: 80%; }
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+img { border: 0; vertical-align: middle; }
+hr { -moz-box-sizing: content-box; box-sizing: content-box; height: 0; }
+pre { overflow: auto; white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
+code, kbd, pre, samp { font-family: monospace, monospace; font-size: 1em; }
+
+
+
+table { border-collapse: collapse; border-spacing: 0; }
+td, th { padding: 0; }
+
+html, button, input, select, textarea { font-family: "Helvetica Neue", Helvetica, STHeiTi, Arial, sans-serif; }
+h1, h2, h3, h4, h5, h6, p, figure, form, blockquote { margin: 0; }
+ul, ol, li, dl, dd { margin: 0; padding: 0; }
+ul, ol { list-style: none outside none; }
+h1, h2, h3 { font-weight: normal; }
+ */
+.ui-artdialog-bg { position: fixed; top: 0px; left: 0px; z-index: 1987; width: 100%; height: 100%; background: #565656; opacity: 1; }
+.ui-artdialog-main { position:absolute; top:0px; width: 100%; z-index: 1988; min-height: 100%; background-color: #FFFFFF; }
+.ui-artdialog-main ul { list-style:none; margin-bottom: 5px;}
+.ui-inset { border:none;}
+.ui-inset li { padding:10px; border-bottom: 1px solid rgba(198,187,177,1); text-align:left; text-shadow:none; }
+.ui-inset li:first-child { border-top-width: 0; }
+.ui-panel { background-color: #CED7D8; position:fixed; top:0px; width:100%; z-index: 1989; }
+.ui-panel li { border:none; color: #4A4A4A; }
+.ui-list { background-color: #FFFFFF; }
+.ui-inset.ui-list li { color: #4A4A4A; font-size:14px;}
+.ui-list li.cur { background-color: #FF974A; }
+.ui-panel li span{ float: right; right: 5px; }
+.ui-panel .btn {  text-align:right; }
+.ui-panel li.fil { background-color: #DBE3E5; }
+.ui-panel .btn a { position: relative; display: inline-block; padding: 8px 12px; margin: 0px 8px; font-weight: bold; line-height: 18px; text-align: center; vertical-align: top; cursor: pointer; border-radius: 5px; box-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4) inset, 0px 1px 2px rgba(0, 0, 0, 0.05);  background-color: #1eafe7;
+background-image: -webkit-linear-gradient(top, #FC9A52 0, #C55F15 100%);
+background-image: linear-gradient(to bottom, #FC9A52 0, #C55F15 100%);
+border: 1px solid #A55113;  color:#FFF;
+}
+.ui-panel label { font-size:14px; color:#4A4A4A;text-shadow:none;}
+.ui-panel .txt { width: 66%; height: 30px; background: #FFF; border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 3px;
+box-shadow: 0px 1px 1px rgba(255, 255, 255, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.1) inset; font-size: 16px; font-weight: bold; }
+.ui-panel li { padding:8px;}
+.ui-foot { position: fixed; width: 100%; z-index: 2000; bottom:0; }
+.ui-foot a{ width: 100%; display: block; font-size: 14px; padding: 8px 0; line-height: 18px; background-color: #F5F5F5; color: #4A4A4A; text-decoration: none; text-align: center;}
+/* 选择效果展示 */
+#j_checkPanel { position: fixed; top: 0; background-color: #FFF; z-index: 2000; width: 100%; }
+#j_checkPanel a { display: block; font-size: 14px; margin: 0; padding:10px; text-align: left; text-shadow:none;}
+#j_checkPanel a#out_city { background-color: #F9F9F9; }
+#j_checkPanel a#back_prov { background-color:#D4D6D5;  }
+#j_checkPanel a#back_city { background-color: #E5E5E5; }
+#j_checkPanel a span{ float: right; margin-right: 10px; font-size: 12px; margin-top: 1px;}

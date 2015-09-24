@@ -1,0 +1,169 @@
+#set($layout = '')
+#override("head")  
+#end
+
+#override("content")
+
+
+
+<table width="1000" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+  #parse("layout/component/left.vm")
+  
+  
+    <td width="518" valign="top" background="static/images/main_bg.jpg"><table width="512" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="413" height="13"></td>
+      </tr>
+      <tr>
+        <td height="192" background="static/images/new_bg.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="37%" height="135" align="center" valign="bottom" class="newsimg"><a href="detail.asp?id=508"><img src="static/images/new_sample.jpg" width="125" height="99" border="0" /></a></td>
+            <td width="63%" valign="top" class="news">
+			<ul><li><a href="detail.asp?id=980" title="2014年全国象棋儿童赛报到执行表（8月2日）">·2014年全国象棋儿童赛报到执行表（8月2日） </a></li>
+<li><a href="detail.asp?id=976" title="2014年全国象棋儿童赛报名查询（7月14日定稿）">·2014年全国象棋儿童赛报名查询（7月14日定稿） </a></li>
+<li><a href="detail.asp?id=974" title="2014年全国儿童赛秩序册名单">·2014年全国儿童赛秩序册名单 </a></li>
+<li><a href="detail.asp?id=971" title="2014年全国象棋儿童赛秩序册内名单">·2014年全国象棋儿童赛秩序册内名单 </a></li>
+<li><a href="detail.asp?id=945" title="2014年全国象棋儿童赛报名表">·2014年全国象棋儿童赛报名表 </a></li>
+<li><a href="detail.asp?id=943" title="2014年全国象棋儿童规程（8月11日-8月15日杭州）">·2014年全国象棋儿童规程（8月11日-8月1 </a></li>
+</ul>
+			</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td align="right"><a href="news.asp"><img src="static/images/more2.gif" alt="查看更多新闻" width="70" height="20" border="0" style="margin-right:20px;"/></a></td>
+          </tr>
+        </table></td>
+      </tr>
+      
+    </table>
+      <table width="504" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="20" height="64"><img src="static/images/scroll_left.gif" width="20" height="64" style="CURSOR: pointer" /></td>
+          <td width="464" align="center" bgcolor="#FFFFFF" class="scroll"><MARQUEE behavior=alternate scrolldelay="1" scrollAmount=1 style="HEIGHT: 62px; WIDTH: 462px" width="98%"><div style="margin-top:5px;"><a href="student.asp"><img src="static/images/ss_1.jpg" width="77" height="52" border="0" /></a><a href="student.asp"><img src="static/images/ss_2.jpg" width="77" height="52" border="0" /></a><a href="student.asp"><img src="static/images/ss_3.jpg" width="77" height="52" border="0" /></a><a href="student.asp"><img src="static/images/ss_4.jpg" width="77" height="52" border="0" /></a><a href="student.asp"><img src="static/images/ss_5.jpg" width="77" height="52" border="0" /><a href="student.asp"><img src="static/images/ss_6.jpg" width="77" height="52" border="0" /></a><a href="student.asp"><a href="student.asp"><img src="static/images/ss_7.jpg" width="77" height="52" border="0" /></a><a href="student.asp"><img src="static/images/ss_8.jpg" width="77" height="52" border="0" /><img src="static/images/ss_11.jpg" width="77" height="52" border="0" /><img src="static/images/ss_12.jpg" width="77" height="52" border="0" /><img src="static/images/ss_13.jpg" width="77" height="52" border="0" /><img src="static/images/ss_14.jpg" width="77" height="52" border="0" /><img src="static/images/ss_15.jpg" width="77" height="52" border="0" /><img src="static/images/ss_16.jpg" width="77" height="52" border="0" /><img src="static/images/ss_17.jpg" width="77" height="52" border="0" /><img src="static/images/ss_18.jpg" width="77" height="52" border="0" /></a></div>
+          </marquee></td>
+          <td width="20"><img src="static/images/scroll_right.gif" width="20" height="64"  border=0  style="CURSOR: pointer" /></td>
+        </tr>
+        <tr>
+          <td height="6" colspan="3"></td>
+        </tr>
+      </table>
+      <table width="512" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="539"><img src="static/images/main_top.gif" width="512" height="6" /></td>
+        </tr>
+        <tr>
+          <td height="319" valign="top" background="static/images/main_bg.gif"><table width="490" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+            <tr>
+              <td width="490" height="24" align="right" background="static/images/xuanyuan_bg.jpg"  style="padding-right:10px;"><img src="static/images/arrow2.gif" width="11" height="11" /> <a href="2010.asp">查看更多</a></td>
+            </tr>
+            <tr>
+              <td height="131" align="center"><div class="stu_pic"  Onmouseover="this.style.border='1px #FF9900 solid';this.style.background='#FFF4C8'" Onmouseout="this.style.border='1px #E8E8E8 solid';this.style.background='#FFF'" ><img src="2013/1.jpg" width="130" height="82" border="0" />
+                  <h5>2013象棋现场</h5>
+                </div>
+                <div class="stu_pic"  Onmouseover="this.style.border='1px #FF9900 solid';this.style.background='#FFF4C8'" Onmouseout="this.style.border='1px #E8E8E8 solid';this.style.background='#FFF'" ><img src="2013/2.jpg" width="130" height="82" border="0" />
+                  <h5>2013象棋现场</h5>
+                </div>
+                <div class="stu_pic"  Onmouseover="this.style.border='1px #FF9900 solid';this.style.background='#FFF4C8'" Onmouseout="this.style.border='1px #E8E8E8 solid';this.style.background='#FFF'" ><img src="2013/3.jpg" alt="student.asp" width="130" height="82" />
+                    <h5>2013象棋现场</h5>
+                </div><div class="stu_pic"  Onmouseover="this.style.border='1px #FF9900 solid';this.style.background='#FFF4C8'" Onmouseout="this.style.border='1px #E8E8E8 solid';this.style.background='#FFF'" >
+                  <img src="2013/4.jpg" alt="student.asp" width="130" height="82" />
+                  <h5>2013象棋现场</h5>
+                </div><div class="stu_pic"  Onmouseover="this.style.border='1px #FF9900 solid';this.style.background='#FFF4C8'" Onmouseout="this.style.border='1px #E8E8E8 solid';this.style.background='#FFF'" >
+                  <img src="2013/5.jpg" alt="student.asp" width="130" height="82" />
+                  <h5>2013象棋现场</h5>
+                </div><div class="stu_pic"  Onmouseover="this.style.border='1px #FF9900 solid';this.style.background='#FFF4C8'" Onmouseout="this.style.border='1px #E8E8E8 solid';this.style.background='#FFF'" ><img src="2013/6.jpg" alt="student.asp" width="130" height="82" />
+                  <h5>2013象棋现场</h5>
+                  </div></td>
+              </tr>
+          </table></td>
+        </tr>
+        <tr>
+          <td><img src="static/images/main_bottom.gif" width="512" height="10" /></td>
+        </tr>
+      </table></td>
+    <td width="242" valign="top" background="static/images/main_bg.jpg"><table width="242" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="206" height="8"></td>
+      </tr>
+      <tr>
+        <td height="195" valign="top" background="static/images/right_topbg.jpg"><table width="204" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="206" height="34" valign="bottom" style="padding-right:20px;pading-top:6px;color:#fff;text-align:right;"><a href="video.asp" style="color:#fff;">更多视频</a></td>
+          </tr>
+          <tr>
+            <td align="center">
+
+<script type="text/javascript">
+var swf_width=190
+var swf_height=154
+var texts='介绍'
+var files='/flv/shhqy.flv'
+document.write('<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="'+ swf_width +'" height="'+ swf_height +'">');
+document.write('<param name="movie" value="flash/vcastr.swf"><param name="quality" value="high">');
+document.write('<param name="menu" value="false"><param name=wmode value="transparent">');
+document.write('<param name="FlashVars" value="vcastr_file='+files+'&vcastr_title='+texts+'">');
+document.write('<embed src="vcastr.swf" wmode="opaque" FlashVars="vcastr_file='+files+'&vcastr_title='+texts+'& menu="false" quality="high" width="'+ swf_width +'" height="'+ swf_height +'" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />'); document.write('</object>'); 
+</script></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td height="4"></td>
+      </tr>
+    </table>
+      <table width="208" height="308" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="242" valign="top" background="static/images/right_bg2.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td height="30" valign="bottom" style="padding-left:35px;color:#fff;">棋院招生简章</td>
+            </tr>
+            <tr>
+              <td height="120" valign="top" class="zsjz">
+			  <ul><li><a href="detail.asp?id=894" title="2013年上半年学员成绩通报+下半年赛事预告">·2013年上半年学员成绩通报 </a></li>
+<li><a href="detail.asp?id=892" title="2013年暑期秋季招生简章">·2013年暑期秋季招生简章 </a></li>
+<li><a href="detail.asp?id=875" title="2013年棋类班寒假强化集训计划书">·2013年棋类班寒假强化集训 </a></li>
+<li><a href="detail.asp?id=873" title="2013年春季棋类班招生简章（3月1日起开学）">·2013年春季棋类班招生简章 </a></li>
+<li><a href="detail.asp?id=852" title="家长报读须知">·家长报读须知 </a></li>
+
+			  </ul></td>
+            </tr>
+            <tr>
+              <td height="36" align="center"><a href="about5.asp"><img src="static/images/right_zs1.gif" width="176" height="32" border="0" /></a></td>
+            </tr>
+            <tr>
+              <td height="36" align="center"><a href="about6.asp"><img src="static/images/right_zs2.gif" width="176" height="32" border="0" /></a></td>
+            </tr>
+            <tr>
+              <td height="36" align="center"><a href="about7.asp"><img src="static/images/right_zs3.gif" width="176" height="32" border="0" /></a></td>
+            </tr>
+            <tr>
+              <td height="36" align="center"><a href="about8.asp"><img src="static/images/right_zs4.gif" width="176" height="32" border="0" /></a></td>
+            </tr>
+            
+          </table></td>
+        </tr>
+      </table>
+      <table width="208" border="0" cellspacing="0" cellpadding="0">
+        
+        <tr>
+          <td width="242" height="108" valign="top" background="static/images/link_bg.gif"><table width="190" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="208" height="22" valign="bottom" style="color:#fff;">友情链接</td>
+            </tr>
+            <tr>
+              <td>
+			  <MARQUEE direction=up height="75" scrollamount=1 scrolldelay=2  ONMOUSEOUT=this.start() ONMOUSEOVER=this.stop()><a href="http://www.xschess.com" target='blank' title="萧山象棋网">萧山象棋网</a><br><a href="http://www.zjchess.com/" target='blank' title="浙江象棋网">浙江象棋网</a><br><a href="http://www.zjqx.org/index.php" target='blank' title="浙江省棋类协会">浙江省棋类协会</a><br><a href="http://www.siyuetian.net/" target='blank' title="四月天象棋网">四月天象棋网</a><br><a href="http://qiuyuye.net.cn" target='blank' title="秋雨夜象棋网">秋雨夜象棋网</a><br><a href="http://www.ahtxqx.com" target='blank' title="合肥天星棋校">合肥天星棋校</a><br><a href="http://www.rouzhiyi.cn/" target='blank' title="柔之艺太极院">柔之艺太极院</a><br><a href="http://ykjlxq.blog.tianya.cn" target='blank' title="语苛棋路">语苛棋路</a><br></MARQUEE>　
+			  </td>
+            </tr>
+          </table></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+#end
+#override("script")  
+       
+#end
+##页面布局
+#extends("layout/expressmain.vm")

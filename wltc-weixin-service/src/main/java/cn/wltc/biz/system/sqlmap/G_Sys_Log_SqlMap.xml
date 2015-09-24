@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<!-- 不使用namespace是由于sql搜索定位会比较方便 -->
+<sqlMap>
+
+    <resultMap id="RM.SysLog" class="cn.wltc.biz.system.model.SysLog">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+	    <result column="yhm" property="yhm" jdbcType="VARCHAR" />
+	    <result column="czlx" property="czlx" jdbcType="VARCHAR" />
+	    <result column="cznr" property="cznr" jdbcType="VARCHAR" />
+	    <result column="czsj" property="czsj" jdbcType="TIMESTAMP" />
+	    <result column="ipdz" property="ipdz" jdbcType="VARCHAR" />
+	    <result column="mac" property="mac" jdbcType="VARCHAR" />
+	    <result column="jlcjsj" property="jlcjsj" jdbcType="TIMESTAMP" />
+	    <result column="jlcjyh" property="jlcjyh" jdbcType="VARCHAR" />
+	    <result column="jlxgsj" property="jlxgsj" jdbcType="TIMESTAMP" />
+	    <result column="jlxgyh" property="jlxgyh" jdbcType="VARCHAR" />
+	    <result column="xm" property="xm" jdbcType="VARCHAR" />
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SysLog.columns">
+	    <![CDATA[
+        id, yhm, czlx, cznr, czsj, ipdz, mac,jlcjsj, jlcjyh, jlxgsj, jlxgyh,(select xm from g_xtgl_yhxxb b where a.yhm=b.yhm) xm
+	    ]]>
+	</sql>
+
+	<sql id="SysLog.where">
+	    <dynamic prepend="WHERE">
+		       <isNotEmpty prepend="AND" property="id">
+		             id = #id#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="yhm">
+		             yhm = #yhm#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="czlx">
+		             czlx = #czlx#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="cznr">
+		             cznr = #cznr#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="czsj">
+		             czsj = #czsj#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="ipdz">
+		             ipdz = #ipdz#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="mac">
+		             mac = #mac#
+		       </isNotEmpty>		       
+		       <isNotEmpty prepend="AND" property="jlcjsj">
+		             jlcjsj = #jlcjsj#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlcjyh">
+		             jlcjyh = #jlcjyh#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlxgsj">
+		             jlxgsj = #jlxgsj#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlxgyh">
+		             jlxgyh = #jlxgyh#
+		       </isNotEmpty>
+		       <isPropertyAvailable property="czsjStart">
+			       <isNotEmpty prepend="AND" property="czsjStart">
+			             czsj &gt;= #czsjStart#
+			       </isNotEmpty>		       
+		       </isPropertyAvailable>
+			   <isPropertyAvailable property="czsjEnd">
+			       <isNotEmpty prepend="AND" property="czsjEnd">
+			             czsj &lt;= #czsjEnd#
+			       </isNotEmpty>
+		       </isPropertyAvailable>		       		       			       		       		       
+	    </dynamic>	
+	</sql>
+
+	
+    <insert id="SysLog.insert" >
+    <![CDATA[
+        INSERT INTO `g_xtgl_czrzb` (
+        	id, 
+        	yhm, 
+        	czlx, 
+        	cznr, 
+        	czsj, 
+        	ipdz, 
+        	mac,
+        	jlcjsj, 
+        	jlcjyh, 
+        	jlxgsj, 
+        	jlxgyh 
+        ) VALUES (
+        	#id#, 
+        	#yhm#, 
+        	#czlx#, 
+        	#cznr#, 
+        	#czsj#, 
+        	#ipdz#, 
+        	#mac#,
+        	#jlcjsj#, 
+        	#jlcjyh#, 
+        	#jlxgsj#, 
+        	#jlxgyh#
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+    -->
+        <selectKey resultClass="java.lang.Integer" type="post" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+    </insert>
+	<insert id="SysLog.insertSelective" >
+        INSERT INTO `g_xtgl_czrzb`
+		 <dynamic prepend="(" >
+			  <isNotEmpty prepend="," property="id" >id</isNotEmpty>
+			  <isNotEmpty prepend="," property="yhm" >yhm</isNotEmpty>
+			  <isNotEmpty prepend="," property="czlx" >czlx</isNotEmpty>
+			  <isNotEmpty prepend="," property="cznr" >cznr</isNotEmpty>
+			  <isNotEmpty prepend="," property="czsj" >czsj</isNotEmpty>
+			  <isNotEmpty prepend="," property="ipdz" >ipdz</isNotEmpty>
+			  <isNotEmpty prepend="," property="mac" >mac</isNotEmpty>			  
+			  <isNotEmpty prepend="," property="jlcjsj" >jlcjsj</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjyh" >jlcjyh</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgsj" >jlxgsj</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgyh" >jlxgyh</isNotEmpty>			  
+			  )
+		</dynamic>
+			values
+		<dynamic prepend="(" >
+			  <isNotEmpty prepend="," property="id" >#id#</isNotEmpty>
+			  <isNotEmpty prepend="," property="yhm" >#yhm#</isNotEmpty>
+			  <isNotEmpty prepend="," property="czlx" >#czlx#</isNotEmpty>
+			  <isNotEmpty prepend="," property="cznr" >#cznr#</isNotEmpty>
+			  <isNotEmpty prepend="," property="czsj" >#czsj#</isNotEmpty>
+			  <isNotEmpty prepend="," property="ipdz" >#ipdz#</isNotEmpty>
+			  <isNotEmpty prepend="," property="mac" >#mac#</isNotEmpty>	
+			  <isNotEmpty prepend="," property="jlcjsj" >#jlcjsj#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjyh" >#jlcjyh#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgsj" >#jlxgsj#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgyh" >#jlxgyh#</isNotEmpty>			  
+		)
+		</dynamic>
+        <selectKey resultClass="java.lang.Integer" type="post" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+
+    <update id="SysLog.updateSelective" >
+        UPDATE `g_xtgl_czrzb`
+		<dynamic prepend="set" >
+			  <isNotNull prepend="," property="yhm" >yhm = #yhm#</isNotNull>
+			  <isNotNull prepend="," property="czlx" >czlx=#czlx#</isNotNull>
+			  <isNotNull prepend="," property="cznr" >cznr=#cznr#</isNotNull>
+			  <isNotNull prepend="," property="czsj" >czsj=#czsj#</isNotNull>
+			  <isNotNull prepend="," property="ipdz" >ipdz=#ipdz#</isNotNull>
+			  <isNotNull prepend="," property="mac" >mac=#mac#</isNotNull>				
+			<isNotNull prepend="," property="jlxgsj" >jlxgsj = #jlxgsj#</isNotNull>	
+			<isNotNull prepend="," property="jlxgsj" >jlxgyh = #jlxgyh#</isNotNull>		
+		</dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+    <delete id="SysLog.delete">
+    <![CDATA[
+        DELETE FROM `g_xtgl_czrzb` WHERE
+        id = #id# 
+    ]]>
+    </delete>
+	<delete id="SysLog.deleteSelective">
+        DELETE FROM `g_xtgl_czrzb` <include refid="SysLog.where"/>
+    </delete>
+    
+    <select id="SysLog.getById" resultMap="RM.SysLog">
+	    SELECT <include refid="SysLog.columns"/>
+	    <![CDATA[
+	        FROM `g_xtgl_czrzb`  a
+	        WHERE 
+		        id = #id# 
+	    ]]>
+    </select>
+
+	
+	 
+    <select id="SysLog.count" resultClass="long">
+        SELECT count(*) FROM `g_xtgl_czrzb` <include refid="SysLog.where"/>    
+    </select>
+   
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="SysLog.findPage" resultMap="RM.SysLog">
+    	SELECT <include refid="SysLog.columns"/> FROM `g_xtgl_czrzb`  a
+		<include refid="SysLog.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+		 limit #firstResult#,#pageSize#
+    </select>
+	<select id="SysLog.find" resultMap="RM.SysLog">
+    	SELECT <include refid="SysLog.columns"/> FROM `g_xtgl_czrzb`  a
+		<include refid="SysLog.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+	
+</sqlMap>
+

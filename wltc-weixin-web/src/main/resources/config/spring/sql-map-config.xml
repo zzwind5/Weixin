@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings enhancementEnabled="false" maxTransactions="32"
+		maxRequests="3000" maxSessions="512" cacheModelsEnabled="true"
+		lazyLoadingEnabled="false" statementCachingEnabled="false"
+		useStatementNamespaces="true" /><!--
+		<typeHandler jdbcType="LONGVARCHAR" javaType="java.lang.String"  
+                     callback="com.jxhlw.StringTypeHandler"/> 
+		-->
+		<sqlMap resource="config/spring/ibatis_blank_mapping.xml" />
+</sqlMapConfig>

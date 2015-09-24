@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<!-- 优惠券 -->
+<sqlMap>
+
+    <resultMap id="RM.Coupon" class="cn.wltc.biz.wxmgr.model.Coupon">
+	   <result column="coupon_id" property="id" jdbcType="INTEGER" />
+	   <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+	   <result column="customer_id" property="customer.customer_id" jdbcType="INTEGER" />
+	   <result column="customer_name" property="customer.name" jdbcType="VARCHAR" />
+	   <result column="mobile" property="customer.mobile" jdbcType="VARCHAR" />
+	   <result column="coupon_code" property="code" jdbcType="VARCHAR" />
+	   <result column="status" property="status" jdbcType="VARCHAR" />
+	   <result column="get_time" property="getTime" jdbcType="VARCHAR" />
+	   <result column="consume_time" property="consumeTime" jdbcType="VARCHAR" />
+	   <result column="line_deal_status" property="lineDealStatus" jdbcType="VARCHAR" />
+	   <result column="line_deal_comment" property="lineDealComment" jdbcType="VARCHAR" />
+    </resultMap>
+	<sql id="Coupon.where">
+	    where 1=1
+		 <isNotEmpty prepend="AND" property="id">
+	            a.coupon_id=#id#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="activityId">
+	            a.activity_id=#activityId#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="customer.customer_id">
+	            a.customer_id=#customer.customer_id#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="lineDealStatus">
+	            a.line_deal_status=#lineDealStatus#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="customer.name">
+	            b.name like CONCAT('%',#customer.name#,'%')
+		 </isNotEmpty>
+		  <isNotEmpty prepend="AND" property="customer.mobile">
+	            b.mobile like CONCAT('%',#customer.mobile#,'%')
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="code">
+	 			a.coupon_code like CONCAT('%',#code#,'%')
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="status">
+	            a.status=#status#
+		 </isNotEmpty>  
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Coupon.columns">
+	    <![CDATA[
+         	a.*,b.name as customer_name,b.mobile
+	    ]]>
+	</sql>
+	 <select id="Coupon.count" resultClass="long">
+        SELECT count(*) FROM weixin_coupon AS a left join weixin_customer b on a.customer_id=b.customer_id <include refid="Coupon.where"/>    
+    </select>
+   
+   <select id="Coupon.getById" resultMap="RM.Coupon">
+	    SELECT <include refid="Coupon.columns"/>
+	        FROM weixin_coupon a  
+	        left join weixin_customer b on a.customer_id=b.customer_id
+	        WHERE  a.coupon_id = #id# 
+    </select>
+   <insert id="Coupon.insert" >
+    <![CDATA[
+        INSERT INTO `weixin_coupon` (
+        	activity_id, 
+        	customer_id, 
+        	coupon_code, 
+        	status, 
+        	get_time, 
+        	consume_time,
+        	line_deal_status
+        ) VALUES (
+        	#activityId#, 
+        	#customerId#, 
+        	#code#, 
+        	#status#, 
+        	#getTime#, 
+        	#consumeTime#,
+        	#lineDealStatus#
+        )
+    ]]>
+        <selectKey resultClass="java.lang.Integer" type="post" keyProperty="id">
+			select last_insert_id()
+		</selectKey>
+   </insert>   
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="Coupon.findPage.count" resultClass="long">
+        SELECT count(*) FROM weixin_coupon AS a  left join weixin_customer b on a.customer_id=b.customer_id <include refid="Coupon.where"/>  
+    </select>   
+    <select id="Coupon.findPage" resultMap="RM.Coupon">
+    	SELECT <include refid="Coupon.columns"/> FROM 
+    	weixin_coupon a 
+    	left join weixin_customer b on a.customer_id=b.customer_id
+		<include refid="Coupon.where"/> 
+		 limit #firstResult#,#pageSize#
+    </select>
+    
+    <select id="Coupon.find" resultMap="RM.Coupon">
+    	SELECT <include refid="Coupon.columns"/> FROM 
+    	weixin_coupon a  
+    	left join weixin_customer b on a.customer_id=b.customer_id
+    	<include refid="Coupon.where"/>
+    </select>
+
+	<select id="Coupon.generateCouponCode" resultClass="string">
+		select 
+			CONCAT(#code#,
+			(case when max(SUBSTRING(coupon_code,length(#code#))) is null then '000' 
+			else LPAD(max(SUBSTRING(coupon_code,length(#code#)+1))+1,3,0) end)) code
+		from weixin_coupon where coupon_code  like CONCAT(#code#,'%')
+	</select>    
+	
+	
+	<select id="Coupon.countByClzt"  resultClass="java.util.HashMap">
+		select sum(ycl) ycl,sum(wcl) wcl from (
+			select case when line_deal_status='1' then count(1) else 0 end ycl,
+				   case when line_deal_status='0' or line_deal_status is null then count(1) else 0 end wcl
+			from weixin_coupon where activity_id=#activityId# group by line_deal_status
+		) as t
+	</select>
+	
+	<select id="Coupon.getCountQrrs" resultClass="Integer">
+		select count(1) as qrrs from weixin_coupon where status='1' and activity_id=#activityId#
+	</select>
+   
+   <update id="Coupon.update" >
+        UPDATE `weixin_coupon`
+		<dynamic prepend="set" >
+			<isNotNull prepend="," property="status" >status = #status#</isNotNull>
+			<isNotNull prepend="," property="lineDealStatus" >line_deal_status = #lineDealStatus#</isNotNull>
+			<isNotNull prepend="," property="lineDealComment" >line_deal_comment = #lineDealComment#</isNotNull>
+			<isNotNull prepend="," property="lineDealTime" >line_deal_time = #lineDealTime#</isNotNull>
+		</dynamic>
+        WHERE 
+	        coupon_id = #id# 
+    </update>
+		
+	
+	
+	<sql id="CouponWebzx.where">
+	    where 1=1
+    	<isNotEmpty prepend="AND" property="activityId">
+	            a.activity_id=#activityId#
+		 </isNotEmpty>
+    	 <isEmpty prepend="AND" property="lineDealStatus">
+	           (a.line_deal_status=0 or a.line_deal_status is null) 
+         </isEmpty>
+    	<isNotEmpty prepend="AND" property="lineDealStatus">
+	            a.line_deal_status=#lineDealStatus#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="customer.name">
+	            b.name like CONCAT('%',#customer.name#,'%')
+		 </isNotEmpty>
+		  <isNotEmpty prepend="AND" property="customer.mobile">
+	            b.mobile like CONCAT('%',#customer.mobile#,'%')
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="status">
+	            a.status=#status#
+		 </isNotEmpty>  
+	</sql>
+	
+    <resultMap id="RM.Coupon2" class="cn.wltc.biz.wxmgr.model.Coupon">
+	   <result column="coupon_id" property="id" jdbcType="INTEGER" />
+	   <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+	   <result column="customer_id" property="customer.customer_id" jdbcType="INTEGER" />
+	   <result column="customer_name" property="customer.name" jdbcType="VARCHAR" />
+	   <result column="mobile" property="customer.mobile" jdbcType="VARCHAR" />
+	   <result column="coupon_code" property="code" jdbcType="VARCHAR" />
+	   <result column="status" property="status" jdbcType="VARCHAR" />
+	   <result column="get_time" property="getTime" jdbcType="VARCHAR" />
+	   <result column="consume_time" property="consumeTime" jdbcType="VARCHAR" />
+	   <result column="line_deal_status" property="lineDealStatus" jdbcType="VARCHAR" />
+	   <result column="line_deal_comment" property="lineDealComment" jdbcType="VARCHAR" />
+	   <result column="cargo_name" property="cargo_name" jdbcType="VARCHAR" />
+    </resultMap>	
+    <select id="Coupon.findWebzxCouponlist" resultMap="RM.Coupon2">
+    	SELECT <include refid="Coupon.columns"/> ,d.cargo_name
+    	FROM  weixin_coupon a  
+    	left join weixin_customer b on a.customer_id=b.customer_id
+    	inner join weixin_activity c on c.activity_id=a.activity_id 
+    	inner join weixin_coupon_order d on a.coupon_id=d.coupon_id
+    	<include refid="CouponWebzx.where"/>
+    </select>
+    
+    <select id="Coupon.findWebzxCount" resultClass="Integer">
+    	SELECT count(1)
+    	FROM  weixin_coupon a  
+    	left join weixin_customer b on a.customer_id=b.customer_id
+    	inner join weixin_activity c on c.activity_id=a.activity_id
+    	inner join weixin_coupon_order d on a.coupon_id=d.coupon_id 
+    	<include refid="CouponWebzx.where"/>
+    </select>
+	
+</sqlMap>
+

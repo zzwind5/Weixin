@@ -1,0 +1,78 @@
+#set($layout = '')
+#override("head")  
+#end
+#override("header")
+#end
+#override("content")
+
+<div id="topbar2">
+   <div id="topbar_title5">
+        <div class="topbarleft"><img style="border-radius: 50%;" src="$!{user.headimgurl}" width="90" height="90"></div>
+        <div class="topbarright">
+            <div class="txt51 mar15">$!{user.nickname}</div>
+            <div class="txt50 mar15"><img src="${rc.contextPath}/static/weixin/images/mapbiao.png" width="13" height="18" align="absmiddle"> $!{user.city}</div>
+        </div>
+   </div>
+</div>
+
+	<a href="javascript:;" onclick="toUrl('mycoupon.htm');">
+        <div class="mycon">
+             <div class="myleftcon">
+                 <div class="txt5">我参与的优惠活动</div>
+             </div>
+             <div class="myrightcon">
+                 <div class="txt6">$!{couponCount}</div>
+             </div>
+             <div class="clear"></div>
+        </div>
+	</a>
+
+	<a href="javascript:;" onclick="toUrl('myroadline.htm');">
+        <div class="mycon" style="border-bottom: 0px;">
+             <div class="myleftcon">
+                 <div class="txt7">我收藏的专线</div>
+             </div>
+             <div class="myrightcon">
+                 <div class="txt6">$!{roadlineCount}</div>
+             </div>
+             <div class="clear"></div>
+        </div> 
+	</a>
+
+	#if($!{user.is_bind} != '1')
+        <div class="txt8">账号管理</div>
+        <div class="nobdbox">
+             <div class="nobdleft">您的账号还未绑定</div>
+             <div class="nobdright">
+                  <a class="ui-btn yuan" href="javascript:;" onclick="toUrl('bindcount.htm');" ><div class="button_15">去绑定</div></a>
+             </div>
+             <div class="clear"></div>
+        </div>
+
+        #else
+            #if($!{user.customer_type} != '1')
+                <div class="txt8"><span class="fr txt10">VIP客户</span>账号管理</div>
+                <div class="loadintroinfo">
+                    <ul>
+                        <li>真实姓名：$!{user.name}</li>
+                        <li>手机号码：$!{user.mobile}</li>
+                    </ul>
+                </div>
+                <div class="bottombtnbox">
+                   <a class="ui-btn" href="javascript:;" onclick="toUrl('lineauthBefore.htm');" ><div class="button_3">升级成专线用户</div></a>
+                </div>
+
+            #else
+    			<div class="txt8"><span class="fr txt10">专线客户</span>账号管理</div>
+                <div class="loadintroinfo">
+                    <ul>
+                        <li>真实姓名：$!{user.name}</li>
+                        <li>手机号码：$!{user.mobile}</li>
+                        <li>专线公司：$!{orgzanation.name}</li>
+                    </ul>
+                </div>
+           #end
+	#end
+
+#end
+#extends("layout/weixinlayout.vm")

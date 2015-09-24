@@ -1,0 +1,22 @@
+#set($layout = '')
+#if($newsInfo.section == '1')
+	#set($title='优惠新闻详细')
+#else
+	#set($title='物流新闻详细')
+#end
+#override("head")  
+#end
+#override("header")
+
+#end
+#override("navbar")
+
+#end
+#override("content")
+<div>
+<h2>$newsInfo.title</h2>
+<p>#direct($newsInfo.content)</p>
+</div>
+
+#end
+#extends("layout/weixinlayout.vm")

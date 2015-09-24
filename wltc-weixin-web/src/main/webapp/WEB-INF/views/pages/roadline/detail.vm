@@ -1,0 +1,48 @@
+#set($layout = '')
+#set($title='零担专线详情')
+##set($bakurl="${rc.contextPath}/roadline/list.htm")
+#override("head")  
+#end
+#override("header")  
+
+#end
+#override("navbar")
+
+#end
+#override("content")
+ <style>
+	
+ </style>
+ #extends("layout/component/topbar.vm")
+ <div class="title1">公司信息</div>
+<div class="loadintroinfo2">
+            <ul>
+                <li><span class="fr">$orgzanation.name</span>公司名称：</li>
+                <li><span class="fr">$!orgzanation.address</span>总部地址：</li>
+                <li><span class="fr">$!orgzanation.contract<a href="tel:$!orgzanation.phone"><img src="${rc.contextPath}/static/weixin/images/phonepc.png" width="20" height="20"></a></span>联系人：</li>
+            </ul>
+</div>
+<div class="title1">专线信息</div>
+<div class="loadintroinfo2">
+            <ul>
+                <li><span class="fr">$!{roadline.startProvince}$!{roadline.startCity}$!{roadline.start}　</span>始发地：</li>
+                <li><span class="fr">$!roadline.contract<a href="tel:$!orgzanation.phone"><img src="${rc.contextPath}/static/weixin/images/phonepc.png" width="20" height="20"></a></span>始发地联系人：</li>
+                <li><span class="fr">$!{roadline.endProvince}$!{roadline.endCity}$!{roadline.end}</span>目的地：</li>
+                <li><span class="fr">$!roadline.contract2<a href="tel:$!orgzanation.phone2"><img src="${rc.contextPath}/static/weixin/images/phonepc.png" width="20" height="20"></a></span>目的地联系人：</li>
+                <li><span class="fr">$!roadline.transit</span>可辐射网点：</li>
+            </ul>
+</div>
+<div class="bottombtnbox">
+				#if($collectedLine && $collectedLine.collectTime)
+    				<a href="#?" onclick="doRemovefav($!roadline.id,this)" ><div class="button_4 mar10">取消收藏</div></a>
+				#else
+					<a href="#?" onclick="dofav($!roadline.id,this)"><div class="button_3">收藏专线</div></a>
+				#end
+</div>
+#end
+#override("script")
+<script type="text/javascript" >
+#include("pages/roadline/roadline.js")
+</script>		
+#end
+#extends("layout/weixinlayout.vm")

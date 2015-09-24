@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+
+    <resultMap id="RM.CouponOrder" class="cn.wltc.biz.wxmgr.model.CouponOrder">
+	   <result column="order_id" property="orderId" jdbcType="INTEGER" />
+	   <result column="coupon_id" property="couponId" jdbcType="INTEGER" />
+	   <result column="line_id" property="lineId" jdbcType="INTEGER" />
+	   <result column="org_id" property="orgId" jdbcType="VARCHAR" />
+	   <result column="customer_orgname" property="customerOrgname" jdbcType="VARCHAR" />
+	   <result column="cargo_name" property="cargoName" jdbcType="VARCHAR" />
+	   <result column="cargo_number" property="cargoNumber" jdbcType="INTEGER" />
+	   <result column="cargo_unit" property="cargoUnit" jdbcType="VARCHAR" />
+	   <result column="destination" property="destination" jdbcType="VARCHAR" />
+    </resultMap>
+	<sql id="CouponOrder.where">
+	    where 1=1
+		 <isNotEmpty prepend="AND" property="orderId">
+	            a.order_id=#id#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="couponId">
+	            a.coupon_id=#couponId#
+		 </isNotEmpty>  
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="CouponOrder.columns">
+	    <![CDATA[
+         	a.*
+	    ]]>
+	</sql>
+	 <select id="CouponOrder.count" resultClass="long">
+        SELECT count(*) FROM weixin_coupon_order AS a  <include refid="CouponOrder.where"/>    
+    </select>
+   
+   <select id="CouponOrder.getById" resultMap="RM.CouponOrder">
+	    SELECT <include refid="CouponOrder.columns"/>
+	        FROM weixin_coupon_order a  
+	        WHERE  a.order_id = #orderId# 
+    </select>
+   <insert id="CouponOrder.insert" >
+    <![CDATA[
+        INSERT INTO `weixin_coupon_order` (
+        	coupon_id, 
+        	line_id, 
+        	org_id, 
+        	customer_orgname,
+        	cargo_name, 
+        	cargo_number, 
+        	cargo_unit,
+        	destination
+        ) VALUES (
+        	#couponId#, 
+        	#lineId#, 
+        	#orgId#, 
+        	#customerOrgname#, 
+        	#cargoName#, 
+        	#cargoNumber#, 
+        	#cargoUnit#,
+        	#destination#
+        )
+    ]]>
+        <selectKey resultClass="java.lang.Integer" type="post" keyProperty="orderId">
+			select last_insert_id()
+		</selectKey>
+   </insert>   
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="CouponOrder.findPage.count" resultClass="long">
+        SELECT count(*) FROM weixin_coupon_order AS a  left join weixin_customer b on a.customer_id=b.customer_id <include refid="CouponOrder.where"/>  
+    </select>   
+    <select id="CouponOrder.findPage" resultMap="RM.CouponOrder">
+    	SELECT <include refid="CouponOrder.columns"/> FROM 
+    	weixin_coupon_order a 
+    	left join weixin_customer b on a.customer_id=b.customer_id
+		<include refid="CouponOrder.where"/> 
+		 limit #firstResult#,#pageSize#
+    </select>
+    
+    <select id="CouponOrder.find" resultMap="RM.CouponOrder">
+    	SELECT <include refid="CouponOrder.columns"/> FROM 
+    	weixin_coupon_order a  
+    	<include refid="CouponOrder.where"/>
+    </select>
+
+	<select id="CouponOrder.generateCouponOrderCode" resultClass="string">
+		select 
+			CONCAT(#code#,
+			(case when max(SUBSTRING(CouponOrder_code,length(#code#))) is null then '000' 
+			else LPAD(max(SUBSTRING(CouponOrder_code,length(#code#)+1))+1,3,0) end)) code
+		from weixin_coupon_order where CouponOrder_code  like CONCAT(#code#,'%')
+	</select>    
+	
+	
+	<select id="CouponOrder.countByClzt"  resultClass="java.util.HashMap">
+		select case when line_deal_status='1' then count(1) else 0 end ycl,
+			   case when line_deal_status='0' or line_deal_status is null then count(1) else 0 end wcl
+		from weixin_coupon_order where activity_id=#activityId# group by line_deal_status
+	</select>
+	
+	<select id="CouponOrder.getCountQrrs" resultClass="Integer">
+		select count(1) as qrrs from weixin_coupon_order where status='1'
+	</select>
+	
+</sqlMap>
+

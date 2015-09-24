@@ -1,0 +1,106 @@
+#set($layout = '')
+#set($title='优惠活动参与确认')
+#override("head")  
+
+#end
+#override("header")  
+
+#end
+#override("content")
+<style>
+input.fieldWithIcon2 {
+}
+	</style>
+#extends("layout/component/topbar.vm")
+<form id="orderForm" method="post" action="${rc.contextPath}/activity/getCoupon.htm">
+<input type="hidden" name="activityId" value="$activityId"/>
+<div class="title1">为让您更好地享受优惠，请输入货运信息</div>
+<div class="loadintroinfo5">
+            <div class="formFieldWrapper">
+              <span class="txt57">组织名称：</span><input type="text" name="customerOrgname" id="customerOrgname" class="fieldWithIcon2 qkbox"  placeholder="请输入组织名称">
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt57">货物名称：</span><input type="text" name="cargoName" id="cargoName" class="fieldWithIcon2 qkbox" placeholder="请输入货物名称">
+            </div>
+            <div class="formFieldWrapper">
+              <span class="fang fr">
+				<select name="cargoUnit" id="cargoUnit"  class="typeone">
+                      <option value="吨">吨</option>
+                      <option value="方">方</option>
+                      <option value="件">件</option>
+				</select></span> <span class="txt57">货物数量：</span><input type="number" name="cargoNumber" id="cargoNumber" class="fieldWithIcon2 qkbox" placeholder="请输入货物数量">
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt57">装货地：</span><input type="text"name="destination" id="destination" class="fieldWithIcon2 qkbox" placeholder="装货地"> <input type="hidden" name="destinationCode" id="destinationCode"/>
+            </div>
+</div>
+
+<div class="bottombtnbox">
+  <a href="#?"  onclick="$('#orderForm').submit()"><div class="button_3">确认参与</div></a>
+</div>
+	
+	
+	
+	
+	
+
+</form>
+
+
+<script>
+var submit = false;
+function dosubmit(){
+	if (submit == false){
+		$('#orderForm').submit();
+	}
+}
+
+$(document).ready( function() {
+    //$('#destination').CityPicker({codeId : 'destinationCode'});
+	
+
+
+			$('#orderForm').validate({
+    			onkeyup: false,
+    			errorClass: 'error',
+    			validClass: 'valid',
+    			errorElement:"p",
+    			rules: {
+			        cargoName: {
+			            required: true
+			        },
+			        cargoNumber: {
+			            	required: true,
+    						digits : true,
+    						maxlength:8			            
+			        },   			
+    				destination: {
+    						 required: true
+    				}
+    			},
+			    messages: {
+			        cargoName: {
+			            required: "请填写货物名称"
+			        },
+			        cargoNumber: {
+			            required: "请填写货物数量",
+			            digits : "请填写数字",
+			            maxlength : "请填写8位以下的数字"
+			        },
+			        destination: {
+			            required: "请填写目的地"
+			        }
+			    },   			
+				submitHandler: function() {
+                    	    jQuery.mobile.loading('show', {theme:"b", text:"请稍后", textVisible: true});
+                    		$("#orderForm").get(0).submit();
+							submit = true;
+				}
+		});
+	
+		
+});
+
+</script>
+#end
+#extends("layout/weixinlayout.vm")

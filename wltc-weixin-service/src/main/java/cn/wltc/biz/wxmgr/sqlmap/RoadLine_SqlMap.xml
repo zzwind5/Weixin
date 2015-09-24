@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<!-- 优惠活动 -->
+<sqlMap>
+
+    <resultMap id="RM.RoadLine" class="cn.wltc.biz.wxmgr.model.RoadLine">
+	   <result column="line_id" property="id" jdbcType="INTEGER" />
+	   <result column="org_id" property="orgId" jdbcType="INTEGER" />
+	   <result column="name" property="name" jdbcType="VARCHAR" />
+	   <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+	   <result column="start_cd" property="startCd" jdbcType="VARCHAR" />
+	   <result column="end_cd" property="endCd" jdbcType="VARCHAR" />
+	   <result column="start_province" property="startProvince" jdbcType="VARCHAR" />
+	   <result column="start_city" property="startCity" jdbcType="VARCHAR" />
+	   <result column="start" property="start" jdbcType="VARCHAR" />
+	   <result column="end_province" property="endProvince" jdbcType="VARCHAR" />
+	   <result column="end_city" property="endCity" jdbcType="VARCHAR" />
+	   <result column="end" property="end" jdbcType="VARCHAR" />
+	   <result column="contract" property="contract" jdbcType="VARCHAR" />
+	   <result column="contract2" property="contract2" jdbcType="VARCHAR" />
+	   <result column="delivery_scope" property="deliveryScope" jdbcType="VARCHAR" />	   
+	   <result column="phone" property="phone" jdbcType="VARCHAR" />
+	   <result column="phone2" property="phone2" jdbcType="VARCHAR" />
+	   <result column="transit" property="transit" jdbcType="VARCHAR" />
+    </resultMap>
+	<sql id="RoadLine.where">
+	    where 1=1
+		 <isNotEmpty prepend="AND" property="id">
+		            a.line_id=#id#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="orgId">
+		            a.org_id=#orgId#
+		 </isNotEmpty>  
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="RoadLine.columns">
+	    <![CDATA[
+         	a.line_id,a.name,a.org_id,a.org_name,a.start_cd,a.end_cd,a.start_province,a.start_city,a.start,a.end_province,a.end_city,a.end,a.contract,a.contract2,a.delivery_scope,a.transit
+         	,phone,phone2
+	    ]]>
+	</sql>
+	 <select id="RoadLine.count" resultClass="long">
+        SELECT count(*) FROM tfrs_road_line AS a  <include refid="RoadLine.where"/>    
+    </select>
+   
+   <select id="RoadLine.getById" resultMap="RM.RoadLine">
+	    SELECT <include refid="RoadLine.columns"/>
+	        FROM tfrs_road_line a  WHERE  a.line_id = #id# 
+    </select>
+   
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="RoadLine.findPage.count" resultClass="long">
+        SELECT count(*) FROM tfrs_road_line AS a   <include refid="RoadLine.where"/>  
+    </select>   
+    <select id="RoadLine.findPage" resultMap="RM.RoadLine">
+    	SELECT <include refid="RoadLine.columns"/> FROM 
+    	tfrs_road_line a 
+		<include refid="RoadLine.where"/> 
+		 limit #firstResult#,#pageSize#
+    </select>
+    
+    <select id="RoadLine.find" resultMap="RM.RoadLine">
+    	SELECT <include refid="RoadLine.columns"/> FROM 
+    	tfrs_road_line a  <include refid="RoadLine.where"/>
+    </select>
+    
+    <select id="RoadLine.findPageLine.count" resultClass="long">
+        SELECT count(*)
+    	FROM 
+    	tfrs_road_line a inner join tfrs_orgzanation b on (a.org_id=b.org_id)
+    	left join (select line_id,count(*) as collectedTotle from weixin_collected_line group by line_id )  c on (a.line_id=c.line_id)
+    	left join (select line_id,count(*) as activeTotle from weixin_activity where status = '2' and  begin_time &lt; now() and end_time &gt; now() group by line_id )  d on (a.line_id=d.line_id)
+		where 1=1
+		 <isNotEmpty prepend="AND" property="startProvince">
+		             ( a.start_province like CONCAT('%',#startProvince#,'%') or  a.start_city like CONCAT('%',#startProvince#,'%') or  a.start like CONCAT('%',#startProvince#,'%'))
+		 </isNotEmpty> 
+		 <isNotEmpty prepend="AND" property="startCity">
+		             (a.start_province like CONCAT('%',#startCity#,'%') or  a.start_city like CONCAT('%',#startCity#,'%') or  a.start like CONCAT('%',#startCity#,'%'))
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="start">
+		             (a.start_province like CONCAT('%',#start#,'%') or  a.start_city like CONCAT('%',#start#,'%') or  a.start like CONCAT('%',#start#,'%'))
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="endProvince">
+		             (a.end_province like CONCAT('%',#endProvince#,'%') or  a.end_city like CONCAT('%',#endProvince#,'%') or  a.end like CONCAT('%',#endProvince#,'%') )		             
+		 </isNotEmpty> 
+		 <isNotEmpty prepend="AND" property="endCity">
+		             (a.end_province like CONCAT('%',#endCity#,'%') or  a.end_city like CONCAT('%',#endCity#,'%') or  a.end like CONCAT('%',#endCity#,'%') )	
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="end">
+		             (a.end_province like CONCAT('%',#end#,'%') or  a.end_city like CONCAT('%',#end#,'%') or  a.end like CONCAT('%',#end#,'%'))	
+		 </isNotEmpty>		 			 		  
+		 <isNotEmpty prepend="AND" property="orgName">
+		            b.name like CONCAT('%',#orgName#,'%')
+		 </isNotEmpty>	 
+    </select>
+    <select id="RoadLine.findPageLine" resultClass="cn.wltc.biz.wxmgr.model.RoadLine">
+    	SELECT 
+    	a.line_id as id,
+    	a.org_id as orgId,
+    	CONCAT(a.start_city,' - ',a.end_city) as name,
+    	a.start_city as startCity,
+    	a.end_city as endCity,
+    	b.name as orgName,
+    	b.contract as orgContract,
+    	b.phone as orgPhone,
+    	c.collectedTotle as collectedTotle,
+    	d.activeTotle
+    	FROM 
+    	tfrs_road_line a inner join tfrs_orgzanation b on (a.org_id=b.org_id)
+    	left join (select line_id,count(*) as collectedTotle from weixin_collected_line group by line_id )  c on (a.line_id=c.line_id)
+    	left join (select line_id,count(*) as activeTotle from weixin_activity where status = '2' and  begin_time &lt; now() and end_time &gt; now() group by line_id )  d on (a.line_id=d.line_id)
+		where 1=1
+		 <isNotEmpty prepend="AND" property="startProvince">
+		             ( a.start_province like CONCAT('%',#startProvince#,'%') or  a.start_city like CONCAT('%',#startProvince#,'%') or  a.start like CONCAT('%',#startProvince#,'%'))
+		 </isNotEmpty> 
+		 <isNotEmpty prepend="AND" property="startCity">
+		             (a.start_province like CONCAT('%',#startCity#,'%') or  a.start_city like CONCAT('%',#startCity#,'%') or  a.start like CONCAT('%',#startCity#,'%'))
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="start">
+		             (a.start_province like CONCAT('%',#start#,'%') or  a.start_city like CONCAT('%',#start#,'%') or  a.start like CONCAT('%',#start#,'%'))
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="endProvince">
+		             (a.end_province like CONCAT('%',#endProvince#,'%') or  a.end_city like CONCAT('%',#endProvince#,'%') or  a.end like CONCAT('%',#endProvince#,'%') )		             
+		 </isNotEmpty> 
+		 <isNotEmpty prepend="AND" property="endCity">
+		             (a.end_province like CONCAT('%',#endCity#,'%') or  a.end_city like CONCAT('%',#endCity#,'%') or  a.end like CONCAT('%',#endCity#,'%') )	
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="end">
+		             (a.end_province like CONCAT('%',#end#,'%') or  a.end_city like CONCAT('%',#end#,'%') or  a.end like CONCAT('%',#end#,'%'))	
+		 </isNotEmpty>		 			 		  
+		 <isNotEmpty prepend="AND" property="orgName">
+		            b.name like CONCAT('%',#orgName#,'%')
+		 </isNotEmpty>	 
+		 limit #firstResult#,#pageSize#
+    </select>    
+    
+   <insert id="RoadLine.insert" >
+    <![CDATA[
+        INSERT INTO `tfrs_road_line` (
+			line_id,org_id,org_name,name,line_desc,start,start_province,start_city,end_province,end_city,end,start_cd,end_cd,contract,phone,contract2,phone2
+        ) VALUES (
+			#id#,#orgId#,#orgName#,#name#,#lineDesc#,#start#,#startProvince#,#startCity#,#endProvince#,#endCity#,#end#,#startCd#,#endCd#,#contract#,#phone#,#contract2#,#phone2#
+        )
+    ]]>
+   </insert>
+</sqlMap>
+

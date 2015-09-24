@@ -1,0 +1,55 @@
+#set($layout = '')
+#override("head")  
+#end
+#override("header")  
+
+#end
+#override("content")
+
+ 	#if($!{roadlineCount} == 0)
+    	<div class="loadintroinfo6"> 
+			<div class="Bindingpng mar48"><img src="${rc.contextPath}/static/weixin/images/Bindingpng.png" width="76" height="102"></div>
+           <div class="Bindingtxt mar30">您现在还没有收藏专线</div>
+            <div class="button_5 mar30" onclick="toUrl('${rc.contextPath}/roadline/main.htm');"  >专线查询</div>
+    	</div>
+	#else	
+        #foreach( $item in $list )
+		<a href="javascript:;"  onclick="toUrl('${rc.contextPath}/roadline/detail.htm?id=$!{item.id}')">	
+        <div class="post_item">
+                    <div class="post_item_icon">
+                         <div class="graybg">
+    						#set($startLineName = '')
+    						#set($endLineName = '')
+            				#set($lineName=$!{item.name})
+    						#if($lineName )
+    							#set($startLineName = $lineName.split("-").get(0))
+    							#set($endLineName = $lineName.split("-").get(1))
+    						#end
+                           <div class="txt2">$startLineName</div>
+                              <div><img src="${rc.contextPath}/static/weixin/images/index_05.png" width="14" height="26"></div>
+                           <div class="txt2">$endLineName</div>
+                         </div>
+                    </div>
+                    <div class="left width200">
+						#set($activeTotle=0)
+						#set($activeTotle=$!{item.activeTotle})
+						#if($activeTotle && $activeTotle > 0)
+							<div class="post_item_title">
+						#else
+							<div class="post_item_note">
+						#end
+                        $stringUtil.length($!{item.orgName},15)</div>
+                      <div class="post_item_note">联系人：$!{item.orgContract}</div>
+                      <div class="txt1 mar10">$!{item.collectedTotle}</div>
+                        
+                    </div>
+                    <div class="clear"></div>
+					</div>
+        </div>
+        </a>
+		#end
+	#end
+
+</div>
+#end
+#extends("layout/weixinlayout.vm")

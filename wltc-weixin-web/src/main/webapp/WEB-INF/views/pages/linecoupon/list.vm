@@ -1,0 +1,73 @@
+#set($layout = '')
+#override("head")  
+#end
+#override("header")  
+#end
+#override("navbar")
+
+<div class="tipbox">
+	<a href="javascript:;" onclick="toUrl('list.htm?status=2');" #if($!{status} == '2') id="tiped" #end>活动中</a>
+	<a href="javascript:;" onclick="toUrl('list.htm?status=3');" #if($!{status} == '3') id="tiped" #end>已结束</a>
+	<a href="javascript:;" onclick="toUrl('list.htm?status=0');" #if($!{status} != '2' && $!{status} != '3') id="tiped" #end>筹备中</a>
+</div>
+<div class="clear"></div>
+
+#end
+#override("content")
+	#foreach( $item in $list )
+
+        <div class="post_item3">
+					#set($couponCount = 0)
+		        	#set($couponCount=$!{item.couponCount})
+		        	#if(!$couponCount)
+						#set($couponCount = 0)
+					#end
+					
+        			#set($typeView = '')
+                	#set($type=$!{item.type})
+                	#if($type == '0')
+                		#set($typeView = '现金优惠')
+                	#elseif($type == '1')
+                		#set($typeView = '折扣优惠')
+                	#elseif($type == '2')
+                		#set($typeView = '减免优惠')
+                    #end
+             <div class="zkbox"><span class="txt11 fr">已参与：$couponCount</span><span class="zkcon">$typeView</span></div>
+			 <a href="javascript:;" onclick="toUrl('detail.htm?id=$!{item.id}');" >
+             <div class="salecon">
+                    <div class="post_item_icon">
+                         <div class="graybg3">
+    						#set($startLineName = '')
+    						#set($endLineName = '')
+            				#set($lineName=$!{item.lineName})
+    						#if($lineName )
+    							#set($startLineName = $lineName.split("-").get(0))
+    							#set($endLineName = $lineName.split("-").get(1))
+    						#end
+                           <div class="txt2">$startLineName</div>
+                              <div><img src="${rc.contextPath}/static/weixin/images/index_05.png" width="14" height="26"></div>
+                           <div class="txt2">$endLineName</div>
+                         </div>
+                    </div>
+                    <div class="left">
+                        <div class="post_item_title2">$!{item.name} </div>
+                      <div class="post_item_note2">$!{item.orgzanationName}</div>
+                      <div class="txt4 mar15">申领时间：$dateUtil.formatDate($!{item.begin_time})至$dateUtil.formatDate($!{item.end_time})</div>
+                    </div>
+                    <div class="clear"></div>
+              </div>   
+			  </a>
+        </div>
+		
+		#end
+
+        <div class="bottombtnbox">
+            <div class="button_3" onclick="toUrl('couponnew.htm');" >发起新的优惠活动</div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+
+#end
+
+#extends("layout/weixinlayout.vm")

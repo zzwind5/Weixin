@@ -1,0 +1,29 @@
+#set($layout = '')
+#set($title='优惠活动列表')
+#override("head")  
+#end
+#override("header")
+
+#end
+#override("navbar")
+
+#end
+#override("content")
+
+#extends("layout/component/topbar.vm")
+<div class="tipbox3"><a href="all.htm" id="tiped3">热门活动</a><a href="my.htm">我参与的</a></div>
+<div class="clear"></div>
+<div id="thelist">
+
+</div>
+		<div id="pullUp" style="display:none">
+			<span class="pullUpIcon"></span><a href="#?" onclick="pullUpAction(false)"><span class="pullUpLabel">点击加载更多...</span></a>
+		</div>
+#end
+#override("script")
+<script type="text/javascript" >
+var pageType = "all";
+#include("pages/activity/activity.js")
+</script>		
+#end
+#extends("layout/weixinlayout.vm")

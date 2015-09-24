@@ -1,0 +1,97 @@
+#macro ( direct $direct-output )$!direct-output#end
+#macro ( c $paras )
+	#if($!paras)
+		#set($content = "")
+		#set($key = "")
+		#set($value = "")
+		#foreach($para in $paras)
+			#if($velocityCount == 1)
+				#set($content = $contain.get($!para))
+			#else
+				#if($velocityCount % 2 == 0)
+					#set($key = $para)
+				#else
+					#set($value = $para)
+				#end
+				#set($content = $content.setParameter($key, $value))
+			#end
+		#end
+		$!content
+	#end
+#end
+
+#macro( springFormSingleSelectEx $path $options $attributes )
+    #springBind($path)
+    <select id="${status.expression}" name="${status.expression}" $!{attributes}>
+		<option value="">全部 </option>
+		#foreach($option in $options.keySet())
+            <option value="${option}" #if("$!status.value" == "$option") selected="selected" #end>${options.get($option)}</option>
+        #end
+    </select>
+#end
+
+#macro( springFormSingleSelectEx3 $path $options $attributes )
+    #springBind($path)
+    <select id="${status.expression}" name="${status.expression}" $!{attributes}>
+		<option value="">请选择 </option>
+		#foreach($option in $options.keySet())
+            <option value="${option}" #if("$!status.value" == "$option") selected="selected" #end>${options.get($option)}</option>
+        #end
+    </select>
+#end
+
+#macro( springFormSingleSelectEx2 $name $options $attributes )
+    <select id="$name" name="$name" $!{attributes}>
+		<option value="">请选择 </option>
+		#foreach($option in $options.keySet())
+            <option value="${option}">${options.get($option)}</option>
+        #end
+    </select>
+#end
+
+#macro( springFormSingleSelectEx1 $name $options $attributes )
+    <select id="$name" name="$name" $!{attributes}>
+		<option value="">全部 </option>
+		#foreach($option in $options.keySet())
+            <option value="${option}">${options.get($option)}</option>
+        #end
+    </select>
+#end
+
+#macro( springFormCheckboxesEx1 $name $options $separator $attributes )
+    #foreach($option in $options.keySet())
+        <input type="checkbox" name="$name" value="${option}" 
+        $!{attributes} #springCloseTag()
+        ${options.get($option)} ${separator}
+    #end
+    <input type="hidden" name="_${name}" value="on"/>
+#end
+
+#macro( springFormSingleSelectEx4 $name $options $attributes $select)
+    <select id="$name" name="$name" $!{attributes}>
+		<option value="">请选择 </option>
+		#foreach($option in $options.keySet())
+            <option value="${option}" #if("$!select" == "$option") selected="selected" #end>${options.get($option)}</option>
+        #end
+    </select>
+#end
+
+#macro( springFormCheckboxesEx2 $name $options $attributes $selects)
+    #foreach($option in $options.keySet())
+		<label class="uni-checkbox">
+    		<div class="uni-checker">
+        		<span>
+                    <input type="checkbox" name="$name" value="${option}"  class="uni_style"
+                     #foreach($select in $selects) 
+                          #if ($select == $option)
+            				checked
+            			  #end
+                     #end
+                    $!{attributes} #springCloseTag()
+        		</span>
+    		</div>
+			${options.get($option)}
+		</label>
+    #end
+    <input type="hidden" name="_${name}" value="on"/>
+#end

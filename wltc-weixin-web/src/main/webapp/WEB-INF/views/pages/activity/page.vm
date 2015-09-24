@@ -1,0 +1,84 @@
+#set($layout = '')
+#foreach( $activity in $page.result ) 
+<div class="post_item3">
+	#set($type=$!{activity.type})
+	#if($type == '0')
+		#set($typeView = '现金优惠')
+	#elseif($type == '1')
+		#set($typeView = '折扣优惠')
+	#elseif($type == '2')
+		#set($typeView = '减免优惠')
+	#end
+	#if($now > $activity.begin_time.getTime() && $now < $activity.end_time.getTime())
+		#set($isover='0')
+	#elseif($now < $activity.begin_time.getTime())
+		#set($isover='1')
+	#else
+		#set($isover='2')
+	#end
+     <div class="zkbox">
+		<span class="txt11 fr">已参与：#if($activity.activityIdCount)$activity.activityIdCount #else 0 #end</span>
+		<span class="zkcon">$typeView</span>
+	 </div>
+	 ##if($pageType == 'my' || ($pageType == 'all' && ($isover=='0' || $isover=='1')))
+	 <a href="#?" onclick="toUrl('${rc.contextPath}/activity/detail.htm?id=$activity.id')">
+	 ##end
+	     <div class="salecon" style="position: relative;">
+	            <div class="post_item_icon">
+	                 <div class="graybg">
+	                   <div class="txt2">$!{activity.startCity}</div>
+	                      <div><img src="${rc.contextPath}/static/weixin/images/index_05.png" width="14" height="26"></div>
+	                   <div class="txt2">$!{activity.endCity}</div>
+	                 </div>
+	            </div>
+	            <div class="left ppleft">
+	                <div class="post_item_title5">$!stringUtil.length($!{activity.name},15)</div>
+	              <div class="post_item_note2">$!{activity.orgzanationName}</div>
+	              <div class="txt4 mar9">申领时间：#if($!{activity.collectTime}) $dateUtil.formatDateTime($activity.collectTime) #else - #end</div>
+	            </div>
+    			#if($isover=='0')
+					<div class="hdright" style="position: absolute;right: 5px;"><img src="${rc.contextPath}/static/weixin/images/sale1.png" width="44" height="18" align="absmiddle"></div>
+            	#elseif($isover=='1')
+					<div class="hdright" style="position: absolute;right: 5px;"><img src="${rc.contextPath}/static/weixin/images/sale3.png" width="44" height="18" align="absmiddle"></div>
+				#else
+					<div class="hdright" style="position: absolute;right: 5px;"><img src="${rc.contextPath}/static/weixin/images/sale2.png" width="44" height="18" align="absmiddle"></div>
+    			#end	            
+	            <div class="clear"></div>
+	      </div> 
+	##if($pageType == 'my' || ($pageType == 'all' && ($isover=='0' || $isover=='1')))
+	 </a>
+	##end
+	 #if($pageType == 'my')
+	 
+	 
+		  		#set($lineDealFeedback = '')
+		  		
+		  		#set($lineDealStatus='')
+		  		#if(${activity.lineDealStatus})
+		  			#set($lineDealStatus=${activity.lineDealStatus})
+		  		#end
+		  		#set($lineDealComment='')
+		  		#if(${activity.lineDealComment})
+		  			#set($lineDealComment=${activity.lineDealComment})
+		  		#end
+		  		#set($couponStatus='')
+		  		#if(${activity.couponStatus})
+		  			#set($couponStatus=${activity.couponStatus})
+		  		#end		  						
+				#if($lineDealStatus && $lineDealStatus == '1')
+					#set($lineDealFeedback = '专线已确认')
+					#if($couponStatus && $couponStatus == '1')
+						#set($lineDealFeedback = $lineDealFeedback + '，已获取优惠资格')	
+					#else
+						#set($lineDealFeedback = $lineDealFeedback + '，未获取优惠资格')					
+					#end
+					#if($lineDealComment)
+						#set($lineDealFeedback = $lineDealFeedback + '\n'+ $lineDealComment)				
+					#end
+				#else
+					#set($lineDealFeedback = '专线未处理')
+                #end
+	 		<div class="txt3">专线反馈：#direct($stringUtil.nl2br(${lineDealFeedback}))</div>
+	 #end	  
+	</div>
+#end

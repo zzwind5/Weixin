@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta content="telephone=no" name="format-detection" />
+        <title>#if($title)${title}#else 56同城微信 #end</title>
+		<link rel="stylesheet" type="text/css" href="${rc.contextPath}/static/css/cityPicker.css">
+		<link rel="stylesheet" href="${rc.contextPath}/static/lib/jquery_mobile/css/themes/default/jquery.mobile-1.4.4.min.css">
+		<link rel="stylesheet" href="${rc.contextPath}/static/lib/jquery_mobile/css/jquery.mobile.simpledialog.min.css">
+			<!--<link rel="stylesheet" href="${rc.contextPath}/static/lib/jquery_mobile/css/56tc.css">-->
+		<script src="${rc.contextPath}/static/lib/jquery_mobile/js/jquery.min.js"></script>
+		<script src="${rc.contextPath}/static/lib/jquery_mobile/js/jquery.mobile.simpledialog2.min.js"></script>
+		<script src="${rc.contextPath}/static/js/jquery.cityPicker.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="${rc.contextPath}/static/lib/iscroll/scrollbar.css">
+		
+
+		<script src="${rc.contextPath}/static/lib/validation/jquery.validate.js"></script>
+		<script src="${rc.contextPath}/static/lib/validation/additional-methods.js"></script>
+		<script src="${rc.contextPath}/static/lib/validation/localization/messages_cn.js"></script>
+		<script src="${rc.contextPath}/static/js/weixin.js"></script>
+		
+		<script >
+			var ROOT_PATH = '$!{rc.contextPath}';
+						
+			function toUrl(url){
+        		if (url.indexOf("?") > 0) {
+        			url += "&";
+        		} else {
+        			url += "?";
+        		}
+        		url += "timestamp=" + new Date().getTime();
+        		location.href = url;
+    		}
+			
+        </script>
+	
+		#block("head")   
+        #end
+
+        <style>
+            .ui-icon-myphone:after {  
+              background-image: url("${rc.contextPath}/static/images/phone.png");
+            } 
+		*{
+        	margin: 0;
+        	padding: 0;
+        	border: 0;
+        	font-style:normal;
+        }
+		body
+
+{
+
+font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";text-shadow:#FFF 0 1px 2px;
+font-family:Helvetica;
+}
+        </style>
+	</head>
+	<body class="ui-mobile-viewport ui-overlay-a" >
+        <div id="page1" data-role="page" data-theme="a" data-dom-cache="false" >
+          <div data-role="header" data-theme="a">		
+			#block("header")   
+ 			#end
+          </div>
+          <div data-role="navbar" data-theme="a">		
+			#block("navbar")   
+ 			#end
+          </div>
+          <div data-role="content" data-theme="a">		
+			#block("content")   
+ 			#end
+          </div>
+		  <!--
+          <div data-role="footer" data-theme="a">		
+			#block("footer")   
+ 			#end
+          </div>
+		  -->
+        </div>
+		#block("other")   
+		#end
+		#block("script") 
+		#end
+	</body>
+</html>

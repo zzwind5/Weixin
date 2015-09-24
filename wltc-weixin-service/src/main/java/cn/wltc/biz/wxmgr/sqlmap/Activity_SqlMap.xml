@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<!-- 优惠活动 -->
+<sqlMap>
+
+    <resultMap id="RM.Activity" class="cn.wltc.biz.wxmgr.model.Activity">
+	   <result column="couponCount" property="couponCount" jdbcType="INTEGER" />
+	   <result column="activity_id" property="id" jdbcType="INTEGER" />
+	   <result column="name" property="name" jdbcType="VARCHAR" />
+	   <result column="type" property="type" jdbcType="VARCHAR" />
+	   <result column="begin_time" property="beginTime" jdbcType="VARCHAR" />
+	   <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+	   <result column="content" property="content" jdbcType="VARCHAR" />
+	   <result column="org_id" property="orgzanation.id" jdbcType="VARCHAR" />
+	   <result column="org_name" property="orgzanation.name" jdbcType="VARCHAR" />
+	   <result column="customer_name" property="customer.name" jdbcType="VARCHAR" />
+	   <result column="customer_mobile" property="customer.mobile" jdbcType="VARCHAR" />
+	   <result column="line_id" property="lineId" jdbcType="VARCHAR" />
+	   <result column="line_name" property="lineName" jdbcType="VARCHAR" />
+	   <result column="status" property="status" jdbcType="VARCHAR" />
+	   <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+	   <result column="endCity" property="endCity" jdbcType="VARCHAR" />
+	   <result column="startCity" property="startCity" jdbcType="VARCHAR" />
+    </resultMap>
+	<sql id="Activity.where">
+	    where a.status &lt;&gt; '0'
+		 <isNotEmpty prepend="AND" property="id">
+		            a.activity_id=#id#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="type">
+		            a.type=#type#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="status">
+		            a.status=#status#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="name">
+		            a.name like CONCAT('%',#name#,'%')
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="orgzanation.name">
+		            b.name like CONCAT('%',#orgzanation.name#,'%')
+		 </isNotEmpty>  
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Activity.columns">
+	    <![CDATA[
+         	a.activity_id,a.name,a.type,a.begin_time,a.end_time,a.content,a.org_id,a.line_id,a.status,a.update_time,b.name as org_name
+         	,(select count(1) from weixin_coupon t where a.activity_id=t.activity_id) couponCount,d.name customer_name,
+         	d.mobile customer_mobile,e.name as line_name,e.start_city as startCity,e.end_city as endCity
+	    ]]>
+	</sql>
+	 <select id="Activity.count" resultClass="long">
+        SELECT count(*) FROM weixin_activity AS a   left join tfrs_orgzanation b on a.org_id = b.org_id <include refid="Activity.where"/>    
+    </select>
+   
+   <select id="Activity.getById" resultMap="RM.Activity">
+	    SELECT <include refid="Activity.columns"/>
+	        FROM weixin_activity a left join tfrs_orgzanation b on a.org_id = b.org_id
+	        left join weixin_activity_auth c on a.activity_id=c.activity_id
+    		left join weixin_customer d on c.apply_man = d.customer_id
+    		left join tfrs_road_line e on a.line_id=e.line_id
+	        WHERE  a.activity_id = #id# 
+    </select>
+   
+   <insert id="Activity.insert" >
+    <![CDATA[
+        INSERT INTO `weixin_activity` (
+        	name, 
+        	type, 
+        	begin_time, 
+        	end_time, 
+        	content, 
+        	org_id,
+        	line_id, 
+        	status, 
+        	update_time,
+        	customer_count
+        ) VALUES (
+        	#name#, 
+        	#type#, 
+        	#beginTime#, 
+        	#endTime#, 
+        	#content#, 
+        	#orgzanation.id#,
+        	#lineId#, 
+        	#status#, 
+        	now(),
+        	#customerCount#
+        )
+    ]]>    
+	<selectKey resultClass="java.lang.Integer" type="post"
+		keyProperty="id">
+		select last_insert_id()
+	</selectKey>    
+   </insert>
+   
+   <update id="Activity.update" >
+        UPDATE `weixin_activity`
+		<dynamic prepend="set" >
+			<isNotNull prepend="," property="name" >name = #name#</isNotNull>
+			<isNotNull prepend="," property="type" >type = #type#</isNotNull>
+			<isNotNull prepend="," property="beginTime" >begin_time = #beginTime#</isNotNull>
+			<isNotNull prepend="," property="endTime" >end_time = #endTime#</isNotNull>
+			<isNotNull prepend="," property="content" >content = #content#</isNotNull>
+			<isNotNull prepend="," property="orgzanation.id" >org_id = #orgzanation.id#</isNotNull>
+			<isNotNull prepend="," property="lineId" >line_id = #lineId#</isNotNull>
+			<isNotNull prepend="," property="status" >status = #status#</isNotNull>
+			,update_time=now()
+		</dynamic>
+        WHERE 
+	        activity_id = #id# 
+    </update>
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="Activity.findPage.count" resultClass="long">
+        SELECT count(*) FROM weixin_activity AS a  left join tfrs_orgzanation b on a.org_id = b.org_id <include refid="Activity.where"/>  
+    </select>   
+    <select id="Activity.findPage" resultMap="RM.Activity">
+    	SELECT 
+    		<include refid="Activity.columns"/>
+    	FROM 
+    	weixin_activity a left join tfrs_orgzanation b on a.org_id = b.org_id
+    	left join weixin_activity_auth c on a.activity_id=c.activity_id
+    	left join weixin_customer d on c.apply_man = d.customer_id
+    	left join tfrs_road_line e on a.line_id=e.line_id
+		<include refid="Activity.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+		 limit #firstResult#,#pageSize#
+    </select>
+    
+    <select id="Activity.getAuthList.count" resultClass="long">
+        SELECT count(*) FROM weixin_activity AS a  left join tfrs_orgzanation b on a.org_id = b.org_id 
+        left join weixin_activity_auth c on a.activity_id=c.activity_id
+        where (c.status='0' or c.status='2')
+		 <isNotEmpty prepend="AND" property="id">
+		            a.activity_id=#id#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="type">
+		            a.type=#type#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="status">
+		            a.status=#status#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="name">
+		            a.name like CONCAT('%',#name#,'%')
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="orgzanation.name">
+		            b.name like CONCAT('%',#orgzanation.name#,'%')
+		 </isNotEmpty> 
+    </select> 
+    
+    <select id="Activity.getAuthList" resultMap="RM.Activity">
+    	SELECT 
+    		a.activity_id,a.name,a.type,a.begin_time,a.end_time,a.content,a.org_id,a.line_id,c.status,a.update_time,b.name as org_name
+         	,(select count(1) from weixin_coupon t where a.activity_id=t.activity_id) couponCount,d.name customer_name,
+         	d.mobile customer_mobile,e.name as line_name,e.start_city as startCity,e.end_city as endCity
+    	FROM 
+    	weixin_activity a left join tfrs_orgzanation b on a.org_id = b.org_id
+    	left join weixin_activity_auth c on a.activity_id=c.activity_id
+    	left join weixin_customer d on c.apply_man = d.customer_id
+    	left join tfrs_road_line e on a.line_id=e.line_id
+		 where (c.status='0' or c.status='2')
+		 <isNotEmpty prepend="AND" property="id">
+		            a.activity_id=#id#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="type">
+		            a.type=#type#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="status">
+		            a.status=#status#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="name">
+		            a.name like CONCAT('%',#name#,'%')
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="orgzanation.name">
+		            b.name like CONCAT('%',#orgzanation.name#,'%')
+		 </isNotEmpty> 
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+		 limit #firstResult#,#pageSize#
+    </select>
+    
+    
+    <select id="Activity.find" resultMap="RM.Activity">
+    	SELECT <include refid="Activity.columns"/> FROM 
+    	weixin_activity a left join tfrs_orgzanation b on a.org_id = b.org_id
+    	left join weixin_activity_auth c on a.activity_id=c.activity_id
+    	left join weixin_customer d on c.apply_man = d.customer_id
+    	left join tfrs_road_line e on a.line_id=e.line_id
+		<include refid="Activity.where"/>
+    </select>
+    
+    
+</sqlMap>
+

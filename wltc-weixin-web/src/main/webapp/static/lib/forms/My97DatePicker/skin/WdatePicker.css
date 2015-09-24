@@ -1,0 +1,36 @@
+.Wdate{
+	border:#999 1px solid;
+	height:20px;
+	width:87px;
+	background:#fff url(datePicker.gif) no-repeat right;
+	border:#e3e3e3 solid 1px;line-height:20px;
+	margin-bottom:-2px;
+}
+.Wdate1{
+	border:#999 1px solid;
+	height:20px;
+	width:100px;
+	background:#fff url(datePicker.gif) no-repeat right;
+	line-height:20px;
+	border:#d2dbe4 solid 1px;
+}
+.Wdate2{
+	border:#999 1px solid;
+	height:18px;
+	width:125px;
+	background:#fff url(datePicker.gif) no-repeat right;
+	border:#d2dbe4 solid 1px;
+}
+
+.Wdate3{
+	border:#999 1px solid;
+	height:20px;
+	width:145px;
+	background:#fff url(datePicker.gif) no-repeat right;
+	border:#e3e3e3 solid 1px;line-height:20px;
+}
+
+.WdateFmtErr{
+	font-weight:bold;
+	color:red;
+}

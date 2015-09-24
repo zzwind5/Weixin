@@ -1,0 +1,74 @@
+    <td width="240" height="392" valign="top" background="static/images/main_bg.jpg">
+	<table width="232" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr>
+        <td height="21" valign="bottom"><img src="static/images/main_leftbg_top.jpg" width="232" height="8" /></td>
+      </tr>
+      <tr>
+        <td height="109" background="static/images/main_leftbg_mid.jpg" ><table width="218" height="129" border="0" cellpadding="0" cellspacing="0" background="static/images/login_bg.jpg" style="margin-left:5px">
+          <form action="bbs/login.asp?action=chk" method="post" target="_blank">
+          <tr>
+            <td width="232" height="30" align="center"><img src="static/images/qiyuanbbs.gif" width="77" height="13" /></td>
+          </tr>
+          <tr>
+            <td height="24" align="center">用户名：
+              <input name="username" type="text" size="16" class="input" /></td>
+          </tr>
+          <tr>
+            <td height="24" align="center">密&nbsp;&nbsp;码：
+              <input name="password" type="password" size="16" class="input" /></td>
+          </tr>
+          <tr>
+            <td height="24" align="center">验证码：
+              <input name="codestr" type="text" size="4" class="input1" /> <img src="bbs/DV_getcode.asp" height="20" width="65" alt="验证码,看不清楚?请点击刷新验证码" style="cursor : pointer;" onclick="this.src='bbs/DV_getcode.asp'" align=absmiddle /></td>
+          </tr>
+          <tr>
+            <td height="40" align="center"><input type="image" src="static/images/login_sub.gif" name="Submit" value="提交" />
+            <a href="bbs/reg.asp" target="_blank"><img src="static/images/login_reg.gif" width="50" height="20" border="0" /></a></td>
+          </tr></form>
+        </table>
+          <table width="210" border="0" cellpadding="0" cellspacing="0" bgcolor="#F3F1DC" style="margin-left:7px;margin-top:4px;">
+            <tr>
+              <td width="154" height="24" style="color:#996600;font-weight:bold;padding-left:5px;">赛事公告</td>
+              <td width="56"><a href="match.asp"><img src="static/images/more.gif" width="40" height="13" border="0" /></a></td>
+            </tr>
+            <tr>
+              <td colspan="2" align="center"><img src="static/images/line.gif" width="200" height="1" /></td>
+            </tr>
+            <tr>
+              <td height="92" colspan="2" class="saishi"><ul>
+			  <li><a href="detail.asp?id=989" title="2014年全国象棋儿童赛对阵数据">2014年全国象棋儿童赛对阵数据 </a></li>
+<li><a href="detail.asp?id=988" title="2014年全国象棋儿童赛8月15日对阵">2014年全国象棋儿童赛8月 </a></li>
+<li><a href="detail.asp?id=981" title="2014年全国象棋儿童赛报到执行表（8月2日）">2014年全国象棋儿童赛报到 </a></li>
+<li><a href="detail.asp?id=977" title="2014年全国象棋儿童赛报名查询（7月14日定稿）">2014年全国象棋儿童赛报名 </a></li>
+<li><a href="detail.asp?id=975" title="2014年全国象棋儿童赛秩序册名单">2014年全国象棋儿童赛秩序 </a></li>
+<li><a href="detail.asp?id=946" title="2014年全国象棋儿童赛报名表">2014年全国象棋儿童赛报名表 </a></li>
+
+			  </ul></td>
+            </tr>
+          </table>
+          <table width="210" border="0" cellpadding="0" cellspacing="0" style="margin-left:7px;margin-top:12px;">
+            <tr>
+              <td width="67" height="24" align="center" style="color:#996600;font-weight:bold;padding-left:5px;"><img src="static/images/qyjj.jpg" width="42" height="139" /></td>
+              <td width="143" style="color:#996600;padding-left:5px;" class="qyjj">
+			  <ul><li><a href="about.asp">·棋院简介
+
+              </a>
+			  <li><a href="about1.asp">·院长介绍
+
+              </a>
+			  <li><a href="about2.asp">·院长致词
+
+              </a>
+			  <li><a href="about3.asp">·答家长问
+
+              </a>
+			  <li><a href="about4.asp">·棋院理念</a>
+			  </ul></td>
+            </tr>
+          </table></td>
+      </tr>
+      <tr>
+        <td><img src="static/images/main_leftbg_bottom.jpg" width="232" height="15" /></td>
+      </tr>
+    </table>
+	</td>

@@ -1,0 +1,36 @@
+#set($layout = '')
+#set($title='零担专线列表')
+#set($bakurl="${rc.contextPath}/roadline/main.htm?start=#direct($!query.start)&end=$!query.end&orgName=$!query.orgName")
+#override("head")
+#end
+#override("header")  
+
+#end
+#override("navbar")
+
+#end
+#override("content")
+#extends("layout/component/topbar.vm")
+<form id="roadline_form" style="display:none">
+<input  type="hidden" name="start" value="$!query.start"/>
+<input  type="hidden" name="end" value="$!query.end"/>
+<input type="hidden" name="orgName" value="$!query.orgName">
+</form>
+<div id="thelist">
+
+</div>
+
+<div id="pullUp" style="display:none">
+	<span class="pullUpIcon"></span><a href="#?" onclick="pullUpAction(false)"><span class="pullUpLabel">点击加载更多...</span></a>
+</div>
+#end
+#override("script")
+<script type="text/javascript" >
+jQuery().ready(function(){
+	pullUpAction(true);
+});
+
+#include("pages/roadline/roadline.js")
+</script>		
+#end
+#extends("layout/weixinlayout.vm")

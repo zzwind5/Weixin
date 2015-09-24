@@ -1,0 +1,73 @@
+#set($layout = '')
+#set($contentstyle = 'padding: 0em;')
+#override("head")
+#end
+#override("header")  
+
+#end
+
+#override("content")
+
+    <div class="title1">优惠信息:</div>
+    <div class="loadintroinfo5">
+            <div class="formFieldWrapper">
+              <span class="txt87">优惠活动名称：</span>$!{item.name}
+            </div>
+            <div class="formFieldWrapper">
+				
+			#set($typeView = '')
+        	#set($type=$!{item.type})
+        	#if($type == '0')
+        		#set($typeView = '现金优惠')
+        	#elseif($type == '1')
+        		#set($typeView = '折扣优惠')
+        	#elseif($type == '2')
+        		#set($typeView = '减免优惠')
+            #end
+               <span class="txt87">优惠类型：</span><span class="zkcon5 fl">$typeView</span>
+               <div class="clear"></div>
+            </div>
+    </div>
+
+    <div class="loadintroinfo6">
+         <div class="txt28">
+              <div class="txt37 fl mar20">优惠时间：</div>
+              <div class="txt36 fl">
+                  <p>$dateUtil.formatDate($!{item.begin_time})</p>
+                  <p>至</p>
+                  <p>$dateUtil.formatDate($!{item.end_time})</p>
+              </div>
+              <div class="clear"></div>
+         </div>
+    </div>
+
+    <div class="loadintroinfo3 mar10">
+      <div class="txt16">活动规则:</div>
+      <div class="txt16 mar10">#direct($stringUtil.nl2br($item.content))</div>
+    </div>	
+	
+    <div class="title1">优惠参与情况:</div>
+    <div class="loadintroinfo5">
+            <div class="formFieldWrapper">
+            	#set($customerCount=$!{item.customerCount})
+            	#if(!$customerCount)
+            		#set($customerCount = '无限制')
+				#end		
+              <span class="txt87">优惠人数：</span>$!{zsCount}
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt87">处理完成比：</span>$!{yclCount}/$!{zsCount}
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt87">确定参与客户：</span>$!{yxCount}
+            </div>
+	</div>	
+	
+    #if($!{zsCount} > 0)
+        <div class="bottombtnbox">
+            <div class="button_3" onclick="toUrl('couponlist.htm?activityId=$!{item.id}');">查看列表</div>
+        </div>
+    #end
+#end
+
+#extends("layout/weixinlayout.vm")

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>demo-list</title>
+    
+        <!-- Bootstrap framework -->
+            <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+            <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css" />
+        <!-- tooltips-->
+            <link rel="stylesheet" href="lib/qtip2/jquery.qtip.min.css" />
+        
+        <!-- gebo color theme-->
+            <link rel="stylesheet" href="gebo/css/blue.css" id="link_theme" />
+        <!-- main styles -->
+            <link rel="stylesheet" href="gebo/css/style.css" />
+            
+            <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans" />
+    
+        <!-- Favicon -->
+            <link rel="shortcut icon" href="favicon.ico" />
+        
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="css/ie.css" />
+            <script src="js/ie/html5.js"></script>
+            <script src="js/ie/respond.min.js"></script>
+        <![endif]-->
+        
+       <!-- app -->
+         <link rel="stylesheet" href="css/base.css" />
+		  <style type="text/css">
+			 .control-label {
+				padding-top:5px;
+			}
+		</style>
+    </head>
+    <body >
+        <div id="loading_layer" style="display:none"><img src="img/ajax_loader.gif" alt="" /></div>
+        <div id="maincontainer" class="clearfix">
+            <!-- header -->
+                <div class="navbar navbar-fixed-top">
+                    <div class="navbar-inner">
+                        <div class="container-fluid">
+                            <a class="brand" href="#"><i class="icon-home icon-white"></i> Name</a>
+                            <ul class="nav user_menu pull-right">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another Action</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Another Action</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="nav" id="mobile-nav">
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"> menu <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">menu section</a></li>
+                                        <li><a href="#">menu section</a></li>
+                                        <li><a href="#">menu section</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"> menu <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">menu section</a></li>
+                                        <li><a href="#">menu section</a></li>
+                                        <li><a href="#">menu section</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"> menu <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">menu section</a></li>
+                                        <li><a href="#">menu section</a></li>
+                                        <li><a href="#">menu section</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            
+            <!-- main content -->
+            <div id="contentwrapper">
+                <div class="main_content">
+					<!-- .breadcrumb -->
+                    <div id="breadcrumbs" class="breadcrumbs">
+								子导航
+					</div>
+					<div class="page_content">
+						<h3 class="heading">XX列表</h3>
+						<div class="form-search">
+							<form class="form-inline">
+							<!--<div class="formSep">-->
+								<div class="row-fluid">
+								  <div class="span2">
+								  <label for="inputPassword" class="control-label" style="padding-top:5px">Password2121212</label>
+								  </div>
+								  <div class="span3">
+									<input type="text" class="form-control input-small" placeholder=".col-xs-2">
+								  </div>
+								  <div class="span2">
+									<label for="inputPassword" class="control-label"  style="padding-top:5px">Password</label>
+								  </div>
+								  <div class="span3">
+									<input type="text" class="form-control input-medium" style="width:140px;" placeholder=".col-xs-4"><span class="help-inline">help inline</span>
+								  </div>
+								   <div class="span2">
+									<button class="btn btn-small">查询</button>
+								  </div>
+								</div>
+								<div class="row-fluid">
+								  <div class="span2">
+								  <label for="inputPassword" class="control-label" style="">Password2121212</label>
+								  </div>
+								  <div class="span3">
+									<input type="text" class="form-control input-small" placeholder=".col-xs-2">
+								  </div>
+								  <div class="span2">
+									<label for="inputPassword" class="control-label"  style="">Password</label>
+								  </div>
+								  <div class="span3">
+									<input type="text" class="form-control input-medium" style="width:140px;" placeholder=".col-xs-4"><span class="help-inline">help inline</span>
+								  </div>
+								   <div class="span2">
+									<button class="btn btn-small">查询</button>
+								  </div>
+								</div>
+							<!--</div>-->
+							</form>
+						</div>
+						<div class="row-fluid datatable">
+							<div class="span12">
+								<div class="table-toolbar  clearfix">
+									<div class="btn-group pull-left">
+										<a class="btn btn-small" href="javascript:void(0)"><i class="icon-file"></i></a>
+										<a class="btn btn-small" href="javascript:void(0)"><i class="icon-trash"></i></a>
+										<a class="btn btn-small" href="javascript:void(0)"><i class="icon-print"></i></a>
+									</div>
+									<div class="btn-group pull-right">
+										<a class="btn btn-small" href="javascript:void(0)" title="上一页"><i class="icon-chevron-left"></i></a>
+										<a class="btn btn-small" href="javascript:void(0)" title="下一页"><i class="icon-chevron-right"></i></a>
+									</div>
+								</div>
+								<table class="table table-bordered table-striped table-hover">
+									<thead>
+										<tr>
+											<th class="table_checkbox"><input type="checkbox" data-tableid="smpl_tbl" class="select_rows" name="select_rows"></th>
+											<th>id</th>
+											<th>Customer</th>
+											<th>Status</th>
+											<th>Date Added</th>
+											<th>Total</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><input type="checkbox" class="select_row" name="row_sel"></td>
+											<td>134</td>
+											<td>Summer Throssell</td>
+											<td>Pending</td>
+											<td>24/04/2012</td>
+											<td>$120.23</td>
+											<td class=" ">
+												<a title="编辑" class="sepV_a" href="#"><i class="icon-pencil"></i></a>
+												<a title="查看" class="sepV_a" href="#"><i class="icon-eye-open"></i></a>
+												<a title="删除" href="#"><i class="icon-trash"></i></a>
+											</td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" name="row_sel"></td>
+											<td>133</td>
+											<td>Declan Pamphlett</td>
+											<td>Pending</td>
+											<td>23/04/2012</td>
+											<td>$320.00</td>
+											<td class=" ">
+												<a title="Edit" class="sepV_a" href="#"><i class="icon-pencil"></i></a>
+												<a title="View" class="sepV_a" href="#"><i class="icon-eye-open"></i></a>
+												<a title="Delete" href="#"><i class="icon-trash"></i></a>
+											</td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" name="row_sel"></td>
+											<td>132</td>
+											<td>Erin Church</td>
+											<td>Pending</td>
+											<td>23/04/2012</td>
+											<td>$44.00</td>
+											<td class=" ">
+												<a title="Edit" class="sepV_a" href="#"><i class="icon-pencil"></i></a>
+												<a title="View" class="sepV_a" href="#"><i class="icon-eye-open"></i></a>
+												<a title="Delete" href="#"><i class="icon-trash"></i></a>
+											</td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" name="row_sel"></td>
+											<td>131</td>
+											<td>Koby Auld</td>
+											<td>Pending</td>
+											<td>22/04/2012</td>
+											<td>$180.20</td>
+											<td class=" ">
+												<a title="Edit" class="sepV_a" href="#"><i class="icon-pencil"></i></a>
+												<a title="View" class="sepV_a" href="#"><i class="icon-eye-open"></i></a>
+												<a title="Delete" href="#"><i class="icon-trash"></i></a>
+											</td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" name="row_sel"></td>
+											<td>130</td>
+											<td>Anthony Pound</td>
+											<td>Pending</td>
+											<td>20/04/2012</td>
+											<td>$610.42</td>
+											<td class=" ">
+												<a title="Edit" class="sepV_a" href="#"><i class="icon-pencil"></i></a>
+												<a title="View" class="sepV_a" href="#"><i class="icon-eye-open"></i></a>
+												<a title="Delete" href="#"><i class="icon-trash"></i></a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="table-footer">
+									<form class="form-inline">														
+											<div class="span6">
+												<label class="control-label">第 1 页 共 6页</label>
+												<label>每页
+													<select class="input-mini" name="dt_gal_length" size="1">
+													<option value="10" selected="selected">10</option>
+													<option value="25">25</option>
+													<option value="50">50</option>
+													<option value="100">100</option>
+													</select>
+												</label>
+											</div>
+											<div class="span6">
+												<div class="dataTables_paginate paging_bootstrap pagination">
+													<ul>
+														<li class="prev disabled">
+															<a href="#">Previous</a>
+														</li>
+														<li class="active">
+															<a href="#">1</a>
+														</li>
+														<li >
+															<a href="#">2</a>
+														</li>
+														<li class="next disabled">
+															<a href="#">Next</a>
+														</li>
+													</ul>
+												</div>
+											</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="page_footer">
+						footer
+					</div>
+            </div>
+            </div>
+            <!-- sidebar -->
+            <a href="javascript:void(0)" class="sidebar_switch on_switch ttip_r" title="Hide Sidebar">Sidebar switch</a>
+            <div class="sidebar">
+                <div class="antiScroll">
+                    <div class="antiscroll-inner">
+                        <div class="antiscroll-content">
+                            <div class="sidebar_inner">
+                                <form action="search_page.html" class="input-append" method="post" >
+                                    <input autocomplete="off" name="query" class="search_query input-medium" size="16" type="text" placeholder="Search..." /><button type="submit" class="btn"><i class="icon-search"></i></button>
+                                </form>
+                                <div id="side_accordion" class="accordion">
+                                    
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a href="#collapseOne" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
+                                                Section
+                                            </a>
+                                        </div>
+                                        <div class="accordion-body collapse" id="collapseOne">
+                                            <div class="accordion-inner">
+                                                <ul class="nav nav-list">
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a href="#collapseTwo" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
+                                                Section
+                                            </a>
+                                        </div>
+                                        <div class="accordion-body collapse" id="collapseTwo">
+                                            <div class="accordion-inner">
+                                                <ul class="nav nav-list">
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a href="#collapseThree" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
+                                                Section
+                                            </a>
+                                        </div>
+                                        <div class="accordion-body collapse" id="collapseThree">
+                                            <div class="accordion-inner">
+                                                <ul class="nav nav-list">
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a href="#collapseFour" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
+                                                Section
+                                            </a>
+                                        </div>
+                                        <div class="accordion-body collapse in" id="collapseFour">
+                                            <div class="accordion-inner">
+                                                <ul class="nav nav-list">
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                    <li><a href="javascript:void(0)">Side menu</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-migrate.min.js"></script>
+            <!-- smart resize event -->
+            <script src="js/jquery.debouncedresize.min.js"></script>
+            <!-- hidden elements width/height -->
+            <script src="js/jquery.actual.min.js"></script>
+            <!-- js cookie plugin -->
+            <script src="js/jquery_cookie.min.js"></script>
+            <!-- main bootstrap js -->
+            <script src="bootstrap/js/bootstrap.min.js"></script>
+             <!-- bootstrap plugins -->
+            <script src="js/bootstrap.plugins.min.js"></script>
+            <!-- tooltips -->
+            <script src="lib/qtip2/jquery.qtip.min.js"></script>
+            <!-- fix for ios orientation change -->
+            <script src="js/ios-orientationchange-fix.js"></script>
+            <!-- scrollbar -->
+            <script src="lib/antiscroll/antiscroll.js"></script>
+            <script src="lib/antiscroll/jquery-mousewheel.js"></script>
+            <!-- common functions -->
+            <script src="gebo/js/gebo_common.js"></script>
+        </div>
+    </body>
+</html>

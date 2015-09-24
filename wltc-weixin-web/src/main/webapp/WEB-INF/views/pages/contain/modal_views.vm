@@ -1,0 +1,65 @@
+#set($layout = '')
+<div class="modal hide draggable" id="model_show">
+	<div class="modal-header" style="cursor: move;">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>#if($model_show_title) $model_show_title #else 查看 #end</h3>
+	</div>
+	<div class="modal-body" style="max-height:400px">
+		 加载中
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+	</div>
+</div>
+<div class="modal hide draggable" id="model_new">
+	<div class="modal-header" style="cursor: move;">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>#if($model_new_title) $model_new_title #else 新增 #end</h3>
+	</div>
+	<div class="modal-body" style="max-height:400px">
+		 加载中
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		<button class="btn btn-primary btnAdd" onclick="TABLE.add(this);">新增</button>
+	</div>
+</div>
+<div class="modal hide draggable" id="model_edit">
+	<div class="modal-header" style="cursor: move;">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>#if($model_edit_title) $model_edit_title #else 修改 #end</h3>
+	</div>
+	<div class="modal-body" style="max-height:400px">
+		 加载中
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		<button class="btn btn-primary btnSave" onclick="TABLE.save(this);">保存</button>
+	</div>
+</div>
+<div class="modal hide draggable" id="model_new_inner">
+	<div class="modal-header" style="cursor: move;">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>#if($model_new_inner_title) $model_new_inner_title #else 新增 #end</h3>
+	</div>
+	<div class="modal-body" style="max-height:400px">
+		 加载中
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		<button class="btn btn-primary btnAdd" onclick="TABLE.addInner(this);">新增</button>
+	</div>
+</div>
+<div class="modal hide draggable" id="model_edit_inner">
+	<div class="modal-header" style="cursor: move;">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>#if($model_edit_inner_title) $model_edit_inner_title #else 修改 #end</h3>
+	</div>
+	<div class="modal-body" style="max-height:400px">
+		 加载中
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		<button class="btn btn-primary btnSave" onclick="TABLE.saveInner(this);">保存</button>
+	</div>
+</div>	

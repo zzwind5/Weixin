@@ -1,0 +1,132 @@
+#set($layout = '')
+#override("head")  
+		
+<script type="text/javascript" >
+var hassubmit = false;
+	$(document).ready(function() {
+		//* validation
+		jQuery.validator.addMethod("compareDate", function(value, element) {   
+			var result = true;
+            var beginTime = $("#beginTime").val();
+            var endTime = $("#endTime").val();
+			if(beginTime > endTime){
+				result = false;
+			}
+			return result;
+        }, "开始时间不能早于结束时间");
+		
+		$('#couponForm').validate({
+			onkeyup: false,
+			errorClass: 'error',
+			validClass: 'valid',
+			errorElement:"p",
+			rules: {
+				endTime:{compareDate:true}
+			},submitHandler:function() {
+				if (!hassubmit){
+                 	ajaxSubmitForm();
+				 	hassubmit = true;
+				 }
+            },
+		    messages: {
+
+		    }
+		});
+	});
+		
+	function ajaxSubmitForm(){
+		jQuery.post(ROOT_PATH + "/linecoupon/saveCoupon.htm", {
+			lineId:$("#lineId").val(),
+			type:$("#type").val(),
+			name:$("#name").val(),
+			customerCount:999,
+			beginTime:$("#beginTime").val(),
+			endTime:$("#endTime").val(),
+			content:$("#content").val()
+		}, function(data) {
+			var result = data.data;
+			if(result){
+				$("#tipPage").show();
+			}
+		}, "json");
+	}
+	
+			
+	function saveForm(){
+		
+			$("#couponForm").submit();
+			
+		
+	}
+
+</script>
+
+
+#end
+#override("header")  
+
+#end
+
+#override("content")
+
+<form method="post" action="saveCoupon.htm" id="couponForm">
+
+<div class="loadintroinfo5">
+            <div class="formFieldWrapper">
+               <span class="txt20">公司名称：</span>
+			   $orgName
+            </div>
+           <div class="formFieldWrapper">
+              <span class="txt20">优惠专线： </span>
+			  <select name="lineId" id="lineId" class="style10">
+            	#foreach( $item in $roadLineList )
+    	          <option value="$!{item.id}">$!{item.name}</option>
+            	#end
+			  </select>
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">优惠类型：</span>
+			   <select name="type" id="type" class="style10">
+                  <option value="0">现金优惠</option>
+                  <option value="1">折扣优惠</option>
+                  <option value="2">减免优惠</option>
+                </select>
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">优惠名称：</span>
+			   <input type="text" name="name" id="name"  maxlength="15" placeholder="优惠名称" required>
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">开始时间：</span><input name="beginTime" id="beginTime" type="date" required>
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">结束时间：</span><input name="endTime" id="endTime" type="date" required>
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">活动内容：</span><textarea name="content" id="content" placeholder="活动内容" maxlength="1000" rows="5" required style="height:100px;"></textarea>
+            </div>
+
+</div>
+
+<div class="bottombtnbox">
+    <div class="button_3" onclick="saveForm();">保存</div>
+</div>
+
+</form>
+
+
+
+ <div id="tipPage" style="display:none;">
+<div class="tanbox" >
+    <div class="tancon">
+          <div class="txt90">保存成功</div>
+          <div class="txt91 mar10">56同城的运营团队将与您联系做进一步的确认，谢谢您的参与！</div>
+          <div class="knowbtn" onclick="toUrl('${rc.contextPath}/linecoupon/list.htm');">知道了</div>
+    </div>
+</div>
+ </div>
+
+
+#end
+
+#extends("layout/weixinlayout.vm")

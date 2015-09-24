@@ -1,0 +1,31 @@
+#set($layout = '')
+<form class="form-inline">												
+		<div class="span6">
+			<label class="control-label pagination-label">第 1 页 共 6页</label>
+			<label>每页
+				<select class="input-mini pagination-pagesize" name="pageSize" size="1">
+				<option value="10" selected="selected">10</option>
+				</select>
+			</label>
+			<label >共 $!{page.totalCount} 条记录
+            </label>
+		</div>
+		<div class="span6">
+			<div class="dataTables_paginate paging_bootstrap pagination">
+				<ul class="pagination-items">
+					<li class="prev disabled">
+						<a href="#">上一页</a>
+					</li>
+					<li class="active">
+						<a href="#">1</a>
+					</li>
+					<li >
+						<a href="#">2</a>
+					</li>
+					<li class="next disabled">
+						<a href="#">下一页</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+</form>

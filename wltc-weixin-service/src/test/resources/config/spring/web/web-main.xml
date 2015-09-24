@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="GB2312"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<bean id="ResourceConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:server.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- view -->
+	<bean id="velocityViewCache" class="cn.wltc.framework.util.cache.local.SimpleHashMapCompactCache"></bean>
+	<bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath" value="WEB-INF/views/" />
+		<property name="velocityProperties">
+			<map>
+				<entry key="input.encoding" value="utf-8"></entry>
+				<entry key="output.encoding" value="${web.encoding}"></entry>
+				<!-- cache directive 相关配置 -->
+				<entry key="userdirective" value="cn.wltc.framework.web.velocity.directive.CacheDirective,cn.wltc.framework.web.velocity.directive.BlockDirective,cn.wltc.framework.web.velocity.directive.OverrideDirective,cn.wltc.framework.web.velocity.directive.ExtendsDirective"></entry>
+				<!-- direcitive.cache.provider　配置cache的提供者 -->
+				<entry key="direcitive.cache.provider" value-ref="velocityViewCache"></entry>
+				<!-- direcitive.cache.dev.mode 控制是否打开cache,如果是true,则关闭 -->
+				<entry key="direcitive.cache.dev.mode" value="${system.devMode}"></entry>
+			</map>
+		</property>
+		<property name="configLocation" value="classpath:velocity.properties"></property>
+	</bean>
+
+	<bean id="viewResolver" class="cn.wltc.framework.web.velocity.resolver.FixedVelocityLayoutViewResolver">
+		<property name="order" value="10" />
+		<property name="suffix" value=".vm" />
+		<property name="prefix" value="pages/" />
+		<property name="layoutUrl" value="layout/default.vm" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="dateToolAttribute" value="dateTool" />
+		<property name="numberToolAttribute" value="numberTool" />
+		<!-- <property name="toolboxConfigLocation" value="classpath:vm-toolbox.xml" /> -->
+		<property name="toolboxConfigLocation" value="WEB-INF/conf/vm-toolbox.xml" />
+		<property name="contentType" value="${web.contentType}"></property>
+		<!-- <property name="templateEncoding" value="${file.encoding}"></property> -->
+	</bean>
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="100" />
+		<property name="prefix" value="/WEB-INF/views/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- interceptors -->
+	<bean id="brokersInterceptor" class="cn.wltc.framework.web.url.URLBrokerLauncherInterceptor">
+		<property name="brokers">
+			<map>
+				<entry key="appServer" value-ref="appServerBroker"></entry>
+				<entry key="staticServer" value-ref="staticServerBroker"></entry>
+				<entry key="fileServer" value-ref="fileServerBroker"></entry>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- adapters -->
+	<bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+	<bean
+		class="cn.wltc.framework.web.adapter.ExtendableAnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+		<property name="customArgumentResolvers">
+			<list>
+				<!-- 只要在method声明Cookyjar对象,则自动注入 -->
+				<bean class="cn.wltc.framework.web.cookyjar.CookyjarArgumentResolver"></bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- url mapping -->
+	<bean id="defaultHandlerMapping"
+		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+		<property name="order" value="0" />
+		<property name="interceptors">
+			<list>
+				<ref bean="brokersInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order" value="100" />
+		<property name="urlMap">
+			<map>
+			</map>
+		</property>
+	</bean>
+
+	<context:component-scan base-package="cn.wltc.web.controller" />
+
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="order" value="200" />
+		<property name="interceptors">
+			<list>
+				<ref bean="brokersInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="lastHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order" value="999" />
+		<property name="defaultHandler">
+			<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController"></bean>
+		</property>
+		<property name="interceptors">
+			<list>
+				<ref bean="brokersInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 文件上传解析-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="${web.encoding}" />
+	</bean>
+	
+	<!-- shiro为集成spring -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.apache.shiro.authz.UnauthorizedException">/accessdeny</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 开启Shiro注解的Spring配置方式的beans。在lifecycleBeanPostProcessor之后运行 -->
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+	
+	<bean id="lifecycleBeanPostProcessor"
+		class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+		
+	<!-- 开启Shiro注解的Spring配置方式的beans。在lifecycleBeanPostProcessor之后运行 -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" 
+		  depends-on="lifecycleBeanPostProcessor">
+		 <property name="proxyTargetClass" value="true" />   
+	</bean>	
+	
+	<!-- exception resolver -->
+	<bean class="cn.wltc.common.web.resolver.MelodyDmoExceptionResolver">
+		<property name="webEncoding" value="${web.encoding}"></property>
+		<property name="errorPage" value="/error"></property>
+		<property name="adminLoginPath" value="/login.htm"></property>
+		<property name="adminDeniedPage" value="/accessDenied"></property>
+		<property name="adminLoginReturnParameterName" value="returnurl"></property>
+	</bean>	
+	
+<!-- 	<import resource="web-validation.xml"/> -->
+</beans>

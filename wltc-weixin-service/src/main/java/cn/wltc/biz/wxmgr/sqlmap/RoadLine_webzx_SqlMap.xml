@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<sqlMap>
+
+    <resultMap id="RM.RoadLineWebzx" class="cn.wltc.biz.wxmgr.model.RoadLine">
+	   <result column="line_id" property="id" jdbcType="INTEGER" />
+	   <result column="org_id" property="orgId" jdbcType="INTEGER" />
+	   <result column="name" property="name" jdbcType="VARCHAR" />
+	   <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+	   <result column="start_cd" property="startCd" jdbcType="VARCHAR" />
+	   <result column="end_cd" property="endCd" jdbcType="VARCHAR" />
+	   <result column="orgPhone" property="orgPhone" jdbcType="VARCHAR" />
+	   <result column="orgContract" property="orgContract" jdbcType="VARCHAR" />
+	   <result column="start_city" property="startCity" jdbcType="VARCHAR" />
+	   <result column="end_city" property="endCity" jdbcType="VARCHAR" />
+    </resultMap>
+	<sql id="RoadLineWebzx.where">
+	    where 1=1
+		 <isNotEmpty prepend="AND" property="id">
+		            a.line_id=#id#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="orgId">
+		            a.org_id=#orgId#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="customerId">
+		            b.customer_id=#customerId#
+		 </isNotEmpty>
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="RoadLineWebzx.columns">
+	    <![CDATA[
+         	a.line_id,a.org_id,a.org_name,a.start_cd,a.end_cd,a.start_city,a.end_city,CONCAT_WS('-',a.start_city,a.end_city) as name
+	    ]]>
+	</sql>
+	 <select id="RoadLineWebzx.count" resultClass="long">
+        SELECT count(*) FROM tfrs_road_line AS a  <include refid="RoadLineWebzx.where"/>    
+    </select>
+   
+   <select id="RoadLineWebzx.getById" resultMap="RM.RoadLineWebzx">
+	    SELECT <include refid="RoadLineWebzx.columns"/>
+	        FROM tfrs_road_line a  WHERE  a.line_id = #id# 
+    </select>
+   
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="RoadLineWebzx.findPage.count" resultClass="long">
+        SELECT count(*) FROM tfrs_road_line AS a   <include refid="RoadLineWebzx.where"/>  
+    </select>   
+    <select id="RoadLineWebzx.findPage" resultMap="RM.RoadLineWebzx">
+    	SELECT <include refid="RoadLineWebzx.columns"/> FROM 
+    	tfrs_road_line a 
+		<include refid="RoadLineWebzx.where"/> 
+		 limit #firstResult#,#pageSize#
+    </select>
+    
+    <resultMap id="RM.RoadLineWebzx2" class="cn.wltc.biz.wxmgr.model.RoadLine">
+	   <result column="line_id" property="id" jdbcType="INTEGER" />
+	   <result column="org_id" property="orgId" jdbcType="INTEGER" />
+	   <result column="name" property="name" jdbcType="VARCHAR" />
+	   <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+	   <result column="start_cd" property="startCd" jdbcType="VARCHAR" />
+	   <result column="end_cd" property="endCd" jdbcType="VARCHAR" />
+	   <result column="orgPhone" property="orgPhone" jdbcType="VARCHAR" />
+	   <result column="orgContract" property="orgContract" jdbcType="VARCHAR" />
+	   <result column="start_city" property="startCity" jdbcType="VARCHAR" />
+	   <result column="end_city" property="endCity" jdbcType="VARCHAR" />
+	   <result column="collectedTotle" property="collectedTotle" jdbcType="INTEGER" />
+	   <result column="activeTotle" property="activeTotle" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="RoadLineWebzx.find" resultMap="RM.RoadLineWebzx2">
+    	SELECT a.line_id,a.org_id,c.name as org_name,a.start_cd,a.end_cd,a.start_city,a.end_city,CONCAT_WS('-',a.start_city,a.end_city) as name
+    	,c.phone as orgPhone,c.contract as orgContract,d.collectedTotle as collectedTotle,e.activeTotle
+    	FROM  tfrs_road_line a
+    	inner join weixin_collected_line b on a.line_id=b.line_id
+    	left join tfrs_orgzanation c on a.org_id=c.org_id
+    	left join (select line_id,count(*) as collectedTotle from weixin_collected_line group by line_id )  d on (a.line_id=d.line_id)
+    	left join (select line_id,count(*) as activeTotle from weixin_activity where status = '2' and  begin_time &lt; now() and end_time &gt; now() group by line_id )  e on (a.line_id=e.line_id)
+    	<include refid="RoadLineWebzx.where"/>
+    </select>
+    
+    <select id="RoadLineWebzx.findCurZx" resultMap="RM.RoadLineWebzx">
+    	SELECT <include refid="RoadLineWebzx.columns"/>
+    	,'' as orgPhone,'' as orgContract
+    	FROM  tfrs_road_line a
+    	<include refid="RoadLineWebzx.where"/>
+    </select>
+
+</sqlMap>
+

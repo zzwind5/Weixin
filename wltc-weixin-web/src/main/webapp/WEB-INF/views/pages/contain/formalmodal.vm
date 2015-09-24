@@ -1,0 +1,36 @@
+<div class="modal hide" id="formmodal">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3 class="modal-header-title"></h3>
+	</div>
+	<div class="modal-body">
+		 加载中
+	</div>
+	#**<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+	</div>
+	**#
+</div>
+<script>
+var formalMadal={
+	width:'560px',
+	height: '400px',
+	show:function(url,title,width,height){
+		url = (url + "?" + new Date().getTime());
+		var modal=$('#formmodal');
+		var mbody =modal.find('.modal-body');
+		modal.find('.modal-header-title').text(title);
+		if(!width) width = this.width;
+		if(!height) height = this.height;
+		modal.css('width',width);
+		mbody.css('max-height',height);
+	    mbody.load(url);
+		modal.modal('show');
+		return false;
+	},
+	close:function(){
+		var modal=$('#formmodal');
+		modal.modal('hide');
+	}
+}
+</script>

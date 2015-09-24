@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<toolbox>
+  <xhtml>true</xhtml>
+   <tool>
+     <key>stringUtils</key>
+     <scope>application</scope>
+     <class>org.apache.commons.lang.StringUtils</class>    
+   </tool>
+   <tool>
+     <key>dateUtil</key>
+     <scope>application</scope>
+     <class>cn.wltc.framework.util.DateUtil</class>    
+   </tool>
+	<tool>
+		<key>shiro</key>
+		<scope>application</scope>
+		<class>cn.wltc.security.support.velocity.Permission</class>
+	</tool>
+	<tool>
+		<key>treeSupport</key>
+		<scope>application</scope>
+		<class>cn.wltc.common.web.util.TreeModelSupport</class>
+	</tool> 	   
+</toolbox>

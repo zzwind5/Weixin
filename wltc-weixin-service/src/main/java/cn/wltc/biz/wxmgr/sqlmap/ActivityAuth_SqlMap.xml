@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+
+<sqlMap>
+
+    <resultMap id="RM.ActivityAuth" class="cn.wltc.biz.wxmgr.model.ActivityAuth">
+		<result column="activity_auth_id" property="activity_auth_id" jdbcType="INTEGER" />
+		<result column="activity_id" property="activity_id" jdbcType="INTEGER" />
+		<result column="line_id" property="line_id" jdbcType="INTEGER" />
+		<result column="org_id" property="org_id" jdbcType="INTEGER" />
+		<result column="apply_man" property="apply_man" jdbcType="VARCHAR" />
+		<result column="apply_time" property="apply_time" jdbcType="TIMESTAMP" />
+		<result column="apply_note" property="apply_note" jdbcType="VARCHAR" />
+		<result column="audit_man" property="audit_man" jdbcType="VARCHAR" />
+		<result column="audit_time" property="audit_time" jdbcType="TIMESTAMP" />
+		<result column="audit_note" property="audit_note" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+    </resultMap>
+	<sql id="ActivityAuth.where">
+	    where 1=1
+		 <isNotEmpty prepend="AND" property="activity_auth_id">
+		            a.activity_auth_id=#activity_auth_id#
+		 </isNotEmpty>  
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ActivityAuth.columns">
+	    <![CDATA[
+			a.activity_auth_id,a.activity_id,a.line_id,a.org_id,a.apply_man,a.apply_time,a.apply_note,a.audit_man,a.audit_time,a.audit_note,a.status,a.source
+	    ]]>
+	</sql>
+	 <select id="ActivityAuth.count" resultClass="long">
+        SELECT count(*) FROM weixin_activity_auth AS a   
+        <include refid="ActivityAuth.where"/>    
+    </select>
+   
+   <select id="ActivityAuth.getById" resultMap="RM.ActivityAuth">
+	    SELECT <include refid="ActivityAuth.columns"/>
+	        FROM weixin_activity_auth a 
+	        WHERE  a.activity_auth_id = #activity_auth_id# 
+    </select>
+   
+   <insert id="ActivityAuth.insert" >
+    <![CDATA[
+        INSERT INTO `weixin_activity_auth` (
+			activity_id,line_id,org_id,apply_man,apply_time,apply_note,audit_man,audit_time,audit_note,status,source
+        ) VALUES (
+			#activity_id#,#line_id#,#org_id#,#apply_man#,#apply_time#,#apply_note#,#audit_man#,#audit_time#,#audit_note#,#status#,#source#
+        )
+    ]]>
+   </insert>
+   
+   <update id="ActivityAuth.update" >
+        UPDATE `weixin_activity_auth`
+		<dynamic prepend="set" >
+			<isNotNull prepend="," property="activity_id" >activity_id = #activity_id#</isNotNull>
+			<isNotNull prepend="," property="line_id" >line_id = #line_id#</isNotNull>
+			<isNotNull prepend="," property="org_id" >org_id = #org_id#</isNotNull>
+			<isNotNull prepend="," property="apply_man" >apply_man = #apply_man#</isNotNull>
+			<isNotNull prepend="," property="apply_time" >apply_time = #apply_time#</isNotNull>
+			<isNotNull prepend="," property="apply_note" >apply_note = #apply_note#</isNotNull>
+			<isNotNull prepend="," property="audit_man" >audit_man = #audit_man#</isNotNull>
+			<isNotNull prepend="," property="audit_time" >audit_time = #audit_time#</isNotNull>
+			<isNotNull prepend="," property="audit_note" >audit_note = #audit_note#</isNotNull>
+			<isNotNull prepend="," property="status" >status = #status#</isNotNull>
+			<isNotNull prepend="," property="source" >source = #source#</isNotNull>
+		</dynamic>
+        WHERE 
+	        activity_auth_id = #activity_auth_id# 
+    </update>
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="ActivityAuth.findPage.count" resultClass="long">
+        SELECT count(*) FROM weixin_activity_auth AS a 
+        <include refid="ActivityAuth.where"/>  
+    </select>   
+    <select id="ActivityAuth.findPage" resultMap="RM.ActivityAuth">
+    	SELECT <include refid="ActivityAuth.columns"/> 
+    	FROM 
+    	weixin_activity_auth a 
+		<include refid="ActivityAuth.where"/>
+		 limit #firstResult#,#pageSize#
+    </select>
+
+
+	<update id="Activity.auth">
+    	update weixin_activity_auth set audit_man=#shr#,audit_time=now(),audit_note=#shyj#,status=#shzt# where activity_id=#id#
+    </update>
+</sqlMap>
+

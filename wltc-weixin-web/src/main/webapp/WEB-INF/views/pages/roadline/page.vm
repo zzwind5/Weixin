@@ -1,0 +1,22 @@
+#set($layout = '')
+#foreach( $roadLine in $page.result )
+	<a href="#?" onclick="toUrl('${rc.contextPath}/roadline/detail.htm?id=$roadLine.id')">
+	 <div class="post_item">
+	            <div class="post_item_icon">
+	                 <div class="graybg">
+	                   <div class="txt2">$!{roadLine.startCity}</div>
+	                      <div><img src="${rc.contextPath}/static/weixin/images/index_05.png" width="14" height="26"></div>
+	                   <div class="txt2">$!{roadLine.endCity}</div>
+	                 </div>
+	            </div>
+				
+	            <div class="left width200">
+	                <div class="post_item_title" style="#if(!$roadLine.activeTotle || $roadLine.activeTotle == 0) background:none #end">$!stringUtil.length($!roadLine.orgName,15)</div>
+	              <div class="post_item_note">联系人：$!roadLine.orgContract</div>
+	              <div class="txt1 mar10">#if($roadLine.collectedTotle) $roadLine.collectedTotle #else 0 #end </div>
+	                
+	            </div>
+	            <div class="clear"></div>
+	</div> 	
+	</a>
+#end

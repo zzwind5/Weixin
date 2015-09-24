@@ -1,0 +1,7 @@
+#set($layout = '')
+<div class="error_page"  style="height:300px;">
+<div class="error_box">
+			<h1>无权访问</h1>
+			<p>请联系管理员.</p>
+</div>
+</div>

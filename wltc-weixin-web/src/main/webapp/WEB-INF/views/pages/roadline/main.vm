@@ -1,0 +1,51 @@
+#set($layout = '')
+#set($title='零担专线查询')
+#override("head")  
+#end
+#override("header")
+
+#end
+#override("navbar")
+
+#end
+
+#override("content")
+
+<form id="roadline_form" method="get" action="list.htm">
+<div class="loadintroinfo5">
+         <div>
+              <div class="andleft">
+                 <p class="pline"><span class="txt110"><img src="${rc.contextPath}/static/weixin/images/where.png" width="21" height="20"></span><input type="text" name="start" id="start" class="fieldWithIcon2"  placeholder="从哪里出发" ></p>
+                 <p><span class="txt110"><img src="${rc.contextPath}/static/weixin/images/here.png" width="22" height="16"></span><input type="text" name="end" id="end" class="fieldWithIcon2" placeholder="到哪里去"></p>
+              </div>
+              <div class="andright">
+                 <p class="prightline"><a href="#?" onclick="changeCity()"><img src="${rc.contextPath}/static/weixin/images/suanj.png" width="25" height="23"></a></p>
+              </div>
+              <div class="clear"></div>
+         </div>
+
+</div>
+
+
+<div class="loadintroinfo5 mar10">
+
+     <p class="homeadd"><span class="txt110"><img src="${rc.contextPath}/static/weixin/images/company.png" width="20" height="19"></span>
+     <input type="text" name="orgName" class="fieldWithIcon2" placeholder="请输入公司名称" ></p>
+
+</div>
+
+
+
+<div class="bottombtnbox">
+      <a href="#?"  onclick="jQuery('#roadline_form').submit()" style="color:#fff"><div class="button_3">搜索</div></a>
+</div>
+        		</form>	
+
+#end
+
+#override("script")
+<script type="text/javascript" >
+#include("pages/roadline/roadline.js")
+</script>		
+#end
+#extends("layout/weixinlayout.vm")

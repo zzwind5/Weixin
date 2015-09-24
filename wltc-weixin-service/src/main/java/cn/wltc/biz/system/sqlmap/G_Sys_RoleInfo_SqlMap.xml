@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<!-- 不使用namespace是由于sql搜索定位会比较方便 -->
+<sqlMap>
+
+    <resultMap id="RM.SysRoleInfo" class="cn.wltc.biz.system.model.SysRoleInfo">
+	    <result column="id" property="id" jdbcType="INTEGER" />
+	    <result column="jsdm" property="jsdm" jdbcType="VARCHAR" />
+	    <result column="jsmc" property="jsmc" jdbcType="VARCHAR" />
+	    <result column="jsms" property="jsms" jdbcType="VARCHAR" />
+	    <result column="fid" property="fid" jdbcType="INTEGER" />
+	    <result column="px" property="px" jdbcType="INTEGER" />
+	    <result column="jszt" property="jszt" jdbcType="VARCHAR" />
+	    <result column="jssszxt" property="jssszxt" jdbcType="VARCHAR" />
+	    <result column="jlcjsj" property="jlcjsj" jdbcType="TIMESTAMP" />
+	    <result column="jlcjyh" property="jlcjyh" jdbcType="VARCHAR" />
+	    <result column="jlxgsj" property="jlxgsj" jdbcType="TIMESTAMP" />
+	    <result column="jlxgyh" property="jlxgyh" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SysRoleInfo.columns">
+	    <![CDATA[
+        id, jsdm, jsmc, jsms, fid, px, jszt,jssszxt, jlcjsj, jlcjyh,jlxgsj,jlxgyh
+	    ]]>
+	</sql>
+
+	<sql id="SysRoleInfo.where">
+	    <dynamic prepend="WHERE">
+		       <isNotEmpty prepend="AND" property="id">
+		             id = #id#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jsdm">
+		             jsdm = #jsdm#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jsmc">
+		             jsmc like CONCAT('%',#jsmc:VARCHAR#,'%')
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jsms">
+		             jsms = #jsms#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="fid">
+		             fid = #fid#
+		       </isNotEmpty>		       
+		       <isNotEmpty prepend="AND" property="px">
+		             px = #px#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jszt">
+		             jszt = #jszt#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jssszxt">
+		             jssszxt = #jssszxt#
+		       </isNotEmpty>		       		       
+		       <isNotEmpty prepend="AND" property="jlcjsj">
+		             jlcjsj = #jlcjsj#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlcjyh">
+		             jlcjyh = #jlcjyh#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlxgsj">
+		             jlxgsj = #jlxgsj#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlxgyh">
+		             jlxgyh = #jlxgyh#
+		       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	
+    <insert id="SysRoleInfo.insert" >
+    <![CDATA[
+        INSERT INTO `g_xtgl_jsxxb` (
+        	id, jsdm, jsmc, jsms, fid, px, jszt,jssszxt, jlcjsj, jlcjyh,jlxgsj,jlxgyh
+        ) VALUES (
+        	#id#, #jsdm#, #jsmc#, #jsms#, #fid#, #px#, #jszt#,#jssszxt#, #jlcjsj#, #jlcjyh#,#jlxgsj#,#jlxgyh#
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+    -->
+        <selectKey resultClass="java.lang.Integer" type="post" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+    </insert>
+	<insert id="SysRoleInfo.insertSelective" >
+        INSERT INTO `g_xtgl_jsxxb`
+		 <dynamic prepend="(" >
+			  <isNotEmpty prepend="," property="id" >id</isNotEmpty>
+			  <isNotEmpty prepend="," property="jsdm" >jsdm</isNotEmpty>
+			  <isNotEmpty prepend="," property="jsmc" >jsmc</isNotEmpty>
+			  <isNotEmpty prepend="," property="jsms" >jsms</isNotEmpty>
+			  <isNotEmpty prepend="," property="fid" >fid</isNotEmpty>
+			  <isNotEmpty prepend="," property="px" >px</isNotEmpty>
+			  <isNotEmpty prepend="," property="jszt" >jszt</isNotEmpty>			  
+			  <isNotEmpty prepend="," property="jssszxt" >jssszxt</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjsj" >jlcjsj</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjyh" >jlcjyh</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgsj" >jlxgsj</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgyh" >jlxgyh</isNotEmpty>			  
+			  )
+		</dynamic>
+			values
+		<dynamic prepend="(" >
+			  <isNotEmpty prepend="," property="id" >#id#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jsdm" >#jsdm#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jsmc" >#jsmc#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jsms" >#jsms#</isNotEmpty>
+			  <isNotEmpty prepend="," property="fid" >#fid#</isNotEmpty>
+			  <isNotEmpty prepend="," property="px" >#px#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jszt" >#jszt#</isNotEmpty>			  
+			  <isNotEmpty prepend="," property="jssszxt" >#jssszxt#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjsj" >#jlcjsj#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjyh" >#jlcjyh#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgsj" >#jlxgsj#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgyh" >#jlxgyh#</isNotEmpty>
+		)
+		</dynamic>
+        <selectKey resultClass="java.lang.Integer" type="post" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+
+    <update id="SysRoleInfo.updateSelective" >
+        UPDATE `g_xtgl_jsxxb`
+		<dynamic prepend="set" >
+			  <isNotNull prepend="," property="jsdm" >jsdm=#jsdm#</isNotNull>
+			  <isNotNull prepend="," property="jsmc" >jsmc=#jsmc#</isNotNull>
+			  <isNotNull prepend="," property="jsms" >jsms=#jsms#</isNotNull>
+			  <isNotNull prepend="," property="fid" >fid=#fid#</isNotNull>
+			  <isNotNull prepend="," property="px" >px=#px#</isNotNull>
+			  <isNotNull prepend="," property="jszt" >jszt=#jszt#</isNotNull>			  
+			  <isNotNull prepend="," property="jssszxt" >jssszxt=#jssszxt#</isNotNull>
+			  <isNotNull prepend="," property="jlxgsj" >jlxgsj=#jlxgsj#</isNotNull>
+			  <isNotNull prepend="," property="jlxgyh" >jlxgyh=#jlxgyh#</isNotNull>					
+		</dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+    <delete id="SysRoleInfo.delete">
+    <![CDATA[
+        DELETE FROM `g_xtgl_jsxxb` WHERE
+        id = #id# 
+    ]]>
+    </delete>
+	<delete id="SysRoleInfo.deleteSelective">
+        DELETE FROM `g_xtgl_jsxxb` <include refid="SysRoleInfo.where"/>
+    </delete>
+    
+    <select id="SysRoleInfo.getById" resultMap="RM.SysRoleInfo">
+	    SELECT <include refid="SysRoleInfo.columns"/>
+	    <![CDATA[
+	        FROM `g_xtgl_jsxxb` 
+	        WHERE 
+		        id = #id# 
+	    ]]>
+    </select>
+
+	
+	 
+    <select id="SysRoleInfo.count" resultClass="long">
+        SELECT count(*) FROM `g_xtgl_jsxxb` <include refid="SysRoleInfo.where"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="SysRoleInfo.findPage" resultMap="RM.SysRoleInfo">
+    	SELECT <include refid="SysRoleInfo.columns"/> FROM g_xtgl_jsxxb 
+		<include refid="SysRoleInfo.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+		 limit #firstResult#,#pageSize#
+    </select>
+	<select id="SysRoleInfo.find" resultMap="RM.SysRoleInfo">
+    	SELECT <include refid="SysRoleInfo.columns"/> FROM g_xtgl_jsxxb 
+		<include refid="SysRoleInfo.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+	
+	<!-- Manually Added -->
+    <resultMap id="RM.SysRoleInfoPid" class="cn.wltc.biz.system.model.SysRoleInfo">
+	    <result column="id" property="id" jdbcType="INTEGER" />
+	    <result column="jsdm" property="jsdm" jdbcType="VARCHAR" />
+	    <result column="jsmc" property="jsmc" jdbcType="VARCHAR" />
+	    <result column="jsms" property="jsms" jdbcType="VARCHAR" />
+	    <result column="fid" property="fid" jdbcType="INTEGER" />
+	    <result column="px" property="px" jdbcType="INTEGER" />
+	    <result column="jszt" property="jszt" jdbcType="VARCHAR" />
+	    <result column="jssszxt" property="jssszxt" jdbcType="VARCHAR" />
+	    <result column="jlcjsj" property="jlcjsj" jdbcType="TIMESTAMP" />
+	    <result column="jlcjyh" property="jlcjyh" jdbcType="VARCHAR" />
+	    <result column="jlxgsj" property="jlxgsj" jdbcType="TIMESTAMP" />
+	    <result column="jlxgyh" property="jlxgyh" jdbcType="VARCHAR" />
+	    <result column="fidjsmc" property="fidjsmc" jdbcType="VARCHAR" />
+	    <result column="userCount" property="userCount" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="SysRoleInfo.getCountByJsdm" parameterClass="string" resultClass="long">
+        SELECT count(*) FROM `g_xtgl_jsxxb` where jsdm=#jsdm#   
+    </select>
+    <select id="SysRoleInfo.getJsdmJsmc" resultMap="RM.SysRoleInfo">
+	    SELECT <include refid="SysRoleInfo.columns"/>
+	    <![CDATA[
+	        FROM `g_xtgl_jsxxb`
+	    ]]>
+    </select>    
+    <select id="SysRoleInfo.findPageJoinMe" resultMap="RM.SysRoleInfoPid">
+    	SELECT a.id, a.jsdm, a.jsmc, a.jsms, a.fid, a.px, a.jssszxt, 
+    	a.jszt, a.jlcjsj, a.jlcjyh,a.jlxgsj, a.jlxgyh,b.jsmc as fidjsmc,(select count(*) from g_xtgl_yhjsxxb as c where a.id=c.jsid) as userCount FROM g_xtgl_jsxxb as a left join g_xtgl_jsxxb as b on  (a.fid=b.id)
+    	<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="jsmc">
+			             a.jsmc like CONCAT('%',#jsmc:VARCHAR#,'%')
+			</isNotEmpty>
+		 </dynamic>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+		 limit #firstResult#,#pageSize#
+    </select>
+    
+    <update id="SysRoleInfo.updateEdit" >
+        UPDATE `g_xtgl_jsxxb` set jsmc=#jsmc#,fid=#fid#,jsms=#jsms#,jszt=#jszt#,jlxgsj=#jlxgsj#,jlxgyh=#jlxgyh#
+        WHERE 
+	        id = #id# 
+    </update> 
+    
+    <select id="SysRoleInfo.findAll" resultMap="RM.SysRoleInfo">
+    	SELECT * from g_xtgl_jsxxb
+		<include refid="SysRoleInfo.where"/>
+		ORDER BY px
+    </select> 	
+    <select id="SysRoleInfo.getMaxJsdm" parameterClass="java.lang.String" resultClass="java.lang.Integer">
+	    SELECT max(CONVERT(jsdm ,UNSIGNED INTEGER)) as jsdm
+	    <![CDATA[
+	        FROM `g_xtgl_jsxxb` 
+	    ]]>
+    </select>
+    
+    <select id="SysRoleInfo.findAllByYhid" parameterClass="java.lang.Integer"  resultMap="RM.SysRoleInfo">
+    	SELECT * from g_xtgl_jsxxb as jsxxb 
+    			 inner join g_xtgl_yhjsxxb as yhjsxxb on (jsxxb.id=yhjsxxb.jsid)
+    			 inner join g_xtgl_yhxxb as yhxxb on (yhxxb.id=yhjsxxb.yhid)
+	        WHERE 
+         yhxxb.id=#yhid#
+    </select>      		
+</sqlMap>
+

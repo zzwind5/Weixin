@@ -1,0 +1,110 @@
+body {
+   font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+   font-style:normal;
+}
+
+ .breadcrumbs {
+	background-color: #F5F5F5;
+	border-bottom: 1px solid #E5E5E5;
+	display: block;
+	line-height: 40px;
+	min-height: 41px;
+	padding: 0 12px 0 0;
+	position: relative;
+}
+input[type="text"]{
+	margin-bottom: 1px;
+}
+
+.btn {
+    border: medium none;
+    box-shadow: none;
+    font-size: 16.5px;
+    text-decoration: none;
+    text-shadow: none;
+    transition: all 0.25s ease 0s;
+}
+.btn .btn-primary {
+    background-color: #3498DB;
+}
+
+.btn-toolbar .btn {
+	line-height: 20px;
+    text-align: center;
+	color: black;
+    padding: 10px 14px 9px;
+    border: medium none;
+    box-shadow: none;
+    text-decoration: none;
+    text-shadow: none;
+    transition: all 0.25s ease 0s;
+    background-image: none;/*linear-gradient(rgb(245, 245, 245), rgb(241, 241, 241));*/
+	background-repeat:repeat-x;
+	 margin-right: 2px;
+}
+.btn-toolbar .btn.active {
+    color: #FFFFFF;
+}
+
+.table th{
+    text-shadow: none;
+}
+
+
+
+.form-search {
+	margin-bottom: 0px;
+	padding: 4px;
+	box-shadow: 0 1px 0 0 #FEFEFE inset;
+    border-bottom-style:dashed;
+    border-bottom-color:#DCDCDC;
+    border-bottom-width:1px;
+}
+
+
+.page_footer {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.page_footer p {
+    color: #777777;
+    margin-bottom: 0;
+}
+
+.tdLabel {
+	width:100px;
+}
+.main_content .row-fluid + .row-fluid {
+    margin-top: 10px;
+}
+
+.nav-header {
+  display: block;
+  padding: 5px 14px;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 20px;
+  color: #999999;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+#siderbar_nav{
+	border: 1px solid #E5E5E5;
+	background: none repeat scroll 0 0 #FAFAFA;
+	border-radius: 6px; 
+	padding-bottom:20px;
+	margin: 20px 0 0;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+}
+#siderbar_nav li a{
+	border: 1px solid #E5E5E5; 
+	margin: 0 0 -1px; 
+	padding: 8px 14px;
+}
+.sidebar {position:absolute;}
+
+.page_content {min-height:500px}
+.page_content .heading{margin-bottom: 5px;}
+.page_content .form-search form{margin-bottom: 5px;}
+

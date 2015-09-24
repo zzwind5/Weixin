@@ -1,0 +1,40 @@
+#set($rootMenus=${shiro.getPrincipal().resourceMenuList})
+<a href="javascript:void(0)" class="sidebar_switch on_switch ttip_r" title="隐藏"#if($bodyCss) style="display:none" #end>隐藏</a>
+<div class="sidebar">
+    <div class="antiScroll">
+        <div class="antiscroll-inner">
+            <div class="antiscroll-content">
+                <div class="sidebar_inner" style="min-height:400px">
+                    <div id="side_accordion" class="accordion">
+                       #if ($leftMenuSuperqxzydms)
+	                       #foreach($leftMenuSuperqxzydm in $leftMenuSuperqxzydms)
+	                       #set($parentMenu=${treeSupport.getTreeObjectByCode($rootMenus,$leftMenuSuperqxzydm)})
+						   #if($parentMenu)
+	                        <div class="accordion-group">
+	                            <div class="accordion-heading sdb_h_active">
+	                                <a href="#collapse$!{velocityCount}" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
+											<i class="$parentMenu.qxzytb"></i>$parentMenu.qxzymc
+	                                </a>
+	                            </div>
+
+                                <div class="accordion-body collapse in" id="collapse$!{velocityCount}">
+                                    <div class="accordion-inner">
+                                        <ul class="nav nav-list">
+                                    					#if ($parentMenu && $parentMenu.children.size() > 0)
+                                    								#foreach($leafMenu in $parentMenu.children)
+                                    									<li #if (${currentUri.indexOf($leafMenu.qxzydz)} > -1) class="active" #end><a href="${rc.contextPath}/$leafMenu.qxzydz">$leafMenu.qxzymc</a></li>
+                                    								#end
+    													#end
+                                        </ul>
+                                    </div>
+                                </div>
+							</div>
+							#end
+	                      #end
+                      #end
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

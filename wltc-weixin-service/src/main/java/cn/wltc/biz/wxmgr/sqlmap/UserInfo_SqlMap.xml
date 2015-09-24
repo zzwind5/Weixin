@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+
+<sqlMap>
+
+    <resultMap id="RM.UserInfo" class="cn.wltc.biz.wxmgr.model.UserInfo">
+		<result column="uid" property="uid" jdbcType="INTEGER" />
+		<result column="org_id" property="org_id" jdbcType="INTEGER" />
+		<result column="login_name" property="login_name" jdbcType="VARCHAR" />
+		<result column="nick" property="nick" jdbcType="VARCHAR" />
+		<result column="avatar" property="avatar" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="county_code" property="county_code" jdbcType="VARCHAR" />
+		<result column="county" property="county" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+    </resultMap>
+	<sql id="UserInfo.where">
+	    where 1=1
+		 <isNotEmpty prepend="AND" property="uid">
+		            a.uid=#uid#
+		 </isNotEmpty>  
+		 <isNotEmpty prepend="AND" property="mobile">
+		            a.mobile=#mobile#
+		 </isNotEmpty>
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="UserInfo.columns">
+	    <![CDATA[
+         	a.uid,a.org_id,a.login_name,a.nick,a.avatar,a.mobile,a.email,a.county_code,a.county,a.address,a.sex
+	    ]]>
+	</sql>
+	 <select id="UserInfo.count" resultClass="long">
+        SELECT count(*) FROM user_info AS a   left join tfrs_orgzanation b on a.org_id = b.org_id <include refid="UserInfo.where"/>    
+    </select>
+   
+   <select id="UserInfo.getById" resultMap="RM.UserInfo">
+	    SELECT <include refid="UserInfo.columns"/>
+	        FROM user_info a 
+	        WHERE  a.uid = #uid# 
+    </select>
+   
+   <insert id="UserInfo.insert" >
+    <![CDATA[
+        INSERT INTO `user_info` (
+			uid,org_id,login_name,nick,avatar,mobile,email,county_code,county,address,sex
+        ) VALUES (
+			#uid#,#org_id#,#login_name#,#nick#,#avatar#,#mobile#,#email#,#county_code#,#county#,#address#,#sex#
+        )
+    ]]>
+   </insert>
+   
+   <update id="UserInfo.update" >
+        UPDATE `user_info`
+		<dynamic prepend="set" >
+			<isNotNull prepend="," property="org_id" >org_id = #org_id#</isNotNull>
+			<isNotNull prepend="," property="login_name" >login_name = #login_name#</isNotNull>
+			<isNotNull prepend="," property="nick" >nick = #nick#</isNotNull>
+			<isNotNull prepend="," property="avatar" >avatar = #avatar#</isNotNull>
+			<isNotNull prepend="," property="mobile" >mobile = #mobile#</isNotNull>
+			<isNotNull prepend="," property="email" >email = #email#</isNotNull>
+			<isNotNull prepend="," property="county_code" >county_code = #county_code#</isNotNull>
+			<isNotNull prepend="," property="county" >county = #county#</isNotNull>
+			<isNotNull prepend="," property="address" >address = #address#</isNotNull>
+			<isNotNull prepend="," property="sex" >sex = #sex#</isNotNull>
+		</dynamic>
+        WHERE 
+	        uid = #uid# 
+    </update>
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="UserInfo.findPage.count" resultClass="long">
+        SELECT count(*) FROM user_info AS a 
+        <include refid="UserInfo.where"/>  
+    </select>   
+    <select id="UserInfo.findPage" resultMap="RM.UserInfo">
+    	SELECT <include refid="UserInfo.columns"/> 
+    	FROM 
+    	user_info a 
+		<include refid="UserInfo.where"/>
+		 limit #firstResult#,#pageSize#
+    </select>
+    
+    <select id="UserInfo.find" resultMap="RM.UserInfo">
+    	SELECT <include refid="UserInfo.columns"/> 
+    	FROM user_info a 
+		INNER JOIN tfrs_orgzanation b ON a.org_id = b.org_id and b.type='1'
+		<include refid="UserInfo.where"/>
+    </select> 
+</sqlMap>
+

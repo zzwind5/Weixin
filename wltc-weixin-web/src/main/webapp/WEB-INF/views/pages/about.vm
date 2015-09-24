@@ -1,0 +1,39 @@
+#set($layout = '')
+#set($title='关于我们')
+#set($contentstyle = 'padding: 0em;')
+#override("head")  
+#end
+
+#override("content")
+
+      
+
+<div class="aboutlogobg">
+    <div><img src="${rc.contextPath}/static/weixin/images/logoabout.png" width="113" height="68"></div>
+</div>
+
+<div class="loadintroinfo6"> 
+
+     <div class="abouttxt">浙江图众网络科技有限公司于2014年8月公司正
+式注册成立，是一家从事行业互联网平台建设与运营
+的高科技公司，团队通过2年多的酝酿，从物流行业
+入手打造一个领先的互联网物流平台——56（物流）
+同城，无论是从供应链理念，平台战略，移动互联、
+大数据分析等技术手段方面，都具有独特的思路。</div>
+    <div class="aboutlist">
+         <ul>
+             <li>服务热线：0571-88394250</li>
+             <li>联&nbsp;&nbsp;系&nbsp;&nbsp;人： 史先生</li>
+             <li>公司邮箱：88301289@qq.com</li>
+         </ul>
+    </div>
+
+</div>
+
+<div class="weimabox mar15">
+     <div class="fenx">分享二维码给朋友</div>
+     <div class="erwei"><img src="${rc.contextPath}/static/weixin/images/erweimapng.jpg" width="90" height="90"></div>
+     <div class="webtxt mar5">更多内容请访问www.56tc.cn</div>
+</div>
+#end
+#extends("layout/weixinlayout.vm")

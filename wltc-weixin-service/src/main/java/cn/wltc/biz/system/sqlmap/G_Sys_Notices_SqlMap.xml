@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<!-- 不使用namespace是由于sql搜索定位会比较方便 -->
+<sqlMap>
+
+    <resultMap id="RM.Notices" class="cn.wltc.biz.system.model.Notices">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+	    <result column="bt" property="bt" jdbcType="VARCHAR" />
+	    <result column="nr" property="nr" jdbcType="VARCHAR" />
+	    <result column="lx" property="lx" jdbcType="VARCHAR" />
+	    <result column="sfzd" property="sfzd" jdbcType="VARCHAR" />
+	    <result column="lb" property="lb" jdbcType="VARCHAR" />
+	    <result column="fbsj" property="fbsj" jdbcType="TIMESTAMP" />
+	    <result column="fbr" property="fbr" jdbcType="VARCHAR" />
+	    <result column="sfsc" property="sfsc" jdbcType="VARCHAR" />
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Notices.columns">
+	    <![CDATA[
+        id, bt, nr, lx, sfzd, lb, fbsj, fbr,sfsc
+	    ]]>
+	</sql>
+
+	<sql id="Notices.where">
+	    <dynamic prepend="WHERE">
+		       <isNotEmpty prepend="AND" property="id">
+		             id = #id#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="bt">
+		             bt like CONCAT('%',#bt#,'%')
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="lx">
+		             lx = #lx#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="sfzd">
+		             sfzd = #sfzd#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="lb">
+		             lb = #lb#
+		       </isNotEmpty>
+		       <isEmpty prepend="AND" property="sfsc">
+		             sfsc='0'
+		       </isEmpty>
+		       <isNotNull prepend="AND" property="lxs">
+		       		lx in 
+		         <iterate open="(" close=")" conjunction="," property="lxs" >
+                		#lxs[]#
+            		</iterate>
+		       </isNotNull>	       
+	    </dynamic>	
+	</sql>
+
+	
+    <insert id="Notices.insert" >
+	    INSERT INTO `wz_tzggb` (
+        	bt ,
+        	nr ,
+        	lx,
+        	sfzd,
+        	lb,
+        	fbsj,
+        	fbr,
+        	sfsc 
+        ) VALUES (
+        	#bt# ,
+        	#nr# ,
+        	#lx# ,
+        	#sfzd#,
+        	#lb#,
+        	now(),
+        	#fbr#,
+        	'0'
+        )
+    </insert>
+
+
+    <update id="Notices.update" >
+        UPDATE `wz_tzggb`
+		<dynamic prepend="set" >
+			<isNotNull prepend="," property="bt" >bt = #bt#</isNotNull>
+			<isNotNull prepend="," property="nr" >nr = #nr#</isNotNull>
+			<isNotNull prepend="," property="lx" >lx = #lx#</isNotNull>
+			<isNotNull prepend="," property="sfzd" >sfzd = #sfzd#</isNotNull>
+			<isNotNull prepend="," property="lb" >lb = #lb#</isNotNull>
+			<isNotNull prepend="," property="fbsj" >fbsj = #fbsj#</isNotNull>	
+			<isNotNull prepend="," property="fbr" >fbr = #fbr#</isNotNull>		
+			<isNotNull prepend="," property="sfsc" >sfsc = #sfsc#</isNotNull>		
+		</dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+    
+    <select id="Notices.getById" resultMap="RM.Notices">
+	    SELECT <include refid="Notices.columns"/>
+	        FROM `wz_tzggb` 
+	        WHERE 
+		        id = #id# 
+    </select>
+
+    <select id="Notices.count" resultClass="long">
+        SELECT count(*) FROM `wz_tzggb` <include refid="Notices.where"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="Notices.findPage" resultMap="RM.Notices">
+    	SELECT <include refid="Notices.columns"/> FROM wz_tzggb 
+		<include refid="Notices.where"/>
+		order by sfzd desc,fbsj desc
+<!-- 		<dynamic prepend="ORDER BY"> -->
+<!-- 			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty> -->
+<!-- 		</dynamic> -->
+		 limit #firstResult#,#pageSize#
+    </select>
+    
+    <update id="Notices.delete">
+    <![CDATA[
+       update wz_tzggb set sfsc='1' where id = #id#
+    ]]>
+    </update>
+</sqlMap>
+

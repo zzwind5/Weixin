@@ -1,0 +1,95 @@
+#set($layout = '')
+#override("head")  
+#end
+#override("header")  
+
+#end
+#override("content")
+
+#if($!{couponCount} == 0)
+	<div class="loadintroinfo6"> 
+		<div class="Bindingpng mar48"><img src="${rc.contextPath}/static/weixin/images/Bindingpng.png" width="76" height="102"></div>
+        <div class="Bindingtxt mar30">您现在还没有参加优惠活动</div>
+        <div class="button_5 mar30" onclick="toUrl('${rc.contextPath}/activity/all.htm');"  >参加优惠活动</div>
+	</div>
+#else	
+	#foreach( $item in $page.result )
+	<a href="${rc.contextPath}/activity/detail.htm?id=$!{item.id}" >
+    <div class="post_item3">
+    
+         <div class="salecon" style="position: relative;">
+                <div class="post_item_icon">
+                     <div class="graybg">
+						#set($startLineName = '')
+						#set($endLineName = '')
+        				#set($lineName=$!{item.lineName})
+						#if($lineName )
+							#set($startLineName = $lineName.split("-").get(0))
+							#set($endLineName = $lineName.split("-").get(1))
+						#end
+                       <div class="txt2">$startLineName</div>
+                          <div><img src="${rc.contextPath}/static/weixin/images/index_05.png" width="14" height="26"></div>
+                       <div class="txt2">$endLineName</div>
+                     </div>
+                </div>
+                <div class="left ppleft">
+						#set($statusJpg = '')
+        				#set($status=$!{item.status})
+        				#if($status == '2')
+        					#set($statusJpg = 'sale1.png')
+        				#elseif($status == '3')
+        					#set($statusJpg = 'sale2.png')
+        				#else
+        					#set($statusJpg = 'sale3.png')
+                        #end  
+                    <div class="post_item_title5">$!{item.name}</div>
+                    <div class="post_item_note2">$!{item.orgzanationName}</div>
+					#set($getTime=$!{item.getTime})
+	    			#if($getTime.length()>16)
+	    				#set($getTime=$getTime.substring(0,16))
+	    			#end
+                    <div class="txt4 mar9">申领时间：$getTime</div>
+                </div>
+                <div class="hdright" style="position: absolute;right: 5px;"><img src="${rc.contextPath}/static/weixin/images/$statusJpg" width="44" height="18" align="absmiddle"></div>
+                <div class="clear"></div>
+          </div>				
+		  		#set($lineDealFeedback = '')
+		  		
+		  		#set($lineDealStatus='')
+		  		#if(${item.lineDealStatus})
+		  			#set($lineDealStatus=${item.lineDealStatus})
+		  		#end
+		  		#set($lineDealComment='')
+		  		#if(${item.lineDealComment})
+		  			#set($lineDealComment=${item.lineDealComment})
+		  		#end
+		  		#set($couponStatus='')
+		  		#if(${item.couponStatus})
+		  			#set($couponStatus=${item.couponStatus})
+		  		#end
+				#if($lineDealStatus == '1')
+					#set($lineDealFeedback = '专线已确认')
+					#if($couponStatus == '1')
+						#set($lineDealFeedback = $lineDealFeedback + '，已获取优惠资格')					
+					#else
+						#set($lineDealFeedback = $lineDealFeedback + '，未获取优惠资格')					
+					#end
+					#if($lineDealComment)
+						#set($lineDealFeedback = $lineDealFeedback  + '\n'+$lineDealComment)				
+					#end
+				#else
+					#set($lineDealFeedback = '专线未处理')
+                #end
+          <div class="txt3">专线反馈：#direct($!stringUtil.nl2br(${lineDealFeedback}))</div>
+    </div>
+         </div>
+    </div></a>
+	#end
+#end
+<br/>
+<br/>
+<br/>
+
+#end
+
+#extends("layout/weixinlayout.vm")

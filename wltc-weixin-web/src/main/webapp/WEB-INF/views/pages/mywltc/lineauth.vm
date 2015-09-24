@@ -1,0 +1,60 @@
+#set($layout = '')
+#override("head")  
+
+<script type="text/javascript" >
+#include("pages/mywltc/js/lineauth.js")
+</script>
+
+#end
+#override("header")  
+
+#end
+#override("content")
+<form method="post" action="saveLineauth.htm" id="form1">
+       <input type="hidden" id="orgId" name="orgId" value=""/>
+
+<div class="title1">基本信息</div>
+<div class="loadintroinfo5">
+            <div class="formFieldWrapper">
+              <span class="txt20">公司名称：</span><input type="text" class="fieldWithIcon2" name="orgName" id="orgName" placeholder="请输入公司名称" maxlength="25" required >
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">联系人：</span><input type="text" class="fieldWithIcon2" name="orgContract" id="orgContract" placeholder="请输入联系人" maxlength="10" >
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">手机号码：</span><input type="number" class="fieldWithIcon2" name="orgPhone" id="orgPhone" placeholder="请输入手机号码" maxlength="25" required>
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">总部地址：</span><input type="text" class="fieldWithIcon2" name="orgAddress" id="orgAddress" placeholder="请输入总部地址" maxlength="50" required>
+            </div>
+</div>
+
+<div class="title1">专线信息</div>
+<div class="loadintroinfo5">
+            <div class="formFieldWrapper">
+              <span class="txt20">始发地：</span><input type="text" class="fieldWithIcon2" name="startCityName" id="startCityName"  placeholder="请输入始发地" maxlength="100" required><input  type="hidden" name="startCityCode" id="startCityCode"/>
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">始发地联系人：</span><input type="text" class="fieldWithIcon2" name="contract" id="contract"  placeholder="请输入始发地联系人" maxlength="10" required></td></tr>
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">手机号码：</span><input type="number" class="fieldWithIcon2" name="phone" id="phone"  placeholder="请输入手机号码" maxlength="25" required></td></tr>
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">目的地：</span><input type="text" class="fieldWithIcon2" name="endCityName" id="endCityName"  placeholder="请输入目的地" maxlength="100" required><input  type="hidden" name="endCityCode" id="endCityCode"/></td></tr>
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">目的地联系人：</span><input type="text" class="fieldWithIcon2" name="contract2" id="contract2" placeholder="请输入目的地联系人" maxlength="10" required></td></tr>
+            </div>
+            <div class="formFieldWrapper">
+               <span class="txt20">手机号码：</span><input type="number" class="fieldWithIcon2" name="phone2" id="phone2"  placeholder="请输入手机号码" maxlength="25" required></td></tr>
+            </div> 
+</div>
+
+<div class="bottombtnbox">
+    <div class="button_3" onclick="javascript:$('#form1').submit();">发布</div>
+</div>
+
+</form>
+#end
+#extends("layout/weixinlayout.vm")

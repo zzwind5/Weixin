@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="keywords" content="56同城 我的56 互动 应用 APP" />
+<meta name="description" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="format-detection" content="telephone=no" />
+<meta property="qc:admins" content="1166357313601001416416375757" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<meta HTTP-EQUIV="expires" CONTENT="0">
+<link rel="apple-touch-icon" href="images/icon_72x72.png" />
+<link rel="icon" type="image/x-icon" href="favicon.ico" size="16x16 32x32" />
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/static/weixin/css/style.css?3" />
+
+		<title>#if($title)${title}#else 56同城微信 #end</title>
+		<link rel="stylesheet" type="text/css" href="${rc.contextPath}/static/css/cityPicker.css">
+		##<link rel="stylesheet" href="${rc.contextPath}/static/lib/jquery_mobile/css/themes/default/jquery.mobile-1.4.4.css?11">
+		<link rel="stylesheet" href="${rc.contextPath}/static/lib/jquery_mobile/css/jquery.mobile.simpledialog.min.css">
+			<!--<link rel="stylesheet" href="${rc.contextPath}/static/lib/jquery_mobile/css/56tc.css">-->
+		<script src="${rc.contextPath}/static/lib/jquery_mobile/js/jquery.min.js"></script>
+		##<script src="${rc.contextPath}/static/lib/jquery_mobile/js/jquery.mobile-1.4.4.min.js"></script>
+		##<script src="${rc.contextPath}/static/lib/jquery_mobile/js/jquery.mobile.simpledialog2.min.js"></script>
+		<script src="${rc.contextPath}/static/js/jquery.cityPicker.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="${rc.contextPath}/static/lib/iscroll/scrollbar.css">
+		
+
+		<script src="${rc.contextPath}/static/lib/validation/jquery.validate.js"></script>
+		<script src="${rc.contextPath}/static/lib/validation/additional-methods.js"></script>
+		<script src="${rc.contextPath}/static/lib/validation/localization/messages_cn.js"></script>
+		<script src="${rc.contextPath}/static/js/weixin.js"></script>
+		<script src="${rc.contextPath}/static/weixin/js/post.js"></script>
+		<script >
+			var ROOT_PATH = '$!{rc.contextPath}';
+			
+			function toUrl(url){
+        		if (url.indexOf("?") > 0) {
+        			url += "&";
+        		} else {
+        			url += "?";
+        		}
+        		url += "timestamp=" + new Date().getTime();
+        		location.href = url;
+    		}
+			
+        </script>
+	
+		#block("head")   
+        #end
+
+        <style>
+		.error{
+			color: red;
+			font-size: 0.9em;
+		}			
+A { text-decoration: none} 
+a:link{text-decoration:none;color:#1f1f1d} 
+        .ui-loading .ui-loader {
+			display: block;
+        }
+		.ui-loader-verbose {
+            width: 12.5em;
+            filter: Alpha(Opacity=88);
+            opacity: .88;
+            box-shadow: 0 1px 1px -1px #fff;
+            height: auto;
+            margin-left: -6.875em;
+            margin-top: -2.6875em;
+            padding: .625em;
+		}
+		.ui-loader {
+            display: none;
+            z-index: 9999999;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            border: 0;
+			text-align:center;
+		}
+		.ui-body-b {
+            border-width: 1px;
+            border-style: solid;
+            background-color: #2a2a2a /*{b-body-background-color}*/;
+            border-color: #1d1d1d /*{b-body-border}*/;
+            color: #fff /*{b-body-color}*/;
+}
+.ui-corner-all {
+    -webkit-background-clip: padding;
+    background-clip: padding-box;
+}
+.ui-corner-all {
+    -webkit-border-radius: .3125em /*{global-radii-blocks}*/;
+    border-radius: .3125em /*{global-radii-blocks}*/;
+}
+.ui-loader-verbose .ui-icon-loading {
+    margin: 0 auto .625em;
+    filter: Alpha(Opacity=75);
+    opacity: .75;
+}
+.ui-loader .ui-icon-loading {
+    background-color: #000;
+    display: block;
+    margin: auto;
+    width: 2.75em;
+    height: 2.75em;
+    padding: .0625em;
+    -webkit-border-radius: 2.25em;
+    border-radius: 2.25em;
+}
+.ui-icon-loading {
+    background: url(${rc.contextPath}/static/weixin/images/ajax-loader.gif);
+    background-size: 2.875em 2.875em;
+	margin: auto;
+}
+        </style>
+	</head>
+	<body>
+		
+		#block("header")   
+		#end
+		#block("navbar")   
+		#end
+		#block("content")   
+		#end		
+		#block("other")   
+		#end
+		#block("script") 
+		#end
+	</body>
+	
+	<div id="loading_area"class="ui-loader ui-corner-all ui-body-b ui-loader-verbose" style="display:none"><span class="ui-icon-loading"></span><h1 style="font-size:15px;">请稍后</h1></div>
+</html>

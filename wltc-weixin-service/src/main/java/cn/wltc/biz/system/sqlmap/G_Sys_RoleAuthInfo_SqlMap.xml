@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+
+    <resultMap id="RM.SysRoleAuthInfo" class="cn.wltc.biz.system.model.SysRoleAuthInfo">
+	    <result column="id" property="id" jdbcType="INTEGER" />
+	    <result column="jsid" property="jsid" jdbcType="INTEGER" />
+	    <result column="zyid" property="zyid" jdbcType="INTEGER" />
+	    <result column="jlcjsj" property="jlcjsj" jdbcType="TIMESTAMP" />
+	    <result column="jlcjyh" property="jlcjyh" jdbcType="VARCHAR" />
+	    <result column="jlxgsj" property="jlxgsj" jdbcType="TIMESTAMP" />
+	    <result column="jlxgyh" property="jlxgyh" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    
+
+	<sql id="SysRoleAuthInfo.columns">
+	    <![CDATA[
+        id, jsid, zyid, jlcjsj, jlcjyh,jlxgsj,jlxgyh
+	    ]]>
+	</sql>
+
+	<sql id="SysRoleAuthInfo.where">
+	    <dynamic prepend="WHERE">
+		       <isNotEmpty prepend="AND" property="id">
+		             id = #id#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="yhid">
+		             jsid = #jsid#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jsid">
+		             zyid = #zyid#
+		       </isNotEmpty>		       		       
+		       <isNotEmpty prepend="AND" property="jlcjsj">
+		             jlcjsj = #jlcjsj#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlcjyh">
+		             jlcjyh = #jlcjyh#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlxgsj">
+		             jlxgsj = #jlxgsj#
+		       </isNotEmpty>
+		       <isNotEmpty prepend="AND" property="jlxgyh">
+		             jlxgyh = #jlxgyh#
+		       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	
+    <insert id="SysRoleAuthInfo.insert" >
+    <![CDATA[
+        INSERT INTO `g_xtgl_jsqxxxb` (
+        	id, jsid, zyid, jlcjsj, jlcjyh,jlxgsj,jlxgyh
+        ) VALUES (
+        	#id#, #jsid#, #zyid#, #jlcjsj#, #jlcjyh#,#jlxgsj#,#jlxgyh#
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+    -->
+        <selectKey resultClass="java.lang.Integer" type="post" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+    </insert>
+	<insert id="SysRoleAuthInfo.insertSelective" >
+        INSERT INTO `g_xtgl_jsqxxxb`
+		 <dynamic prepend="(" >
+			  <isNotEmpty prepend="," property="id" >id</isNotEmpty>
+			  <isNotEmpty prepend="," property="jsid" >jsid</isNotEmpty>
+			  <isNotEmpty prepend="," property="zyid" >zyid</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjsj" >jlcjsj</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjyh" >jlcjyh</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgsj" >jlxgsj</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgyh" >jlxgyh</isNotEmpty>			  
+			  )
+		</dynamic>
+			values
+		<dynamic prepend="(" >
+			  <isNotEmpty prepend="," property="id" >#id#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jsid" >#jsid#</isNotEmpty>
+			  <isNotEmpty prepend="," property="zyid" >#zyid#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjsj" >#jlcjsj#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlcjyh" >#jlcjyh#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgsj" >#jlxgsj#</isNotEmpty>
+			  <isNotEmpty prepend="," property="jlxgyh" >#jlxgyh#</isNotEmpty>
+		)
+		</dynamic>
+        <selectKey resultClass="java.lang.Integer" type="post" keyProperty="id" >
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+
+    <update id="SysRoleAuthInfo.updateSelective" >
+        UPDATE `g_xtgl_jsqxxxb`
+		<dynamic prepend="set" >
+			  <isNotNull prepend="," property="jsid" >jsid=#jsid#</isNotNull>
+			  <isNotNull prepend="," property="zyid" >zyid=#zyid#</isNotNull>
+			  <isNotNull prepend="," property="jlxgsj" >jlxgsj=#jlxgsj#</isNotNull>
+			  <isNotNull prepend="," property="jlxgyh" >jlxgyh=#jlxgyh#</isNotNull>					
+		</dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+    <delete id="SysRoleAuthInfo.delete">
+    <![CDATA[
+        DELETE FROM `g_xtgl_jsqxxxb` WHERE
+        id = #id# 
+    ]]>
+    </delete>
+	<delete id="SysRoleAuthInfo.deleteSelective">
+        DELETE FROM `g_xtgl_jsqxxxb` <include refid="SysRoleAuthInfo.where"/>
+    </delete>
+    
+    <select id="SysRoleAuthInfo.getById" resultMap="RM.SysRoleAuthInfo">
+	    SELECT <include refid="SysRoleAuthInfo.columns"/>
+	    <![CDATA[
+	        FROM `g_xtgl_jsqxxxb` 
+	        WHERE 
+		        id = #id# 
+	    ]]>
+    </select>
+
+	
+	 
+    <select id="SysRoleAuthInfo.count" resultClass="long">
+        SELECT count(*) FROM `g_xtgl_jsqxxxb` <include refid="SysRoleAuthInfo.where"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="SysRoleAuthInfo.findPage" resultMap="RM.SysRoleAuthInfo">
+    	SELECT <include refid="SysRoleAuthInfo.columns"/> FROM `g_xtgl_jsqxxxb`
+		<include refid="SysRoleAuthInfo.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+		 limit #firstResult#,#pageSize#
+    </select>
+	<select id="SysRoleAuthInfo.find" resultMap="RM.SysRoleAuthInfo">
+    	SELECT <include refid="SysRoleAuthInfo.columns"/> FROM `g_xtgl_jsqxxxb`
+		<include refid="SysRoleAuthInfo.where"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+	
+	<!--  Manually Added  -->
+    <delete id="SysRoleAuthInfo.deleteByYhid" parameterClass="java.lang.Integer">
+    <![CDATA[
+        DELETE FROM `g_xtgl_yhjsxxb` WHERE
+        yhid = #yhid# 
+    ]]>
+    </delete> 
+    
+    <select id="SysRoleAuthInfo.getByRoleIdAndResourceId" parameterClass="java.util.HashMap" resultMap="RM.SysRoleAuthInfo">
+	    SELECT <include refid="SysRoleAuthInfo.columns"/>
+	    <![CDATA[
+	        FROM `g_xtgl_jsqxxxb` 
+	        WHERE 
+		        jsid = #jsid#  and zyid=#zyid#
+		         
+	    ]]>
+    </select> 
+    <select id="SysRoleAuthInfo.getByRoleId" parameterClass="java.util.HashMap" resultMap="RM.SysRoleAuthInfo">
+	    SELECT <include refid="SysRoleAuthInfo.columns"/>
+	    <![CDATA[
+	        FROM `g_xtgl_jsqxxxb` 
+	        WHERE 
+		        jsid = #jsid#
+		         
+	    ]]>
+    </select>
+     <delete id="SysRoleAuthInfo.deleteByRoleIdAndResourceId" parameterClass="java.util.HashMap" >
+	    DELETE 
+	    <![CDATA[
+	        FROM `g_xtgl_jsqxxxb` 
+	        WHERE 
+		        jsid = #jsid#  and zyid=#zyid#
+		         
+	    ]]>
+    </delete> 
+</sqlMap>
+

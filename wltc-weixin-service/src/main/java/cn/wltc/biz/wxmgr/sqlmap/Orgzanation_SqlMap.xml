@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<!-- 企业 -->
+<sqlMap>
+
+    <resultMap id="RM.Orgzanation" class="cn.wltc.biz.wxmgr.model.Orgzanation">
+	   <result column="org_id" property="id" jdbcType="INTEGER" />
+	   <result column="name" property="name" jdbcType="VARCHAR" />
+	   <result column="type" property="type" jdbcType="VARCHAR" />
+	   <result column="county_cd" property="countyCode" jdbcType="VARCHAR" />
+	   <result column="province" property="province" jdbcType="VARCHAR" />
+	   <result column="city" property="city" jdbcType="VARCHAR" />
+	   <result column="county" property="county" jdbcType="VARCHAR" />
+	   <result column="address" property="address" jdbcType="VARCHAR" />
+	   <result column="contract" property="contract" jdbcType="VARCHAR" />
+	   <result column="phone" property="phone" jdbcType="VARCHAR" />
+	   <result column="fax" property="fax" jdbcType="VARCHAR" />
+	   <result column="email" property="email" jdbcType="VARCHAR" />
+	   <result column="zip" property="zip" jdbcType="VARCHAR" />
+	   <result column="websie" property="websie" jdbcType="VARCHAR" />
+    </resultMap>
+	<sql id="Orgzanation.where">
+	    where 1=1
+		 <isNotEmpty prepend="AND" property="name">
+		            a.name like CONCAT('%',#name#,'%')
+		 </isNotEmpty>  
+	</sql>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Orgzanation.columns">
+	    <![CDATA[
+         	a.org_id,a.name,a.type,a.county_cd,a.province,a.city,a.county,a.address,a.contract,a.phone,a.fax,a.email,a.zip,a.websie
+	    ]]>
+	</sql>
+	 <select id="Orgzanation.count" resultClass="long">
+        SELECT count(*) FROM tfrs_orgzanation AS a <include refid="Orgzanation.where"/>    
+    </select>
+   <select id="Orgzanation.getById" resultMap="RM.Orgzanation">
+	    SELECT <include refid="Orgzanation.columns"/>
+	        FROM tfrs_orgzanation a  WHERE  a.org_id = #id# 
+    </select>   
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="Orgzanation.findPage.count" resultClass="long">
+        SELECT count(*) FROM tfrs_orgzanation AS a <include refid="Orgzanation.where"/>  
+    </select>   
+    <select id="Orgzanation.findPage" resultMap="RM.Orgzanation">
+    	SELECT <include refid="Orgzanation.columns"/> FROM 
+    	tfrs_orgzanation a 
+		<include refid="Orgzanation.where"/>
+		 limit #firstResult#,#pageSize#
+    </select>
+    
+    <select id="Orgzanation.find" resultMap="RM.Orgzanation">
+    	SELECT <include refid="Orgzanation.columns"/> FROM 
+    	tfrs_orgzanation a 
+		<include refid="Orgzanation.where"/>
+    </select>
+        	
+   <insert id="Orgzanation.insert" >
+    <![CDATA[
+        INSERT INTO `tfrs_orgzanation` (
+			org_id,name,type,contract,phone,address
+        ) VALUES (
+			#id#,#name#,#type#,#contract#,#phone#,#address#
+        )
+    ]]>
+	<selectKey resultClass="java.lang.Integer" type="post"
+		keyProperty="id">
+		select last_insert_id()
+	</selectKey>
+   </insert>
+       
+    <select id="Orgzanation.findByName" resultMap="RM.Orgzanation">
+    	SELECT <include refid="Orgzanation.columns"/> FROM 
+    	tfrs_orgzanation a where name=#name#
+    	 limit 0,1
+    </select>
+</sqlMap>
+

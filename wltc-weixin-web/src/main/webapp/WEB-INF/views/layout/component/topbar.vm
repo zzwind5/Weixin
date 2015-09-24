@@ -1,0 +1,11 @@
+##	  <div id="topbar">
+##           <div id="topbar_title" class="topbar_title">零担专线列表</div>
+##           <div id="topbar_menu" class="topbar_menu">
+##			#if($bakurl)
+##				<a href="$bakurl">
+##				#else
+##					<a href="#?" onclick="window.history.go(-1);return false;">
+##					#end
+##				<img src="${rc.contextPath}/static/weixin/images/backpng.png">
+##			</a></div>
+##      </div>

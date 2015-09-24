@@ -1,0 +1,27 @@
+#set($layout = '')
+#override("head")  
+#end
+#override("header")  
+#end
+#override("navbar")
+
+#end
+#override("content")
+
+<div class="loadintroinfo6"> 
+
+<div class="Bindingpng mar48"><img src="${rc.contextPath}/static/weixin/images/canjia.png" width="76" height="102"></div>
+#if($hadCoupons)
+<div class="Bindingtxt mar30">已经参加过!</div>
+#elseif($param)
+<div class="Bindingtxt mar30">请填写必要信息</div>	
+#else
+<div class="Bindingtxt mar30">优惠活动参与成功!</div>
+<div class="Bindingtxt mar30">等待专线公司审核</div>
+#end
+<a href="${rc.contextPath}/activity/all.htm" style="color:#fff"><div class="button_5 mar30">知道了</div></a>
+<br>
+<br>
+</div>
+#end
+#extends("layout/weixinlayout.vm")
